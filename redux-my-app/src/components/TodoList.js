@@ -6,6 +6,7 @@ import Todo from './Todo'
 
 export default class TodoList extends Component {
     render() {
+        console.log("todoList");
         return (
             <ul>
                 {this.props.todos.map((todo, index) =>

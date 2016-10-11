@@ -8,6 +8,7 @@ import './App.css';
 
 class App extends Component {
   render() {
+      console.log("App");
       const {dispatch, visibleTodos, visibilityFilter,todos} = this.props;
     return (
       <div>

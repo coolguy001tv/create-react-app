@@ -21,7 +21,13 @@ export default class Footer extends Component {
     showLength(filter){
         return this.props.selectTodos(this.props.todos,filter).length;
     }
+    undo(){
 
+    }
+
+    redo(){
+
+    }
     render() {
         return (
             <div>
@@ -35,6 +41,8 @@ export default class Footer extends Component {
                     {this.renderFilter('SHOW_ACTIVE', '激活的')},{this.showLength('SHOW_ACTIVE')}
                     .
                 </p>
+                <button onClick={this.undo}>undo</button>
+                <button onClick={this.redo}>redo</button>
 
             </div>
 

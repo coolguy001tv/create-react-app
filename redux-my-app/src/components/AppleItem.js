@@ -2,7 +2,7 @@
  * Created by CoolGuy on 2016/10/11 16:17.
  */
 import React from 'react';
-
+import '../styles/appleItem.css';
 class AppleItem extends React.Component {
     shouldComponentUpdate(nextProps) {
         return nextProps.state != this.props.state;

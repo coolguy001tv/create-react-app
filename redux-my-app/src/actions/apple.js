@@ -1,7 +1,7 @@
 /**
  * Created by CoolGuy on 2016/10/11 16:44.
  */
-import fetch from 'whatwg-fetch';
+import 'whatwg-fetch';
 export const EAT_APPLE = 'EAT_APPLE';
 export const BEGIN_PICK_APPLE = 'BEGIN_PICK_APPLE';
 export const DONE_PICK_APPLE = 'DONE_PICK_APPLE';
@@ -23,12 +23,16 @@ export function fetchApple(id){
     return (dispatch)=>{
         dispatch(request(id));
         return fetch("http://localhost/apple.php")
-            .then(res=>res.json())
+            .then(res=>{
+
+                return res.json()
+            })
             .then(json=>{
-                dispatch(receiveApple(id, json));
+                console.log(json);
+                dispatch(receiveApple(json));
             })
             .catch(e=>{
-                dispatch(errorFetchApple(id,e));
+                dispatch(errorFetchApple(e));
             })
     }
 };

@@ -8,18 +8,22 @@ function appleReducer(state=[],action){
         case EAT_APPLE:
             let id = action.id;
             let index = state.findIndex((value,i)=>{
-                return i.id == id
+                return value.id == id
             });
             if(-1 === index){
                 return state;
             }
-            return [
-                ...state.slice(0,index),
-                Object.assign({},state[index],{
-                    isEaten:true
-                }),
-                ...state.slice(action.index + 1)
-            ];
+            //console.log(index);
+            //return [
+            //    ...state.slice(0,index-1),
+            //    Object.assign({},state[index],{
+            //        isEaten:true
+            //    }),
+            //    ...state.slice(index + 1)
+            //];
+            let arr = state.slice();
+            arr[index].isEaten = true;
+            return arr;
         case DONE_PICK_APPLE:
             return [
                 ...state,
@@ -29,7 +33,17 @@ function appleReducer(state=[],action){
             return state;
     }
 }
+function error(state="",action){
+    console.log(action);
+    switch(action.type){
+        case FAIL_PICK_APPLE:
+            return action.error.toString();
+        default:
+            return "";//除非有错误信息，否则应该是空
+    }
+}
 
 export default combineReducers({
-    apple:appleReducer
+    apple:appleReducer,
+    error
 })

@@ -60,6 +60,8 @@ class AppleBasket extends React.Component {
         })
 
 
+        console.log(state);
+
         return (
             <div className="appleBusket">
                 <div className="title">苹果篮子</div>
@@ -88,6 +90,12 @@ class AppleBasket extends React.Component {
                 <div className="btn-div">
                     <button onClick={this.pickApple.bind(this)}>摘苹果</button>
                 </div>
+
+                {state.error ?
+                    <div className="errorInfo">
+                        错误信息：{state.error}
+                    </div>
+                :null}
 
             </div>
         );

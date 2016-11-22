@@ -1,13 +1,23 @@
 import React from 'react';
 import {render} from 'react-dom';
-import {createStore} from 'redux';
+import {createStore,applyMiddleware, compose} from 'redux';
 import {Provider} from 'react-redux';
-import App from './App';
 import AllApp from './AllApp';
-import todoApp from './reducers';
 import './index.css';
+import appleReducer from './reducers/appleReducer'
+import thunkMiddleware from 'redux-thunk';
+import createLogger from 'redux-logger'
+const loggerMiddleware = createLogger()
 
-let store = createStore(todoApp, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(appleReducer, composeEnhancers(
+    applyMiddleware(
+        thunkMiddleware // 允许我们 dispatch() 函数
+        ,loggerMiddleware
+    )
+));
+
 render(
   <Provider store={store}>
       <AllApp/>

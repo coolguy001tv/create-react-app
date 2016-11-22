@@ -5,33 +5,40 @@ import React from 'react';
 import { connect } from 'react-redux';
 import '../styles/appleBasket.css';
 import AppleItem from '../components/AppleItem';
+import {fetchApple} from '../actions/apple';
 
 class AppleBasket extends React.Component {
 
+    pickApple(){
+        let {dispatch} = this.props;
+        console.log("pick pick");
+        dispatch(fetchApple("theId"));
+    }
     render() {
 
         let { state } = this.props;
+        //if(!state.apple) state.apple = [];
 
         //这部分从对应的 appleBasketReducer.js 中拷贝
-        let mockState = {
-            isPicking : false,
-            newAppleId: 3,
-            apples: [
-                {
-                    id: 1,
-                    weight: 235,
-                    isEaten: true
-                },
-                {
-                    id: 2,
-                    weight: 256,
-                    isEaten: false
-                }
-            ]
-        };
-
-        //是否开启模拟数据的开关，注释这行代码关闭模拟数据
-        state = mockState;
+        //let mockState = {
+        //    isPicking : false,
+        //    newAppleId: 3,
+        //    apples: [
+        //        {
+        //            id: 1,
+        //            weight: 235,
+        //            isEaten: true
+        //        },
+        //        {
+        //            id: 2,
+        //            weight: 256,
+        //            isEaten: false
+        //        }
+        //    ]
+        //};
+        //
+        ////是否开启模拟数据的开关，注释这行代码关闭模拟数据
+        //state = mockState;
 
 
         //对 state 做显示级别的转化
@@ -46,12 +53,14 @@ class AppleBasket extends React.Component {
             }
         };
 
-        state.apples.map(apple => {
+        state.apple.map(apple => {
             let selector = apple.isEaten ? 'appleEaten':'appleNow';
             stats[selector].quantity ++;
             stats[selector].weight += apple.weight;
         })
 
+
+        console.log(state);
 
         return (
             <div className="appleBusket">
@@ -75,12 +84,18 @@ class AppleBasket extends React.Component {
                 </div>
 
                 <div className="appleList">
-                    { state.apples.map(apple => <AppleItem state ={apple} />) }
+                    { state.apple.map((apple,i) => <AppleItem key={i} state ={apple} />) }
                 </div>
 
                 <div className="btn-div">
-                    <button>摘苹果</button>
+                    <button onClick={this.pickApple.bind(this)}>摘苹果</button>
                 </div>
+
+                {state.error ?
+                    <div className="errorInfo">
+                        错误信息：{state.error}
+                    </div>
+                :null}
 
             </div>
         );
@@ -89,7 +104,7 @@ class AppleBasket extends React.Component {
 }
 function select(state) {
     return {
-        state: state.appleBusket
+        state: state
     }
 }
 export default connect(select)(AppleBasket);

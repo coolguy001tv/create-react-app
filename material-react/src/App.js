@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './App.scss';
 import RaisedButton from 'material-ui/RaisedButton';
 
 class App extends Component {
@@ -13,6 +14,9 @@ class App extends Component {
         </div>
           <div>
               <RaisedButton label="Default" />
+          </div>
+          <div className="hello">
+              <div className="world">AAAA</div>
           </div>
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.

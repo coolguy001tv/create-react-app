@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link,hashHistory } from 'react-router'
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+//import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -11,7 +12,7 @@ import { createStore, applyMiddleware ,compose} from 'redux';
 
 
 //containers & components
-import Layout from'./components/Layout';
+import Layout from'./components/Layout/index';
 import Login from './containers/Login';
 import Reg from './containers/Reg';
 import Dashboard from './containers/Dashboard';
@@ -30,7 +31,7 @@ let store = createStore(Reducer,composeEnhancers(applyMiddleware(
 
 const TheApp = () => (
     <Provider store={store}>
-        <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+        <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
             <Router history={hashHistory}>
                 <Route path="/" component={Layout}>
                     <Route path="login" component={Login}/>

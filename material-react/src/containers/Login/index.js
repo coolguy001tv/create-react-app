@@ -2,18 +2,23 @@
  * Created by CoolGuy on 2016/11/27.
  */
 import React,{Component} from 'react';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import Toggle from 'material-ui/Toggle';
+import Paper from 'material-ui/Paper';
 
+const style = {
+    height: 100,
+    width: 100,
+    margin: 20,
+    textAlign: 'center',
+    display: 'inline-block',
+}
 var Login = React.createClass({
     render(){
         return (
             <div>
-                <Card>
-
-                </Card>
-                Card--Login
+                登陆~
+                <Paper style={style} zDepth={1} rounded={false} >
+                    登陆
+                </Paper>
             </div>
 
         )

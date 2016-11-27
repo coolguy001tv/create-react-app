@@ -1,0 +1,25 @@
+@charset "UTF-8";
+.dp-f{
+  display: flex;
+}
+.flex{
+  flex: 1;
+}
+.bold{
+  font-weight:bold;
+}
+.left-menu{
+  width: 300px;
+}
+.content{
+  flex: 1;
+}
+
+
+.footer{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}

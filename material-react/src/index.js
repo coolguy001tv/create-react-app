@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Link, browserHistory } from 'react-router'
+import { Router, Route, Link,hashHistory } from 'react-router'
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -31,7 +31,7 @@ let store = createStore(Reducer,composeEnhancers(applyMiddleware(
 const TheApp = () => (
     <Provider store={store}>
         <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-            <Router history={browserHistory}>
+            <Router history={hashHistory}>
                 <Route path="/" component={Layout}>
                     <Route path="login" component={Login}/>
                     <Route path="reg" component={Reg}/>

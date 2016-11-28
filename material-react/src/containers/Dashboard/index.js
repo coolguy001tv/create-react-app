@@ -6,8 +6,10 @@ export default class Dashboard extends Component{
 
     render(){
         return (
-            <div>
-                Dashboard
+            <div style={{display:'flex',alignItems:'center',justifyContent:'center',height:300}}>
+                <div style={{border:"1px solid red"}}>
+                    Hello World
+                </div>
             </div>
         )
     }

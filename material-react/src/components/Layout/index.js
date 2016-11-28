@@ -22,7 +22,7 @@ export default class Layout extends Component{
         return (
             <div className="outer">
                 <div>公共头部</div>
-                <div className="dp-f">
+                <div className="">
                     <div className="left-menu">
 
                         <List>

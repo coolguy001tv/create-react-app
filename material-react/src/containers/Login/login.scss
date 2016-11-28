@@ -1,0 +1,62 @@
+.login-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top:0;
+  left:0;
+  right: 0;
+  bottom:0;
+}
+.login-div{
+  width: 400px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  h1{
+    font-size: 20px;
+    text-align: center;
+
+  }
+  color:#666;
+  .remember{
+    height: 48px;
+    align-items: center;
+    svg:first-child{
+      fill:#666 !important;//hack
+    }
+  }
+  .btn-wrapper{
+    margin-top: 20px;
+  }
+  .reg{
+    margin: 10px 0;
+    text-align: right;
+  }
+  .third-login{
+    text-align: center;
+  }
+  .icon-qq{
+    background: url("./images/qq.png") no-repeat;
+    background-size: contain;
+  }
+  .icon-weixin{
+    background: url("./images/weixin.png") no-repeat;
+    background-size: contain;
+  }
+  .icon{
+    display: inline-block;
+    flex:1;
+    height: 40px;
+    width: 40px;
+    background-position:center center;
+    cursor: pointer;
+  }
+  .third-login-i-wrapper{
+    width: 200px;
+    margin: 0 auto;
+    display: flex;
+  }
+}
+.flex-row{
+  flex-direction: row;
+}

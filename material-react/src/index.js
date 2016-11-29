@@ -1,13 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Link,hashHistory } from 'react-router'
+import { Router, Route, Link,hashHistory } from 'react-router';
+import configureStore from './configureStore';
 //import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
 
-import { Provider } from 'react-redux'
-import thunk from 'redux-thunk';
+import { Provider,connect } from 'react-redux'
+
 import { createStore, applyMiddleware ,compose} from 'redux';
 
 
@@ -23,30 +28,43 @@ import Reducer from './reducers';
 
 
 //store
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-let store = createStore(Reducer,composeEnhancers(applyMiddleware(
-    thunk
-)));
+let store = configureStore(Reducer,{
+    user:{
+        userName:"丁丁",
+        password:"123456789"
+    }
+});
 
 
-const TheApp = () => (
-    <Provider store={store}>
-        <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
-            <Router history={hashHistory}>
-                <Route path="/" component={Layout}>
-                    <Route path="login" component={Login}/>
-                    <Route path="reg" component={Reg}/>
-                    <Route path="dashboard" component={Dashboard}/>
+class TheApp extends React.Component{
+    componentDidMount() {
+        let {fetch} = this.props;
 
-                    {/*<Route path="*" component={NoMatch}/>*/}
-                </Route>
+    }
+    render(){
+        return (
+            <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+                <Router history={hashHistory}>
+                    <Route path="/" component={Layout}>
+                        <Route path="login" component={Login}/>
+                        <Route path="reg" component={Reg}/>
+                        <Route path="dashboard" component={Dashboard}/>
+                        {/*<Route path="*" component={NoMatch}/>*/}
+                    </Route>
+                </Router>
+            </MuiThemeProvider>
+        )
+    }
+};
 
-            </Router>
-        </MuiThemeProvider>
-    </Provider>
-);
-
+//TheApp = connect((state)=>{
+//    return {
+//        state
+//    }
+//}, undefined, null, {pure:false})(TheApp);
 ReactDOM.render(
-  <TheApp />,
+    <Provider store={store}>
+        <TheApp/>
+    </Provider>,
   document.getElementById('root')
 );

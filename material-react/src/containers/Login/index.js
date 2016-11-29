@@ -10,21 +10,38 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import './login.scss';
 
-var Login = React.createClass({
-    render(){
+import actions from '../../actions/index';
+
+import {connect} from 'react-redux';
+
+class Login extends Component {
+    componentDidMount(){
+
+    }
+    login = (e)=>{
+        let userName = '';
+        let password = '';
+        let {dispatch} = this.props;
+        dispatch(actions.login({userName,password}));
+    };
+    render() {
+        let {user,dispath} = this.props;
+        let {userName,password} = user;
+        console.log(user.userName);
         return (
-            <div className="login-wrapper" >
+            <div className="login-wrapper">
                 <div className="login-div">
                     <h1>登录</h1>
                     <TextField
                         hintText="用户名"
                         errorText=""
-                        defaultValue=""
+                        defaultValue={userName}
                         fullWidth={true}
                     />
                     <TextField
                         hintText="密码"
                         type="password"
+                        defaultValue={password}
                         fullWidth={true}
                     />
                     <div className="dp-f flex-row remember">
@@ -45,10 +62,12 @@ var Login = React.createClass({
                         <a href="#" style={{flex:1,textAlign:"right"}}>忘记密码</a>
                     </div>
                     <div className="btn-wrapper">
-                        <RaisedButton label="登录" fullWidth={true} backgroundColor="#333333" labelColor="#fff"/>
+                        <RaisedButton label="登录" fullWidth={true} backgroundColor="#333333" labelColor="#fff"
+                                      onClick={this.login}/>
                     </div>
                     <div className="reg">
-                        还没账号？<a href="#">立即注册</a>
+                        还没账号？
+                        <a href="#">立即注册</a>
                     </div>
                     <Divider/>
                     <div className="third-login">
@@ -65,7 +84,11 @@ var Login = React.createClass({
             </div>
 
         )
-
     }
-});
-export default Login;
+
+}
+export default connect((state)=>{
+    return {
+        user:state.user
+    }
+})(Login);

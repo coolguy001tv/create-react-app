@@ -6,8 +6,10 @@ import actions from '../actions/index';
 let user = (state={},action)=>{
     //console.log(action);
     switch (action.type){
-        case actions.Login:
-            return Object.assign({},action.data,state);
+        case actions.LOGIN:
+            let obj = Object.assign({},state,action.data);
+            console.log(obj);
+            return obj;
         default:
             return state;
     }

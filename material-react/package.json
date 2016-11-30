@@ -40,6 +40,7 @@
     "path-exists": "2.1.0",
     "postcss-loader": "1.0.0",
     "promise": "7.1.1",
+    "react-addons-css-transition-group": "^15.4.1",
     "react-dev-utils": "^0.3.0",
     "react-redux": "^4.4.6",
     "react-router": "^3.0.0",

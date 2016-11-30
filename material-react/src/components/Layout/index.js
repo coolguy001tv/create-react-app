@@ -2,6 +2,8 @@
  * Created by CoolGuy on 2016/11/27.
  */
 import React,{Component} from 'react';
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+
 import Subheader from 'material-ui/Subheader';
 import {List, ListItem, makeSelectable} from 'material-ui/List';
 import ContentInbox from '../../../node_modules/material-ui/svg-icons/content/inbox';
@@ -19,6 +21,7 @@ export default class Layout extends Component{
         //console.log("It's ok!");
     }
     render(){
+        console.log(this.props.location)
         return (
             <div className="outer">
                 <div>公共头部</div>
@@ -35,8 +38,22 @@ export default class Layout extends Component{
                         <Divider />
                     </div>
                     <div className="content">
-                        {this.props.children}
+                    <ReactCSSTransitionGroup
+                        component="div"
+                        transitionName="example"
+                        transitionEnterTimeout={500}
+                        transitionLeaveTimeout={500}
+                    >
+
+                            {React.cloneElement(this.props.children,{
+                                key:this.props.location.pathname
+                            })}
+
+                    </ReactCSSTransitionGroup>
                     </div>
+                    {/*<div className="content">
+                        {this.props.children}
+                    </div>*/}
                 </div>
 
                 <div className="footer">版权所有 @ pomelo</div>

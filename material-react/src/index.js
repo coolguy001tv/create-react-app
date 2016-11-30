@@ -7,6 +7,7 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
@@ -21,6 +22,7 @@ import Layout from'./components/Layout/index';
 import Login from './containers/Login';
 import Reg from './containers/Reg';
 import Dashboard from './containers/Dashboard';
+import NoMatch from './containers/NoMatch';
 import './index.css';
 
 //reducers
@@ -49,14 +51,14 @@ class TheApp extends React.Component{
                         <Route path="login" component={Login}/>
                         <Route path="reg" component={Reg}/>
                         <Route path="dashboard" component={Dashboard}/>
-                        {/*<Route path="*" component={NoMatch}/>*/}
+                        <Route path="*" component={NoMatch}/>
                     </Route>
                 </Router>
             </MuiThemeProvider>
         )
     }
 };
-
+//注意，目前的情况下react-router和react-redux在顶层上，如果connect的话会有问题
 //TheApp = connect((state)=>{
 //    return {
 //        state

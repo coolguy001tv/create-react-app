@@ -1,4 +1,12 @@
 @charset "UTF-8";
+@keyframes rightToLeft {
+  0%{
+    left:1980px;
+  }
+  100%{
+    left:0;
+  }
+}
 .dp-f{
   display: flex;
 }
@@ -27,4 +35,22 @@
   left: 0;
   right: 0;
   text-align: center;
+}
+//动画
+.example-enter {
+  opacity: 0.01;
+  transition: opacity .5s ease-in;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+}
+
+.example-leave {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0;
 }

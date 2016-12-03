@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Link,hashHistory } from 'react-router';
+import { Router, Route,hashHistory } from 'react-router';
 import configureStore from './configureStore';
 
 import ThemeSetting from './components/ThemeSetting';
@@ -10,9 +10,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-import { Provider,connect } from 'react-redux'
-
-import { createStore, applyMiddleware ,compose} from 'redux';
+import { Provider } from 'react-redux'
 
 import './styles/index.scss';
 

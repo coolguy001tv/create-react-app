@@ -5,10 +5,10 @@ import React,{Component} from 'react';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 import Subheader from 'material-ui/Subheader';
-import {List, ListItem, makeSelectable} from 'material-ui/List';
+import {List, ListItem} from 'material-ui/List';
 import ContentInbox from '../../../node_modules/material-ui/svg-icons/content/inbox';
 import ActionGrade from '../../../node_modules/material-ui/svg-icons/action/grade';
-import ContentSend from '../../../node_modules/material-ui/svg-icons/content/send';
+//import ContentSend from '../../../node_modules/material-ui/svg-icons/content/send';
 import ContentDrafts from '../../../node_modules/material-ui/svg-icons/content/drafts';
 import Divider from 'material-ui/Divider';
 import Link from '../NavLink';

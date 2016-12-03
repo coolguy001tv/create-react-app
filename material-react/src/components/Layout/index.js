@@ -21,7 +21,7 @@ export default class Layout extends Component{
         //console.log("It's ok!");
     }
     render(){
-        console.log(this.props.location)
+        //console.log(this.props.location)
         return (
             <div className="outer">
                 <div>公共头部</div>
@@ -45,7 +45,7 @@ export default class Layout extends Component{
                         transitionLeaveTimeout={500}
                     >
 
-                            {React.cloneElement(this.props.children,{
+                            {this.props.children && React.cloneElement(this.props.children,{
                                 key:this.props.location.pathname
                             })}
 

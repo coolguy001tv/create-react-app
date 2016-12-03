@@ -62,7 +62,7 @@ class Login extends Component {
                         <a href="#" style={{flex:1,textAlign:"right"}}>忘记密码</a>
                     </div>
                     <div className="btn-wrapper">
-                        <RaisedButton label="登录" fullWidth={true} backgroundColor="#333333" labelColor="#fff"
+                        <RaisedButton label="登录" fullWidth={true} primary={true}
                                       onClick={this.login}/>
                     </div>
                     <div className="reg">

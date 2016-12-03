@@ -13,7 +13,17 @@ let user = (state={},action)=>{
         default:
             return state;
     }
-}
+};
+
+let theme = (state = {}, action) => {
+    switch (action.type){
+        case actions.THEME_CHANGE:
+            return action.theme;
+        default:
+            return state
+    }
+};
 export default combineReducers({
     user,
+    theme
 })

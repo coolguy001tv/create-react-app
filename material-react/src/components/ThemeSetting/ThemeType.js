@@ -7,7 +7,7 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 
 let primary = {
     palette: {
-        primary1Color:"#ff0000"
+        primary1Color:"#22c67f"
     }
 };
 

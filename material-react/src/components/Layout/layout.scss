@@ -1,12 +1,4 @@
 @charset "UTF-8";
-@keyframes rightToLeft {
-  0%{
-    left:1980px;
-  }
-  100%{
-    left:0;
-  }
-}
 .dp-f{
   display: flex;
 }
@@ -20,12 +12,51 @@
   width: 300px;
   position: fixed;
   left:0;
-  top:20px;
+  top:50px;
   z-index: 10;
+}
+.main-content{
+  margin-top: 45px;
 }
 .content{
   width: 960px;
   margin: 0 auto;
+}
+.header{
+  position: fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:45px;
+  line-height: 45px;
+  color:#fff;
+  &:after{
+    display:block;clear:both;content:"";visibility:hidden;height:0;zoom:1;
+  }
+  .header-left{
+    float: left;
+    height: 100%;
+
+  }
+  .header-right{
+    float: right;
+    margin-right: 30px;
+
+    a{
+      color:#fff;
+      text-decoration: none;
+    }
+  }
+}
+.pomelo-logo{
+  display: block;
+  background: url("./images/logo.png") no-repeat;
+  background-size: 25px 25px;
+  background-position:30px center;
+  padding-left: 70px;
+  font-weight: bold;
+  font-style: normal;
+  letter-spacing:1.5px;
 }
 
 
@@ -47,10 +78,5 @@
 }
 
 .example-leave {
-  opacity: 1;
-  transition: opacity .35s ease-in;
-}
-
-.example-leave.example-leave-active {
-  opacity: 0;
+  display:none;
 }

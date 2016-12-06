@@ -8,6 +8,7 @@ import Subheader from 'material-ui/Subheader';
 import {List, ListItem} from 'material-ui/List';
 import ContentInbox from '../../../node_modules/material-ui/svg-icons/content/inbox';
 import ActionGrade from '../../../node_modules/material-ui/svg-icons/action/grade';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 //import ContentSend from '../../../node_modules/material-ui/svg-icons/content/send';
 import ContentDrafts from '../../../node_modules/material-ui/svg-icons/content/drafts';
 import Divider from 'material-ui/Divider';
@@ -15,18 +16,31 @@ import Link from '../NavLink';
 
 import './layout.scss';
 
-export default class Layout extends Component{
 
-    componentDidMount() {
-        //console.log("It's ok!");
+class Layout extends Component{
+
+    renderTitle(){
+        let themeColor = this.props.muiTheme.palette.primary1Color;
+        return (
+            <div className="header" style={{backgroundColor:themeColor}}>
+                <div className="header-left">
+                    <i className="pomelo-logo">Pomelo</i>
+                </div>
+                <div className="header-right">
+                    <Link to="/login">登录</Link> | <Link to="/reg">注册</Link>
+                </div>
+            </div>
+        )
     }
     render(){
-        //console.log(this.props.location)
+        let themeColor = this.props.muiTheme.palette.primary1Color;
+        let pathname = this.props.location.pathname;
+        console.log(themeColor,pathname);
         return (
             <div className="outer">
-                <div>公共头部</div>
-                <div className="">
-                    <div className="left-menu">
+                {this.renderTitle()}
+                <div className="main-content">
+                    <div className="left-menu" style={{borderTop:"1px solid "+themeColor}}>
 
                         <List>
                             <Subheader>左侧菜单只用于临时展示用~</Subheader>
@@ -38,22 +52,19 @@ export default class Layout extends Component{
                         <Divider />
                     </div>
                     <div className="content">
-                    <ReactCSSTransitionGroup
-                        component="div"
-                        transitionName="example"
-                        transitionEnterTimeout={500}
-                        transitionLeaveTimeout={500}
-                    >
+                        <ReactCSSTransitionGroup
+                            component="div"
+                            transitionName="example"
+                            transitionEnterTimeout={350}
+                            transitionLeave={false}
+                        >
 
-                            {this.props.children && React.cloneElement(this.props.children,{
-                                key:this.props.location.pathname
-                            })}
+                                {this.props.children && React.cloneElement(this.props.children,{
+                                    key:pathname
+                                })}
 
-                    </ReactCSSTransitionGroup>
+                        </ReactCSSTransitionGroup>
                     </div>
-                    {/*<div className="content">
-                        {this.props.children}
-                    </div>*/}
                 </div>
 
                 <div className="footer">版权所有 @ pomelo</div>
@@ -61,3 +72,4 @@ export default class Layout extends Component{
         )
     }
 }
+export default muiThemeable()(Layout);

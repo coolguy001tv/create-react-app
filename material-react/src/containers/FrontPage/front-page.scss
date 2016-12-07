@@ -1,0 +1,28 @@
+.front-page{
+  .header{
+    color:#434343;
+    font-weight: normal;
+    text-align: center;
+    h1{
+      height: 340px;
+      width: 960px;
+      background: url('./images/title.png') no-repeat;
+    }
+  }
+  .front-page-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  .numbers{
+    display: inline-flex;
+    width: 100px;
+    flex-direction: column;
+    align-items: center;
+      span{
+        flex:1
+      }
+  }
+
+}

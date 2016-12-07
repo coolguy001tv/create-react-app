@@ -14,16 +14,23 @@ import ContentDrafts from '../../../node_modules/material-ui/svg-icons/content/d
 import Divider from 'material-ui/Divider';
 import Link from '../NavLink';
 
+import FrontPage from '../../containers/FrontPage';
+
 import './layout.scss';
 
 
 class Layout extends Component{
 
+    toFrontPage(){
+        if(this.props.location.pathname !== '/'){
+            this.props.router.push("/");
+        }
+    }
     renderTitle(){
         let themeColor = this.props.muiTheme.palette.primary1Color;
         return (
-            <div className="header" style={{backgroundColor:themeColor}}>
-                <div className="header-left">
+            <div className="fixed-header" style={{backgroundColor:themeColor}}>
+                <div className="header-left" onClick={()=>{this.toFrontPage()}}>
                     <i className="pomelo-logo">Pomelo</i>
                 </div>
                 <div className="header-right">
@@ -35,7 +42,7 @@ class Layout extends Component{
     render(){
         let themeColor = this.props.muiTheme.palette.primary1Color;
         let pathname = this.props.location.pathname;
-        console.log(themeColor,pathname);
+        //console.log(themeColor,pathname);
         return (
             <div className="outer">
                 {this.renderTitle()}
@@ -52,18 +59,19 @@ class Layout extends Component{
                         <Divider />
                     </div>
                     <div className="content">
+                        {this.props.children ?
                         <ReactCSSTransitionGroup
                             component="div"
                             transitionName="example"
                             transitionEnterTimeout={350}
                             transitionLeave={false}
                         >
-
-                                {this.props.children && React.cloneElement(this.props.children,{
+                                {React.cloneElement(this.props.children,{
                                     key:pathname
                                 })}
-
                         </ReactCSSTransitionGroup>
+                        :<FrontPage {...this.props}/>
+                        }
                     </div>
                 </div>
 

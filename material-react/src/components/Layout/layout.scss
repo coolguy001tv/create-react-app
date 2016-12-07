@@ -22,7 +22,7 @@
   width: 960px;
   margin: 0 auto;
 }
-.header{
+.fixed-header{
   position: fixed;
   top:0;
   left:0;
@@ -36,6 +36,7 @@
   .header-left{
     float: left;
     height: 100%;
+    cursor: pointer;
 
   }
   .header-right{

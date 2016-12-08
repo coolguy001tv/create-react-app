@@ -47,7 +47,7 @@ class Layout extends Component{
             <div className="outer">
                 {this.renderTitle()}
                 <div className="main-content">
-                    <div className="left-menu" style={{borderTop:"1px solid "+themeColor}}>
+                    {/*<div className="left-menu" style={{borderTop:"1px solid "+themeColor}}>
 
                         <List>
                             <Subheader>左侧菜单只用于临时展示用~</Subheader>
@@ -57,21 +57,23 @@ class Layout extends Component{
                             <Link to="/dashboard"><ListItem primaryText="dashboard" leftIcon={<ContentDrafts />} /></Link>
                         </List>
                         <Divider />
-                    </div>
+                    </div>*/}
                     <div className="content">
-                        {this.props.children ?
+
                         <ReactCSSTransitionGroup
                             component="div"
                             transitionName="example"
                             transitionEnterTimeout={350}
                             transitionLeave={false}
                         >
-                                {React.cloneElement(this.props.children,{
+                            {this.props.children ?
+                                React.cloneElement(this.props.children,{
                                     key:pathname
-                                })}
+                                })
+                            :<FrontPage key={pathname} {...this.props}/>
+                            }
                         </ReactCSSTransitionGroup>
-                        :<FrontPage {...this.props}/>
-                        }
+
                     </div>
                 </div>
 

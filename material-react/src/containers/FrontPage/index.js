@@ -7,8 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Divider from 'material-ui/Divider';
 import React,{Component} from 'react';
 import muiThemeable from 'material-ui/styles/muiThemeable';
-//@muiThemeable
-export default class FrontPage extends Component{
+class FrontPage extends Component{
 
     create(){
         this.props.router.push('/login');
@@ -16,13 +15,14 @@ export default class FrontPage extends Component{
 
     renderNumber(number,name){
         return (
-            <div className="numbers">
-                <span>220,443</span>
-                <span>用户</span>
+            <div className="data">
+                <span className="number">{number}</span>
+                <span>{name}</span>
             </div>
         )
     }
     render(){
+        let themeColor = this.props.muiTheme.palette.primary1Color;
         return (
             <div className="front-page">
                 <div className="header">
@@ -31,7 +31,7 @@ export default class FrontPage extends Component{
                              onClick={()=>{this.create()}}     />
                     <Divider/>
                 </div>
-                <div className="front-page-content">
+                <div className="front-page-content" style={{color:themeColor}}>
                     当前有{this.renderNumber(222111,'用户')}
                     编写了{this.renderNumber(1234,'APIs')}，
                     被{this.renderNumber(234562345,'开发人员')}使用
@@ -41,3 +41,4 @@ export default class FrontPage extends Component{
         )
     }
 }
+export default muiThemeable()(FrontPage);

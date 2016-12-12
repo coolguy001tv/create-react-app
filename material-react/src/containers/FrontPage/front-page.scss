@@ -31,4 +31,56 @@
       }
   }
 
+  .icons-div{
+    display: flex;
+    justify-content: center;
+    margin:40px 20px;
+    .one-icon{
+      flex: 1;
+      display: flex;
+      flex-direction:column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .footer{
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    .upper{
+      background: url("./images/map.png") repeat-x;
+      background-size: contain;
+
+      .content{
+        width: 960px;
+        display: flex;
+        padding-top: 40px;
+      }
+      .list{
+        flex:1;
+        h1{
+          font-size: 14px;
+        }
+
+        ul{
+          padding-left: 0;
+          li{
+            font-size: 12px;
+            list-style-type: none;
+            padding:5px 0;
+          }
+        }
+      }
+    }
+
+    .downer{
+      height: 60px;
+      background: #2b2f3e;
+      line-height:60px;
+      color:#958e86;
+    }
+  }
+
 }

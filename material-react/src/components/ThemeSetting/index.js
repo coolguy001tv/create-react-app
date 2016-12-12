@@ -11,7 +11,7 @@ import ThemeType from './ThemeType';
  class ThemeSetting extends React.Component{
     render(){
         let {theme} = this.props;
-        console.log(theme);
+        //console.log(theme);
         return (
             <MuiThemeProvider muiTheme={getMuiTheme(ThemeType(theme))}>
                 {this.props.children}

@@ -1,0 +1,68 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../../fonts/icomoon.eot?ctf456');
+  src:  url('../../fonts/icomoon.eot?ctf456#iefix') format('embedded-opentype'),
+  url('../../fonts/icomoon.ttf?ctf456') format('truetype'),
+  url('../../fonts/icomoon.woff?ctf456') format('woff'),
+  url('../../fonts/icomoon.svg?ctf456#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-management .path1:before {
+  content: "\e900";
+  color: rgb(34, 198, 127);
+}
+.icon-management .path2:before {
+  content: "\e901";
+  margin-left: -1em;
+  color: rgb(116, 232, 174);
+}
+.icon-data .path1:before {
+  content: "\e902";
+  color: rgb(116, 232, 174);
+}
+.icon-data .path2:before {
+  content: "\e903";
+  margin-left: -1em;
+  color: rgb(34, 198, 127);
+}
+.icon-data .path3:before {
+  content: "\e904";
+  margin-left: -1em;
+  color: rgb(34, 198, 127);
+}
+.icon-team .path1:before {
+  content: "\e905";
+  color: rgb(116, 232, 174);
+}
+.icon-team .path2:before {
+  content: "\e906";
+  margin-left: -1em;
+  color: rgb(34, 198, 127);
+}
+.icon-cooperation .path1:before {
+  content: "\e907";
+  color: rgb(34, 198, 127);
+}
+.icon-cooperation .path2:before {
+  content: "\e908";
+  margin-left: -1em;
+  color: rgb(116, 232, 174);
+}
+.icon-pomelo:before {
+  content: "\ead1";
+}

@@ -5,15 +5,17 @@ import React,{Component} from 'react';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 import Subheader from 'material-ui/Subheader';
-import {List, ListItem} from 'material-ui/List';
-import ContentInbox from '../../../node_modules/material-ui/svg-icons/content/inbox';
-import ActionGrade from '../../../node_modules/material-ui/svg-icons/action/grade';
 import muiThemeable from 'material-ui/styles/muiThemeable';
+//import {List, ListItem} from 'material-ui/List';
+//import ContentInbox from '../../../node_modules/material-ui/svg-icons/content/inbox';
+//import ActionGrade from '../../../node_modules/material-ui/svg-icons/action/grade';
+//
 //import ContentSend from '../../../node_modules/material-ui/svg-icons/content/send';
-import ContentDrafts from '../../../node_modules/material-ui/svg-icons/content/drafts';
+//import ContentDrafts from '../../../node_modules/material-ui/svg-icons/content/drafts';
 import Divider from 'material-ui/Divider';
 import Link from '../NavLink';
 
+import Icon from '../Icon';
 import FrontPage from '../../containers/FrontPage';
 
 import './layout.scss';
@@ -31,7 +33,8 @@ class Layout extends Component{
         return (
             <div className="fixed-header" style={{backgroundColor:themeColor}}>
                 <div className="header-left" onClick={()=>{this.toFrontPage()}}>
-                    <i className="pomelo-logo">Pomelo</i>
+                    <Icon name="pomelo" size={25} className="pomelo-logo"/>
+                    <span className="name">Pomelo</span>
                 </div>
                 <div className="header-right">
                     <Link to="/login">登录</Link> | <Link to="/reg">注册</Link>
@@ -47,7 +50,10 @@ class Layout extends Component{
             <div className="outer">
                 {this.renderTitle()}
                 <div className="main-content">
-                    {/*<div className="left-menu" style={{borderTop:"1px solid "+themeColor}}>
+                    {/*<Icon name="management" size={120}/>
+                    <Icon name="team"/>
+                    <Icon name="ddd"/>
+                    <div className="left-menu" style={{borderTop:"1px solid "+themeColor}}>
 
                         <List>
                             <Subheader>左侧菜单只用于临时展示用~</Subheader>
@@ -77,7 +83,7 @@ class Layout extends Component{
                     </div>
                 </div>
 
-                <div className="footer">版权所有 @ pomelo</div>
+                {/*<div className="layout-footer">版权所有 @ pomelo</div>*/}
             </div>
         )
     }

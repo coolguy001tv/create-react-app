@@ -24,6 +24,14 @@ class Layout extends Component{
             this.props.router.push("/");
         }
     }
+    renderMainIcon(){
+        return (
+            <span onClick={()=>{this.toFrontPage()}}>
+                <Icon name="pomelo" size={25} className="pomelo-logo"/>
+            </span>
+
+        )
+    }
     renderTitle(){
         let themeColor = this.props.muiTheme.palette.primary1Color;
         let {location} = this.props;
@@ -35,7 +43,7 @@ class Layout extends Component{
         return (
             <div className={className} style={{backgroundColor:themeColor}}>
                 <div className="header-left" onClick={()=>{this.toFrontPage()}}>
-                    <Icon name="pomelo" size={25} className="pomelo-logo"/>
+
                     <span className="name">Pomelo</span>
                 </div>
                 <div className="header-right">
@@ -66,8 +74,10 @@ class Layout extends Component{
         //console.log(themeColor,pathname);
         return (
             <div className="outer">
-                {this.renderTitle()}
+                {this.renderMainIcon()}
                 {this.renderLeftMenu()}
+                {this.renderTitle()}
+
                 <div className="main-content">
                     {/*<Icon name="management" size={120}/>
                     <Icon name="team"/>

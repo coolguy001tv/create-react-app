@@ -2,7 +2,7 @@
   "name": "material-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://localhost/react_related/create-react-app/material-react/build",
+  "homepage": "./",
   "devDependencies": {
     "autoprefixer": "6.5.3",
     "babel-core": "6.18.2",

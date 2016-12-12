@@ -119,7 +119,7 @@ class Icon extends Component{
 
         //'management','team','cooperation','data' 这几个图标需要单独处理颜色
         return (
-            <span className={"icon "+className} style={{fontSize:size,color:color}}>
+            <span className={"icon "+className} style={{fontSize:size,color:color}} >
                 {this.renderIcon(name)}
             </span>
 

@@ -40,6 +40,7 @@
     cursor: pointer;
     .name{
       vertical-align: top;
+      padding-left: 45px;
     }
 
   }
@@ -55,6 +56,15 @@
 }
 .pomelo-logo{
   padding:0 10px;
+  z-index: 10;
+  height: 45px;
+  line-height: 45px;
+  width: 45px;
+  position: fixed;
+  left:0;
+  top:0;
+  color:#fff;
+  cursor: pointer;
 }
 .leftMenu{
   position: fixed;

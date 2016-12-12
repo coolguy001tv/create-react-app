@@ -30,6 +30,7 @@
   height:45px;
   line-height: 45px;
   color:#fff;
+  transition:right 1s cubic-bezier(0, 0, 0.2, 1);
   &:after{
     display:block;clear:both;content:"";visibility:hidden;height:0;zoom:1;
   }
@@ -55,6 +56,14 @@
 .pomelo-logo{
   padding:0 10px;
 }
+.leftMenu{
+  position: fixed;
+  left:0;
+  width: 45px;
+  top:0;
+  bottom:100%;
+  transition:bottom 1s cubic-bezier(0, 0, 0.2, 1);
+}
 
 
 .layout-footer{
@@ -76,4 +85,12 @@
 
 .example-leave {
   display:none;
+}
+
+.animate-to-right{
+  right:100%;
+}
+
+.animate-to-bottom{
+  bottom:0;
 }

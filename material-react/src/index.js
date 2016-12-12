@@ -46,7 +46,9 @@ class TheApp extends React.Component{
                     <Route path="/" component={Layout}>
                         <Route path="login" component={Login}/>
                         <Route path="reg" component={Reg}/>
-                        <Route path="dashboard" component={Dashboard}/>
+                        <Route path="dashboard" component={Dashboard}>
+
+                        </Route>
                         <Route path="*" component={NoMatch}/>
                     </Route>
                 </Router>

@@ -2,18 +2,14 @@
  * Created by CoolGuy on 2016/11/27.
  */
 import React,{Component} from 'react';
+import {connect} from 'react-redux';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 import Subheader from 'material-ui/Subheader';
 import muiThemeable from 'material-ui/styles/muiThemeable';
-//import {List, ListItem} from 'material-ui/List';
-//import ContentInbox from '../../../node_modules/material-ui/svg-icons/content/inbox';
-//import ActionGrade from '../../../node_modules/material-ui/svg-icons/action/grade';
-//
-//import ContentSend from '../../../node_modules/material-ui/svg-icons/content/send';
-//import ContentDrafts from '../../../node_modules/material-ui/svg-icons/content/drafts';
 import Divider from 'material-ui/Divider';
 import Link from '../NavLink';
+
 
 import Icon from '../Icon';
 import FrontPage from '../../containers/FrontPage';
@@ -30,8 +26,14 @@ class Layout extends Component{
     }
     renderTitle(){
         let themeColor = this.props.muiTheme.palette.primary1Color;
+        let {location} = this.props;
+        let className = "fixed-header";
+        //dashboard下的都需要这个class
+        if(~['/dashboard'].indexOf(location.pathname)){
+            className+= " animate-to-right";
+        }
         return (
-            <div className="fixed-header" style={{backgroundColor:themeColor}}>
+            <div className={className} style={{backgroundColor:themeColor}}>
                 <div className="header-left" onClick={()=>{this.toFrontPage()}}>
                     <Icon name="pomelo" size={25} className="pomelo-logo"/>
                     <span className="name">Pomelo</span>
@@ -42,6 +44,22 @@ class Layout extends Component{
             </div>
         )
     }
+    renderLeftMenu(){
+        let themeColor = this.props.muiTheme.palette.primary1Color;
+        let {location} = this.props;
+        let className = "leftMenu";
+        //dashboard下的都需要这个class
+        if(~['/dashboard'].indexOf(location.pathname)){
+            className+= " animate-to-bottom";
+        }
+        return (
+            <div className={className} style={{backgroundColor:themeColor}}></div>
+        )
+    }
+
+    componentDidMount() {
+
+    }
     render(){
         let themeColor = this.props.muiTheme.palette.primary1Color;
         let pathname = this.props.location.pathname;
@@ -49,6 +67,7 @@ class Layout extends Component{
         return (
             <div className="outer">
                 {this.renderTitle()}
+                {this.renderLeftMenu()}
                 <div className="main-content">
                     {/*<Icon name="management" size={120}/>
                     <Icon name="team"/>
@@ -88,4 +107,6 @@ class Layout extends Component{
         )
     }
 }
-export default muiThemeable()(Layout);
+export default connect(state=>({
+    state
+}))(muiThemeable()(Layout));

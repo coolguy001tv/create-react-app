@@ -24,6 +24,8 @@ class Login extends Component {
         let password = '';
         let {dispatch} = this.props;
         dispatch(actions.login({userName,password}));
+        this.props.router.push('/dashboard');
+
     };
     render() {
         let {user} = this.props;

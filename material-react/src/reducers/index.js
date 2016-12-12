@@ -23,7 +23,8 @@ let theme = (state = {}, action) => {
             return state
     }
 };
+
 export default combineReducers({
     user,
-    theme
+    theme,
 })

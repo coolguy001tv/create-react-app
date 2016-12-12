@@ -25,7 +25,7 @@ class FrontPage extends Component{
     }
     render(){
         let themeColor = this.props.muiTheme.palette.primary1Color;
-        console.log(this.props.theme);
+        //console.log(this.props.theme);
         return (
             <div className="front-page">
                 <header className="header">

@@ -1,7 +1,8 @@
 /**
  * Created by CoolGuy on 2016/12/8.
  * 所有的图标信息
- * 当前支持的图标请参考方法iconNames
+ * 当前支持的图标请参考方法iconNames和font-awesome网站(http://fontawesome.io/icons/)
+ * 要使用font-awesome图标，请在html中引用相关的css（目前已经引入了）
  * eg:
  * <Icon name="management" size={120}/>
  * <Icon name="team"/>
@@ -13,12 +14,13 @@ import './icon.scss';
 class Icon extends Component{
 
     iconNames(icon){
-        let icons = ['pomelo','management','team','cooperation','data'];
-        icon = icon.toLowerCase();
-        if(icons.indexOf(icon)===-1){
-            return icons[0];
-        }
-        return icon;
+        //let icons = ['pomelo','management','team','cooperation','data'];
+        //icon = icon.toLowerCase();
+        //if(icons.indexOf(icon)===-1){
+        //    return icons[0];
+        //}
+        //return icon;
+        return icon.toLowerCase();
     }
 
     renderIconManagement(){
@@ -51,10 +53,14 @@ class Icon extends Component{
             </span>
         )
     }
-    renderDefaultIcon(name){
-
+    renderPomelo(){
         return (
-            <span className={"icon-"+name}></span>
+            <span className={"icon-pomelo"}></span>
+        )
+    }
+    renderDefaultIcon(name){
+        return (
+            <span className={"fa fa-"+name}></span>
         )
     }
     //注意，有几个ICON不是纯色的，比较特殊
@@ -64,6 +70,7 @@ class Icon extends Component{
             case 'team':return this.renderIconTeam();
             case 'cooperation':return this.renderIconCooperation();
             case 'data':return this.renderIconData();
+            case 'pomelo': return this.renderPomelo();
             default:return this.renderDefaultIcon(name);
         }
     }
@@ -115,9 +122,9 @@ class Icon extends Component{
         let className = this.props.className || "";
 
         let color = this.getIconColor();
-        //console.log("color",color);
+        console.log(name,color);
 
-        //'management','team','cooperation','data' 这几个图标需要单独处理颜色
+        //'management','team','cooperation','data','pomelo' 这几个图标需要单独处理颜色
         return (
             <span className={"icon "+className} style={{fontSize:size,color:color}} >
                 {this.renderIcon(name)}

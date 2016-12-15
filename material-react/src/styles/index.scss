@@ -5,4 +5,10 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+.clearfix{
+  zoom:1;
+  &:after{
+    display:block;clear:both;content:"";visibility:hidden;height:0
+  }
+}
 

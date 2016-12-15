@@ -25,9 +25,10 @@ class Layout extends Component{
         }
     }
     renderMainIcon(){
+        let themeColor = this.props.muiTheme.palette.primary1Color;
         return (
             <span onClick={()=>{this.toFrontPage()}}>
-                <Icon name="pomelo" size={25} className="pomelo-logo"/>
+                <Icon name="pomelo" size={25} className="pomelo-logo" style={{backgroundColor:themeColor}}/>
             </span>
 
         )
@@ -43,7 +44,6 @@ class Layout extends Component{
         return (
             <div className={className} style={{backgroundColor:themeColor}}>
                 <div className="header-left" onClick={()=>{this.toFrontPage()}}>
-
                     <span className="name">Pomelo</span>
                 </div>
                 <div className="header-right">
@@ -55,13 +55,29 @@ class Layout extends Component{
     renderLeftMenu(){
         let themeColor = this.props.muiTheme.palette.primary1Color;
         let {location} = this.props;
-        let className = "leftMenu";
+        let className = "left-menu";
         //dashboard下的都需要这个class
         if(~['/dashboard'].indexOf(location.pathname)){
             className+= " animate-to-bottom";
         }
         return (
-            <div className={className} style={{backgroundColor:themeColor}}></div>
+            <div className={className} style={{backgroundColor:themeColor}}>
+                <div className="icons-wrapper">
+                    <ul className="top-icons">
+                        <li><Icon name="search"></Icon></li>
+                        <li><Icon name="home"></Icon></li>
+                        <li><Icon name="plus-circle"></Icon></li>
+                        <li><Icon name="users"></Icon></li>
+                    </ul>
+                    <div className="flex1"></div>
+                    <ul className="bottom-icons">
+                        <li><Icon name="share-alt-square"></Icon></li>
+                        <li><Icon name="bell"></Icon></li>
+                        <li><Icon name="gear"></Icon></li>
+                    </ul>
+                </div>
+
+            </div>
         )
     }
 

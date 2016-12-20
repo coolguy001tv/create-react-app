@@ -9,17 +9,13 @@
  */
 import React,{Component} from 'react';
 import muiThemeable from 'material-ui/styles/muiThemeable';
+import IconButton from 'material-ui/IconButton';
+import FontIcon from 'material-ui/FontIcon';
 import {connect} from 'react-redux';
 import './icon.scss';
 class Icon extends Component{
 
     iconNames(icon){
-        //let icons = ['pomelo','management','team','cooperation','data'];
-        //icon = icon.toLowerCase();
-        //if(icons.indexOf(icon)===-1){
-        //    return icons[0];
-        //}
-        //return icon;
         return icon.toLowerCase();
     }
 
@@ -53,25 +49,34 @@ class Icon extends Component{
             </span>
         )
     }
-    renderPomelo(){
+    renderPomelo(name,color,size){
         return (
-            <span className={"icon-pomelo"}></span>
+            <IconButton iconStyle={{color:color,fontSize:size}}>
+                <FontIcon className={"icon-pomelo"}>
+                </FontIcon>
+            </IconButton>
+
         )
     }
-    renderDefaultIcon(name){
+    renderDefaultIcon(name,color,size){
+        let disableTouchRipple = this.props.disableTouchRipple || false;//是否不显示MUI点击的效果
+        let style = this.props.style;
         return (
-            <span className={"fa fa-"+name}></span>
+            <IconButton disableTouchRipple={disableTouchRipple} iconStyle={{color:color,fontSize:size}} style={{...style}}>
+                <FontIcon className={"fa fa-"+name}>
+                </FontIcon>
+            </IconButton>
         )
     }
     //注意，有几个ICON不是纯色的，比较特殊
-    renderIcon(name){
+    renderIcon(name,color,size){
         switch (name){
             case 'management':return this.renderIconManagement();
             case 'team':return this.renderIconTeam();
             case 'cooperation':return this.renderIconCooperation();
             case 'data':return this.renderIconData();
-            case 'pomelo': return this.renderPomelo();
-            default:return this.renderDefaultIcon(name);
+            case 'pomelo': return this.renderPomelo(name,color,size);
+            default:return this.renderDefaultIcon(name,color,size);
         }
     }
     //获取图标的颜色，如果传入color则使用，否则检查是否useThemeColor为true，是的话使用主题色，否则返回undefined
@@ -118,18 +123,18 @@ class Icon extends Component{
     }
     render(){
         let name = this.iconNames(this.props.name);
-        let size = this.props.size;
+        let size = this.props.size || 24;
         let className = this.props.className || "";
+        let style = this.props.style || {};
 
         let color = this.getIconColor();
-        console.log(name,color);
+        console.log(name,color,size);
 
         //'management','team','cooperation','data','pomelo' 这几个图标需要单独处理颜色
         return (
-            <span className={"icon "+className} style={{fontSize:size,color:color}} >
-                {this.renderIcon(name)}
+            <span className={"icon "+className} style={{fontSize:size,color:color,...style}} >
+                {this.renderIcon(name,color,size)}
             </span>
-
         )
     }
 }

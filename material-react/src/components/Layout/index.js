@@ -5,9 +5,9 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux';
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
-import Subheader from 'material-ui/Subheader';
+//import Subheader from 'material-ui/Subheader';
 import muiThemeable from 'material-ui/styles/muiThemeable';
-import Divider from 'material-ui/Divider';
+//import Divider from 'material-ui/Divider';
 import Link from '../NavLink';
 
 
@@ -27,18 +27,21 @@ class Layout extends Component{
     renderMainIcon(){
         let themeColor = this.props.muiTheme.palette.primary1Color;
         return (
-            <span onClick={()=>{this.toFrontPage()}}>
-                <Icon name="pomelo" size={25} className="pomelo-logo" style={{backgroundColor:themeColor}}/>
+            <span className="pomelo-logo-wrapper" onClick={()=>{this.toFrontPage()}}>
+                <Icon name="pomelo" size={25} color="#ffffff" className="pomelo-logo" style={{backgroundColor:themeColor}}/>
             </span>
 
         )
+    }
+    inDashboard(path){
+        return ~path.indexOf('/dashboard');
     }
     renderTitle(){
         let themeColor = this.props.muiTheme.palette.primary1Color;
         let {location} = this.props;
         let className = "fixed-header";
         //dashboard下的都需要这个class
-        if(~['/dashboard'].indexOf(location.pathname)){
+        if(this.inDashboard(location.pathname)){
             className+= " animate-to-right";
         }
         return (
@@ -57,23 +60,23 @@ class Layout extends Component{
         let {location} = this.props;
         let className = "left-menu";
         //dashboard下的都需要这个class
-        if(~['/dashboard'].indexOf(location.pathname)){
+        if(this.inDashboard(location.pathname)){
             className+= " animate-to-bottom";
         }
         return (
             <div className={className} style={{backgroundColor:themeColor}}>
                 <div className="icons-wrapper">
                     <ul className="top-icons">
-                        <li><Icon name="search"></Icon></li>
-                        <li><Icon name="home"></Icon></li>
-                        <li><Icon name="plus-circle"></Icon></li>
-                        <li><Icon name="users"></Icon></li>
+                        <li><Icon name="search" color="#fff"></Icon></li>
+                        <li><Link to="/dashboard"><Icon name="home" color="#fff"></Icon></Link></li>
+                        <li><Icon name="plus-circle" color="#fff"></Icon></li>
+                        <li><Icon name="users" color="#fff"></Icon></li>
                     </ul>
                     <div className="flex1"></div>
                     <ul className="bottom-icons">
-                        <li><Icon name="share-alt-square"></Icon></li>
-                        <li><Icon name="bell"></Icon></li>
-                        <li><Icon name="gear"></Icon></li>
+                        <li><Icon name="share-alt-square" color="#fff"></Icon></li>
+                        <li><Icon name="bell" color="#fff"></Icon></li>
+                        <li><Icon name="gear" color="#fff"></Icon></li>
                     </ul>
                 </div>
 
@@ -85,9 +88,9 @@ class Layout extends Component{
 
     }
     render(){
-        let themeColor = this.props.muiTheme.palette.primary1Color;
+        //let themeColor = this.props.muiTheme.palette.primary1Color;
         let pathname = this.props.location.pathname;
-        //console.log(themeColor,pathname);
+        //console.log(pathname);
         return (
             <div className="outer">
                 {this.renderMainIcon()}

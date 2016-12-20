@@ -41,7 +41,8 @@ class FrontPage extends Component{
                 </div>
                 <div className="icons-div">
                     <div className="one-icon">
-                        <Icon name="team" size={100} useThemeColor={true}/>
+                        <div><Icon name="team" size={100} useThemeColor={true}/></div>
+
                         <span className="name">团队</span>
                     </div>
                     <div className="one-icon">

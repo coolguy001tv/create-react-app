@@ -28,11 +28,12 @@
   position: fixed;
   top:0;
   left:0;
-  right:0;
+  width: 100%;
   height:45px;
   line-height: 45px;
   color:#fff;
-  transition:right 1s cubic-bezier(0, 0, 0.2, 1);
+  z-index: 0;
+  transition:left 1s cubic-bezier(0, 0, 0.2, 1);
   &:after{
     display:block;clear:both;content:"";visibility:hidden;height:0;zoom:1;
   }
@@ -56,9 +57,19 @@
     }
   }
 }
+.bottom-icons{
+  margin-bottom: 40px;
+}
+.pomelo-logo-wrapper{
+  position: fixed;
+  left:0;
+  top:0;
+  z-index: 1;
+  button{
+    z-index:1
+  }
+}
 .pomelo-logo{
-  padding:0 10px;
-  z-index: 100;
   height: 45px;
   line-height: 45px;
   width: 45px;
@@ -119,7 +130,7 @@
 }
 
 .animate-to-right{
-  right:100%;
+  left:-100%;
 }
 
 .animate-to-bottom{

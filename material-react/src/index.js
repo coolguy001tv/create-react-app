@@ -18,9 +18,10 @@ import './styles/index.scss';
 import Layout from'./components/Layout/index';
 import Login from './containers/Login';
 import Reg from './containers/Reg';
-import Dashboard from './containers/Dashboard';
+import Dashboard from './components/Dashboard';
 import NoMatch from './containers/NoMatch';
 
+import EditProject from './containers/EditProject';
 //reducers
 import Reducer from './reducers';
 
@@ -47,7 +48,8 @@ class TheApp extends React.Component{
                         <Route path="login" component={Login}/>
                         <Route path="reg" component={Reg}/>
                         <Route path="dashboard" component={Dashboard}>
-
+                            <Route path="edit" component={EditProject}/>
+                            <Route path="edit/:id" component={EditProject}/>
                         </Route>
                         <Route path="*" component={NoMatch}/>
                     </Route>

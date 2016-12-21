@@ -20,7 +20,7 @@ import Login from './containers/Login';
 import Reg from './containers/Reg';
 import Dashboard from './components/Dashboard';
 import NoMatch from './containers/NoMatch';
-
+import ApiPage from './containers/ApiPage';
 import EditProject from './containers/EditProject';
 //reducers
 import Reducer from './reducers';
@@ -50,6 +50,7 @@ class TheApp extends React.Component{
                         <Route path="dashboard" component={Dashboard}>
                             <Route path="edit" component={EditProject}/>
                             <Route path="edit/:id" component={EditProject}/>
+                            <Route path="api" component={ApiPage}/>
                         </Route>
                         <Route path="*" component={NoMatch}/>
                     </Route>

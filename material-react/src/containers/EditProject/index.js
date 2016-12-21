@@ -31,7 +31,7 @@ class EditProject extends Component{
                     defaultValue={""}
                     fullWidth={true}
                 />
-                <Link to="/dashboard" style={{width:"100%"}}>
+                <Link to="/dashboard/api" style={{width:"100%"}}>
                     <RaisedButton label={id?"编 辑":"新 建"} fullWidth={true} primary={true} style={{marginTop:40}}/>
                 </Link>
             </Paper>

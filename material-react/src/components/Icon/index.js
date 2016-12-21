@@ -128,11 +128,11 @@ class Icon extends Component{
         let style = this.props.style || {};
 
         let color = this.getIconColor();
-        console.log(name,color,size);
+        //console.log(name,color,size);
 
         //'management','team','cooperation','data','pomelo' 这几个图标需要单独处理颜色
         return (
-            <span className={"icon "+className} style={{fontSize:size,color:color,...style}} >
+            <span className={"icon "+className} style={{fontSize:size,color:color,...style}} onClick={(e)=>{this.props.onClick && this.props.onClick(e)}}>
                 {this.renderIcon(name,color,size)}
             </span>
         )

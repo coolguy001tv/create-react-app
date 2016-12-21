@@ -26,7 +26,7 @@ class DashboardIndex extends Component{
 
                     >
                         <Icon name="gear" size={20} className="settings" useThemeColor={true}
-                              onClick={(e)=>{e.preventDefault();e.stopPropagation();}}></Icon>
+                              onClick={(e)=>{console.log("111");e.preventDefault();e.stopPropagation();}}></Icon>
                         <Icon name="data" size={60}></Icon>
                         <span className="name">会议系统</span>
                     </Paper> :

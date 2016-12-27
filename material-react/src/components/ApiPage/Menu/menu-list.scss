@@ -24,6 +24,7 @@
   }
   .method{
     font-weight: bold;
+    padding-left: 30px;
     &.post:before{
       color:#22C67F;
       content:'POST';
@@ -34,8 +35,13 @@
     }
 
   }
-  .dd-list .dd-handle{
-    padding-left: 30px;
+  .dd-list {
+    //padding-left: 30px;
+    .dd-handle{
+      //因为这个要被拖出去，所以这里如果设置padding之类的会影响样式
+    }
+
+
   }
 }
 
@@ -64,6 +70,7 @@
   color: #333;
   background: #fafafa;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .dd-handle:hover {
@@ -138,11 +145,4 @@
 .dd-dragel .dd-handle {
   -webkit-box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, .1);
   box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, .1);
-}
-
-.dd2 {
-  .dd-handle {
-    padding: 5px;
-    margin: 5px;
-  }
 }

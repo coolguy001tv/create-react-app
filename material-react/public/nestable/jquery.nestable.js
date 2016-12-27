@@ -274,7 +274,7 @@
                 'left' : e.pageX - mouse.offsetX,
                 'top'  : e.pageY - mouse.offsetY
             });
-            console.log(e,e.pageX - mouse.offsetX,e.pageY - mouse.offsetY);
+            //console.log(e,e.pageX - mouse.offsetX,e.pageY - mouse.offsetY);
             // total depth of dragging item
             var i, depth,
                 items = this.dragEl.find(this.options.itemNodeName);
@@ -352,32 +352,42 @@
             }
             mouse.dirAx = newAx;
 
+
+            var type = this.dragEl.children(this.options.itemNodeName).first().data("type");
+
             /**
              * move horizontal
              */
             if (mouse.dirAx && mouse.distAxX >= opt.threshold) {
+                console.log("hhh");
                 // reset move distance on x-axis for new phase
                 mouse.distAxX = 0;
                 prev = this.placeEl.prev(opt.itemNodeName);
+                console.log(prev);
                 // increase horizontal level if previous sibling exists and is not collapsed
+
                 if (mouse.distX > 0 && prev.length && !prev.hasClass(opt.collapsedClass)) {
-                    // cannot increase level when item above is collapsed
-                    list = prev.find(opt.listNodeName).last();
-                    // check if depth limit has reached
-                    depth = this.placeEl.parents(opt.listNodeName).length;
-                    if (depth + this.dragDepth <= opt.maxDepth) {
-                        // create new sub-level if one doesn't exist
-                        if (!list.length) {
-                            list = $('<' + opt.listNodeName + '/>').addClass(opt.listClass);
-                            list.append(this.placeEl);
-                            prev.append(list);
-                            this.setParent(prev);
-                        } else {
-                            // else append to next level up
-                            list = prev.children(opt.listNodeName).last();
-                            list.append(this.placeEl);
+                    //folder不能够水平拖动
+                    if( type !== 'folder'){
+                        // cannot increase level when item above is collapsed
+                        list = prev.find(opt.listNodeName).last();
+                        // check if depth limit has reached
+                        depth = this.placeEl.parents(opt.listNodeName).length;
+                        if (depth + this.dragDepth <= opt.maxDepth) {
+                            // create new sub-level if one doesn't exist
+                            if (!list.length) {
+                                list = $('<' + opt.listNodeName + '/>').addClass(opt.listClass);
+                                list.append(this.placeEl);
+                                prev.append(list);
+                                this.setParent(prev);
+                            } else {
+                                // else append to next level up
+                                list = prev.children(opt.listNodeName).last();
+                                list.append(this.placeEl);
+                            }
                         }
                     }
+
                 }
                 // decrease horizontal level
                 if (mouse.distX < 0) {
@@ -427,10 +437,24 @@
                 }
 
                 // check depth limit
-                depth = this.dragDepth - 1 + this.pointEl.parents(opt.listNodeName).length;
+                var pLength = this.pointEl.parents(opt.listNodeName).length;
+                depth = this.dragDepth - 1 + pLength;
+
                 if (depth > opt.maxDepth) {
                     return;
                 }
+
+                //文件夹不能放在深度>1以上的地方
+                if( type === 'folder' && pLength > 1) {
+                    return;
+                }
+
+                //文件只能放在深度>=2以上的地方,BUG先留着
+                //if( type === 'file' && pLength < 2){
+                //    console.log(this.dragDepth,pLength);
+                //    return;
+                //}
+
                 var before = e.pageY < (this.pointEl.offset().top + this.pointEl.height() / 2);
                     parent = this.placeEl.parent();
                 // if empty create new list to replace empty placeholder
@@ -440,7 +464,22 @@
                     this.pointEl.replaceWith(list);
                 }
                 else if (before) {
-                    this.pointEl.before(this.placeEl);
+                    var pointType = this.pointEl.data("type");
+                    if(type === 'file' && pointType === 'folder'){
+                        console.log("hererererer");
+                        var prev = this.pointEl.prev();
+                        //console.log(prev);
+                        // cannot increase level when item above is collapsed
+                        list = prev.children(opt.listNodeName).last();
+                        console.log(prev,list);
+                        list.append(this.placeEl);
+                    }else{
+                        this.pointEl.before(this.placeEl);
+                    }
+
+
+
+
                 }
                 else {
                     this.pointEl.after(this.placeEl);
@@ -449,6 +488,7 @@
                     this.unsetParent(parent.parent());
                 }
                 if (!this.dragRootEl.find(opt.itemNodeName).length) {
+                    debugger;
                     this.dragRootEl.append('<div class="' + opt.emptyClass + '"/>');
                 }
                 // parent root list has changed

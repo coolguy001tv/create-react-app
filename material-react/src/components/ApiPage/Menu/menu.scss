@@ -1,0 +1,35 @@
+//test only
+.api-left-menu{
+  .rst__nodeContent{
+    button{
+      padding: 0;
+    }
+  }
+}
+$height:48px;
+body{
+  .menu-tree{
+    .jstree-default{
+
+      .jstree-node,.jstree-wholerow,.jstree-anchor{
+        min-height: $height;
+        line-height: $height;
+      }
+      .jstree-icon{
+        margin-top: 10px;
+      }
+      .jstree-anchor{
+        position: relative;
+        .jstree-icon{
+          margin-top: 10px;
+        }
+        >div{
+          display: inline-block;
+          margin-left: 10px;
+        }
+
+      }
+    }
+  }
+
+}

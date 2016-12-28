@@ -1,6 +1,7 @@
 /**
  * Created by CoolGuy on 2016/12/21.
  * 左侧菜单项
+ * 该文件目前被MenuList代替
  */
 import React,{Component} from 'react';
 import SortableTree from 'react-sortable-tree';

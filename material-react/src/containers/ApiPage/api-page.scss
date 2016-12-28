@@ -1,0 +1,19 @@
+$border-color:#dbe8f0;
+.api-page-wrapper{
+    position: absolute;
+    left:48px;
+    top:0;
+    bottom: 0;
+    right:0;
+    display: flex;
+    .row-left{
+      width:200px;
+      border-right:1px solid $border-color;
+      height: 100%;
+    }
+    .row-right{
+      flex:1;
+    }
+
+
+}

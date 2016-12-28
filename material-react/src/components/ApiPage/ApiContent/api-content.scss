@@ -1,0 +1,39 @@
+.api-content-wrapper{
+  .header{
+    display: flex;
+    align-items: center;
+    h1{
+      margin: 20px 20px;
+      font-size: 24px;
+      flex:1;
+    }
+    .toggle{
+      width: 80px;
+    }
+  }
+  .content-wrapper{
+    display: flex;
+    .left-nav{
+      width: 70px;
+
+      font-size:12px;
+      margin-left: 30px;
+      ul{
+        list-style: none;
+        li{
+          padding: 5px;
+          margin: 0;
+          border-right:1px solid #dbe8f0;
+          &.active{
+            border-right-width: 2px;
+          }
+        }
+      }
+
+    }
+    .right-content{
+      margin: 0 30px;
+    }
+  }
+
+}

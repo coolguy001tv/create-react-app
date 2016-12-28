@@ -1,5 +1,6 @@
 /**
  * Created by CoolGuy on 2016/12/23.
+ * 该文件目前被MenuList代替
  */
 import React,{Component} from 'react';
 import {List, ListItem} from 'material-ui/List';

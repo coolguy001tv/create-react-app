@@ -13,8 +13,13 @@
   }
   .content-wrapper{
     display: flex;
+    position: relative;
+    overflow-y: auto;
     .left-nav{
       width: 70px;
+      position: fixed;
+      top:70px;
+      left:270px;
 
       font-size:12px;
       margin-left: 30px;
@@ -24,15 +29,20 @@
           padding: 5px;
           margin: 0;
           border-right:1px solid #dbe8f0;
-          &.active{
-            border-right-width: 2px;
-          }
         }
+      }
+      .line{
+        width: 2px;
+        position: absolute;
+        height: 29px;
+        top:0;
+        right: 0;
+        transition:top 0.5s cubic-bezier(0.55, 0.09, 0.68, 0.53)
       }
 
     }
     .right-content{
-      margin: 0 30px;
+      margin: 2px 30px 0 170px;
     }
   }
 

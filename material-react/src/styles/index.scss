@@ -4,6 +4,13 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  overflow-y: hidden;//注意必须是hidden,否则dashboard页面的滚动会有问题
+}
+table{
+  margin-bottom: 0;
+}
+th,tr,td{
+  padding: 0;
 }
 .clearfix{
   zoom:1;

@@ -23,43 +23,53 @@ class FrontPage extends Component{
             </div>
         )
     }
+
+    componentDidMount() {
+        let height = document.documentElement.clientHeight - 45;
+        document.querySelector('.font-page-outer').style.height = height + 'px';
+    }
     render(){
         let themeColor = this.props.muiTheme.palette.primary1Color;
         //console.log(this.props.theme);
         return (
-            <div className="front-page">
-                <header className="header">
-                    <h1></h1>
-                    <RaisedButton label="创建一个项目" style={{width:320,marginBottom:40}} primary={true}
-                             onClick={()=>{this.create()}}     />
-                    <Divider/>
-                </header>
-                <div className="front-page-content" style={{color:themeColor}}>
-                    当前有{this.renderNumber(222111,'用户')}
-                    编写了{this.renderNumber(1234,'APIs')}，
-                    被{this.renderNumber(234562345,'开发人员')}使用
-                </div>
-                <div className="icons-div">
-                    <div className="one-icon">
-                        <div><Icon name="team" size={100} useThemeColor={true}/></div>
+            <div className="font-page-outer">
+                <div className="front-page">
+                    <header className="header">
+                        <h1></h1>
+                        <RaisedButton label="创建一个项目" style={{width:320,marginBottom:40}} primary={true}
+                                      onClick={()=>{this.create()}}     />
+                        <Divider/>
+                    </header>
+                    <div className="front-page-content" style={{color:themeColor}}>
+                        当前有{this.renderNumber(222111,'用户')}
+                        编写了{this.renderNumber(1234,'APIs')}，
+                        被{this.renderNumber(234562345,'开发人员')}使用
+                    </div>
+                    <div className="icons-div">
+                        <div className="one-icon">
+                            <div><Icon name="team" size={100} useThemeColor={true}/></div>
 
-                        <span className="name">团队</span>
+                            <span className="name">团队</span>
+                        </div>
+                        <div className="one-icon">
+                            <Icon name="cooperation" size={100} useThemeColor={true}/>
+                            <span className="name">协作</span>
+                        </div>
+                        <div className="one-icon">
+                            <Icon name="data" size={100} useThemeColor={true}/>
+                            <span className="name">数据</span>
+                        </div>
+                        <div className="one-icon">
+                            <Icon name="management" size={100} useThemeColor={true}/>
+                            <span className="name">管理</span>
+                        </div>
                     </div>
-                    <div className="one-icon">
-                        <Icon name="cooperation" size={100} useThemeColor={true}/>
-                        <span className="name">协作</span>
-                    </div>
-                    <div className="one-icon">
-                        <Icon name="data" size={100} useThemeColor={true}/>
-                        <span className="name">数据</span>
-                    </div>
-                    <div className="one-icon">
-                        <Icon name="management" size={100} useThemeColor={true}/>
-                        <span className="name">管理</span>
-                    </div>
+                    <Divider/>
+                    其他内容，先这么放着了~
+
+
+
                 </div>
-                <Divider/>
-                其他内容，先这么放着了~
                 <footer className="footer">
                     <div className="upper">
                         <div className="content">
@@ -93,9 +103,8 @@ class FrontPage extends Component{
                         CopyRight @Pomelo Team
                     </div>
                 </footer>
-
-
             </div>
+
         )
     }
 }

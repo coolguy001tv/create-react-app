@@ -10,7 +10,9 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import ApiVisual from '../ApiVisual';
 import './api-content.scss';
+import $ from 'jquery';
 
 
 const request_method = ["GET","POST","HEAD","PUT","DELETE","TRACE","CONNECT","OPTIONS"];
@@ -38,7 +40,8 @@ class ApiContent extends Component{
         request_method:request_method[0],
         request_type:request_type[0],
         data_type:data_type[0],
-        response_type:response_type[2]
+        response_type:response_type[2],
+        top:0
     };
     handleChange = (type,event, index, value) => this.setState({[type]:value});
     cardBasicInfo(){
@@ -115,43 +118,27 @@ class ApiContent extends Component{
             </Card>
         )
     }
-    cardRequest(){
-        return (
-            <Card containerStyle={cardStyle}>
-                <CardTitle title="请求参数" titleStyle={titleStyle} style={cardTitleStyle}/>
-                <Table style={{width:600}}>
-                    <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                        <TableRow>
-                            <TableHeaderColumn>ID</TableHeaderColumn>
-                            <TableHeaderColumn>Name</TableHeaderColumn>
-                            <TableHeaderColumn>Status</TableHeaderColumn>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody showRowHover={true} displayRowCheckbox={false}>
-                        <TableRow>
-                            <TableRowColumn>1</TableRowColumn>
-                            <TableRowColumn>John Smith</TableRowColumn>
-                            <TableRowColumn>Employed</TableRowColumn>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowColumn>2</TableRowColumn>
-                            <TableRowColumn>Randal White</TableRowColumn>
-                            <TableRowColumn>Unemployed</TableRowColumn>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowColumn>3</TableRowColumn>
-                            <TableRowColumn>Stephanie Sanders</TableRowColumn>
-                            <TableRowColumn>Employed</TableRowColumn>
-                        </TableRow>
-                        <TableRow>
-                            <TableRowColumn>4</TableRowColumn>
-                            <TableRowColumn>Steve Brown</TableRowColumn>
-                            <TableRowColumn>Employed</TableRowColumn>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </Card>
-        )
+
+    liClick = ()=>{
+        let _this = this;
+        let scroller = $(".api-content-wrapper .content-wrapper");
+
+        $(".left-nav-ul li").click(function(){
+            let $this = $(this);
+            let height = $this.outerHeight();
+            let index= $this.index();
+            _this.setState({
+                top:index*height
+            });
+            console.log(index);
+            scroller.scrollTo((".card"+index),1500);
+        });
+
+    };
+
+    componentDidMount() {
+        this.liClick();
+        $(".api-content-wrapper .content-wrapper").css("height",document.documentElement.clientHeight - 70);
     }
     render(){
 
@@ -172,19 +159,28 @@ class ApiContent extends Component{
                 </div>
                 <div className="content-wrapper">
                     <div className="left-nav">
-                        <ul>
-                            <li className="active">基本信息</li>
+                        <ul className="left-nav-ul">
+                            <li>基本信息</li>
                             <li>请求参数</li>
                             <li>响应参数</li>
                             <li>辅助信息</li>
                             <li>示例</li>
                             <li>文档</li>
                         </ul>
+                        <div className="line" style={{top:this.state.top,backgroundColor:themeColor}}></div>
                     </div>
                     <div className="right-content">
 
-                        {this.cardBasicInfo()}
-                        {this.cardRequest()}
+                        <div className="card0">{this.cardBasicInfo()}</div>
+                        <div className="card1">
+                            <Card containerStyle={cardStyle}>
+                                <CardTitle title="请求参数" titleStyle={titleStyle} style={cardTitleStyle}/>
+                                <ApiVisual/>
+                            </Card>
+                        </div>
+
+
+
 
                     </div>
                 </div>

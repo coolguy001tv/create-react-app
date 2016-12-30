@@ -1,55 +1,59 @@
-.front-page{
-  width: 960px;
-  margin: 0 auto;
-  .header{
-    color:#434343;
-    font-weight: normal;
-    text-align: center;
-    h1{
-      height: 340px;
-      width: 960px;
-      background: url('./images/title.png') no-repeat;
+.font-page-outer{
+  overflow-y: auto;
+  .front-page{
+    width: 960px;
+    margin: 0 auto;
+
+    .header{
+      color:#434343;
+      font-weight: normal;
+      text-align: center;
+      h1{
+        height: 340px;
+        width: 960px;
+        background: url('./images/title.png') no-repeat;
+      }
     }
-  }
-  .front-page-content{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 40px;
-    font-size: 18px;
-  }
-  .data{
-    display: inline-flex;
-    margin: 0 20px;
-    flex-direction: column;
-    align-items: center;
-    color:#747d93;
-    .number{
-      font-weight: bold;
-      font-size: 20px;
+    .front-page-content{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 40px;
+      font-size: 18px;
     }
+    .data{
+      display: inline-flex;
+      margin: 0 20px;
+      flex-direction: column;
+      align-items: center;
+      color:#747d93;
+      .number{
+        font-weight: bold;
+        font-size: 20px;
+      }
       span{
         flex:1
       }
-  }
-
-  .icons-div{
-    display: flex;
-    justify-content: center;
-    margin:40px 20px;
-    .one-icon{
-      flex: 1;
-      display: flex;
-      flex-direction:column;
-      align-items: center;
-      justify-content: center;
     }
-  }
 
+    .icons-div{
+      display: flex;
+      justify-content: center;
+      margin:40px 20px;
+      .one-icon{
+        flex: 1;
+        display: flex;
+        flex-direction:column;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+
+
+  }
   .footer{
-    position: absolute;
-    left: 0;
-    right: 0;
+
     text-align: center;
     .upper{
       background: url("./images/map.png") repeat-x;
@@ -84,5 +88,4 @@
       color:#958e86;
     }
   }
-
 }

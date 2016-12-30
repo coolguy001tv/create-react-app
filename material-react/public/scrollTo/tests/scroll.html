@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .dp-f{
+            display: flex;
+        }
+        .flex1{
+            flex:1;
+        }
+        .left{
+            width: 200px;
+            display: flex;
+        }
+        ul{
+            margin: 0;
+            width: 198px;
+            padding:0;
+        }
+        li{
+            border-right: 1px solid blue;
+        }
+        li.active{
+
+        }
+        #line{
+            width: 2px;
+            background: red;
+            position: absolute;
+            right: 0;
+            top:0;
+            height:18px;
+            transition: top 1s ease-in;
+        }
+        .clearfix:after{
+            display: block;
+            zoom:1;
+            content: "";
+            visibility: hidden;
+        }
+        .active{
+            top:36px;
+        }
+    </style>
+    <script type="text/javascript" src="//cdn.bootcss.com/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery.scrollTo.js"></script>
+</head>
+<body class="dp-f">
+<div class="left">
+    <div class="clearfix" style="position: fixed;">
+        <ul>
+            <li class="active" id="t1">基本状况</li>
+            <li>基本状况2</li>
+            <li>基本状况3</li>
+            <li>基本状况4</li>
+            <li>基本状况5</li>
+            <li>基本状况6</li>
+        </ul>
+        <div id="line"></div>
+    </div>
+
+</div>
+<div class="right flex1">
+    <div class="basic">
+            <pre>
+                本文提供了使用service workers所需要的相关知识。
+                包括它的基本结构、注册一个service worker、一个新的service worker的安装和激活流程、
+                更新你的service worker、缓存管理和自定义响应内容。
+                所有这些功能点都是基于一个场景：离线APP。
+            </pre>
+    </div>
+    <div class="basic2">
+            <pre>
+                有一个困扰web用户多年的难题：网络不可连接（离线）。即使是世界上最好的web app，
+                如果你下载不了它，用户体验基本是毁了。已经有很多种技术尝试，来解决这一问题。
+                随着离线页面的出现，一些问题已经得到了解决。但是，最重要的问题是，
+                仍然没有一个好的统筹机制，来对缓存和网络请求进行控制。
+            </pre>
+    </div>
+    <div class="basic3">
+            <pre>
+                本文提供了使用service workers所需要的相关知识。
+                包括它的基本结构、注册一个service worker、一个新的service worker的安装和激活流程、
+                更新你的service worker、缓存管理和自定义响应内容。
+                所有这些功能点都是基于一个场景：离线APP。
+            </pre>
+    </div>
+    <div class="basic4">
+            <pre>
+                本文提供了使用service workers所需要的相关知识。
+                包括它的基本结构、注册一个service worker、一个新的service worker的安装和激活流程、
+                更新你的service worker、缓存管理和自定义响应内容。
+                所有这些功能点都是基于一个场景：离线APP。
+                本文提供了使用service workers所需要的相关知识。
+                包括它的基本结构、注册一个service worker、一个新的service worker的安装和激活流程、
+                更新你的service worker、缓存管理和自定义响应内容。
+                所有这些功能点都是基于一个场景：离线APP。
+                本文提供了使用service workers所需要的相关知识。
+                包括它的基本结构、注册一个service worker、一个新的service worker的安装和激活流程、
+                更新你的service worker、缓存管理和自定义响应内容。
+                所有这些功能点都是基于一个场景：离线APP。
+                本文提供了使用service workers所需要的相关知识。
+                包括它的基本结构、注册一个service worker、一个新的service worker的安装和激活流程、
+                更新你的service worker、缓存管理和自定义响应内容。
+                所有这些功能点都是基于一个场景：离线APP。
+                本文提供了使用service workers所需要的相关知识。
+                包括它的基本结构、注册一个service worker、一个新的service worker的安装和激活流程、
+                更新你的service worker、缓存管理和自定义响应内容。
+                所有这些功能点都是基于一个场景：离线APP。
+                本文提供了使用service workers所需要的相关知识。
+                包括它的基本结构、注册一个service worker、一个新的service worker的安装和激活流程、
+                更新你的service worker、缓存管理和自定义响应内容。
+                所有这些功能点都是基于一个场景：离线APP。
+            </pre>
+    </div>
+    <div class="basic5">
+            <pre>
+                本文提供了使用service workers所需要的相关知识。
+                包括它的基本结构、注册一个service worker、一个新的service worker的安装和激活流程、
+                更新你的service worker、缓存管理和自定义响应内容。
+                所有这些功能点都是基于一个场景：离线APP。
+            </pre>
+    </div>
+    <div class="basic6">
+            <pre>
+                本文提供了使用service workers所需要的相关知识。
+                包括它的基本结构、注册一个service worker、一个新的service worker的安装和激活流程、
+                更新你的service worker、缓存管理和自定义响应内容。
+                所有这些功能点都是基于一个场景：离线APP。
+            </pre>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        $("#t1").click(function(){
+            $(window).scrollTo(".basic6",800, { queue:true })
+        })
+        var i = 1;
+        setInterval(function(){
+            $("#line").css("top",18*(i%6));
+            i++;
+
+        },1500);
+
+    })
+</script>
+</body>
+</html>

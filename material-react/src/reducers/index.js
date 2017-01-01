@@ -2,13 +2,17 @@
  * Created by CoolGuy on 2016/11/27.
  */
 import { combineReducers } from 'redux';
-import actions from '../actions/index';
+import actions from '../actions';
+import AjaxAction from '../actions/AjaxAction';
+import currentProjectReducer from './CurrentProjectReducer';
 let user = (state={},action)=>{
-    //console.log(action);
+    let obj;
     switch (action.type){
-        case actions.LOGIN:
-            let obj = Object.assign({},state,action.data);
-            console.log(obj);
+        case AjaxAction.LOGIN:
+            obj = Object.assign({},state,action.data);
+            return obj;
+        case AjaxAction.REG:
+            obj = Object.assign({},action.data);
             return obj;
         default:
             return state;
@@ -24,7 +28,16 @@ let theme = (state = {}, action) => {
     }
 };
 
+let currentProject = (state = {}, action) => {
+    switch (action.type){
+        case actions.CHANGE_API_REQUEST_TYPE:
+            return Object.assign(state,action.data);
+        default:
+            return state;
+    }
+};
 export default combineReducers({
     user,
     theme,
+    currentProject
 })

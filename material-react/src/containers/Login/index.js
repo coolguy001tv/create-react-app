@@ -37,7 +37,7 @@ class Login extends Component {
                         <div className="login-div">
                             <h1>登录</h1>
                             <TextField
-                                hintText="用户名"
+                                hintText="邮箱"
                                 errorText=""
                                 defaultValue={userName}
                                 fullWidth={true}

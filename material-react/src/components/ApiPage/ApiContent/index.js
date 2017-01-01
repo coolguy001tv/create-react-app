@@ -3,6 +3,7 @@
  */
 
 import React,{Component} from 'react';
+import {connect} from 'react-redux';
 import Toggle from 'material-ui/Toggle';
 import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
@@ -13,6 +14,8 @@ import MenuItem from 'material-ui/MenuItem';
 import ApiVisual from '../ApiVisual';
 import './api-content.scss';
 import $ from 'jquery';
+
+import reducers from '../../../reducers';
 
 
 const request_method = ["GET","POST","HEAD","PUT","DELETE","TRACE","CONNECT","OPTIONS"];
@@ -35,6 +38,7 @@ let cardStyle = {
     padding:10,
     marginBottom:40
 };
+let liHeight = 29;
 class ApiContent extends Component{
     state = {
         request_method:request_method[0],
@@ -119,31 +123,61 @@ class ApiContent extends Component{
         )
     }
 
+    liScroll = (i,cb=null)=>{
+        if(i * liHeight === this.state.top){
+            return;
+        }
+        this.setState({
+            top:i*liHeight
+        },cb)
+    };
     liClick = ()=>{
         let _this = this;
         let scroller = $(".api-content-wrapper .content-wrapper");
-
         $(".left-nav-ul li").click(function(){
             let $this = $(this);
-            let height = $this.outerHeight();
             let index= $this.index();
-            _this.setState({
-                top:index*height
+            _this.liScroll(index,()=>{
+                //console.log(index+",");
+                scroller.scrollTo((".card"+index),1500);
             });
-            console.log(index);
-            scroller.scrollTo((".card"+index),1500);
-        });
 
+        });
+    };
+    upperVisible = ()=>{
+        let index = 0;
+        let length = 6;//li的长度
+        for(let i = length - 1; i >= 0; i--){
+            let cardI = $(".card"+i);
+            if(cardI.length){
+                let top = cardI.position().top;
+                if(top <= 0){
+                    index = i;
+                    break;
+                }
+            }
+
+        }
+        return index;
+    };
+    scrollChange = ()=>{
+        let scroller = $(".api-content-wrapper .content-wrapper");
+        scroller.on("scroll",()=>{
+            let i = this.upperVisible();
+            this.liScroll(i);
+        });
     };
 
     componentDidMount() {
         this.liClick();
+        this.scrollChange();
         $(".api-content-wrapper .content-wrapper").css("height",document.documentElement.clientHeight - 70);
     }
     render(){
 
         let themeColor = this.props.muiTheme.palette.primary1Color;
-
+        let {request} = this.props;
+        //console.log(request);
         return (
             <div className="api-content-wrapper">
                 <div className="header">
@@ -175,12 +209,9 @@ class ApiContent extends Component{
                         <div className="card1">
                             <Card containerStyle={cardStyle}>
                                 <CardTitle title="请求参数" titleStyle={titleStyle} style={cardTitleStyle}/>
-                                <ApiVisual/>
+                                <ApiVisual data={request}/>
                             </Card>
                         </div>
-
-
-
 
                     </div>
                 </div>
@@ -190,4 +221,8 @@ class ApiContent extends Component{
         )
     }
 }
-export default muiThemeable()(ApiContent);
+export default connect((state)=>{
+    return {
+        request:state.currentProject.request
+    }
+})(muiThemeable()(ApiContent));

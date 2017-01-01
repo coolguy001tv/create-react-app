@@ -24,16 +24,11 @@ import ApiPage from './containers/ApiPage';
 import EditProject from './containers/EditProject';
 //reducers
 import Reducer from './reducers';
+import InitReducer from './initReducer';
 
 
 //store
-let store = configureStore(Reducer,{
-    user:{
-        userName:"丁丁",
-        password:"123456789"
-    },
-    theme:'default'
-});
+let store = configureStore(Reducer,InitReducer);
 
 
 class TheApp extends React.Component{

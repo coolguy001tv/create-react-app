@@ -11,10 +11,11 @@ import ApiTextArea from './TextArea';
 class ApiVisual extends Component{
 
     render(){
+        let {data} = this.props;
         return (
             <div>
-                <ApiTable/>
-                <ApiTextArea/>
+                <ApiTable data={data}/>
+                <ApiTextArea data={data}/>
             </div>
 
 

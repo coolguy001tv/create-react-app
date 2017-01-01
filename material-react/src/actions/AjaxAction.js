@@ -1,6 +1,8 @@
 /**
  * Created by CoolGuy on 2016/11/29.
  */
+import API from '../util/ApiList';
+import {ajax} from '../util';
 //actions
 const LOGIN = "LOGIN";//登录
 const REG = "REG";//注册
@@ -14,13 +16,18 @@ let ajaxStart = ()=>{
         type:AJAX_START
     }
 };
-
+let ajaxFail = (data)=>{
+    return {
+        type:AJAX_FAIL,
+        data
+    }
+};
 let ajaxLoadingStart=(data)=>{
     return {
         type: AJAX_LOADING_START,
         data
     }
-}
+};
 
 //action creators
 let loginSuccess = (data) => {
@@ -28,10 +35,13 @@ let loginSuccess = (data) => {
         type:LOGIN,
         data
     }
-}
+};
 
-let reg = () => {
-
+let regSuccess = (data) => {
+    return {
+        type:REG,
+        data
+    }
 };
 
 export default {
@@ -43,13 +53,32 @@ export default {
     login :(username,password,rememberPas) => {
         return (dispatch)=>{
             dispatch(ajaxStart());
-            return fetch(`http://localhost/user.php`,{username,password,rememberPas})
-                .then(response => response.json())
-                .then(json =>
+            return ajax(`http://localhost/user.php`,{username,password,rememberPas})
+                .done(json =>
                     dispatch(loginSuccess(json))
                 )
+                .fail(e=>dispatch(ajaxFail(e)))
         }
     },
     REG,
-    reg,
+    reg :(email,password) => {
+        return (dispath) => {
+            dispath(ajaxStart());
+            return ajax({
+                    url:API.Login.register.url,
+                    method:API.Login.register.method,
+                    data:{email,password}
+                })
+                .done((data)=>{
+                    if(data && data.result){
+                        return dispath(regSuccess(data.data))
+                    }else{
+                        //异常情况处理，此处先直接打印错误信息
+                        console.error(data);
+                    }
+
+                })
+                .fail(e=>dispath(ajaxFail(e)))
+        }
+    }
 }

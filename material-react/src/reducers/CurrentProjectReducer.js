@@ -3,7 +3,7 @@
  * currentProject拆分成多个小的部分
  */
 import { combineReducers } from 'redux';
-import actions from '../actions/index';
+//import actions from '../actions/index';
 let request = (state = {}, action) => {
     switch (action.type) {
         //case actions.XXX:

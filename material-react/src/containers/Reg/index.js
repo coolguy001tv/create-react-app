@@ -27,6 +27,11 @@ class Reg extends Component{
     getCaptcha(){
         console.log("captcha");
     }
+    listenEnter = (event)=>{
+        if(13 == event.charCode){
+            this.reg();
+        }
+    };
     reg=()=>{
         let {dispatch,router} = this.props;
         let {email,password} = this.refs;
@@ -57,7 +62,7 @@ class Reg extends Component{
                     autoHideDuration={2000}
                     onRequestClose={this.handleRequestClose}
                 />
-                <div className="login-wrapper">
+                <div className="login-wrapper" onKeyPress={this.listenEnter}>
                     <Paper>
                         <div className="login-div">
                             <h1>注册</h1>

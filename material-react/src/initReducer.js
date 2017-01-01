@@ -5,6 +5,7 @@ export default {
     user: {
     },
     theme: 'default',
+    projectList:[],
     currentProject:{
         request:[{
             "require": "false",

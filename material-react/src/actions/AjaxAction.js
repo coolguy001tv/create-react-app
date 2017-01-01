@@ -2,10 +2,12 @@
  * Created by CoolGuy on 2016/11/29.
  */
 import API from '../util/ApiList';
-import {ajax} from '../util';
+import {ajax,ajaxCommon} from '../util';
 //actions
 const LOGIN = "LOGIN";//登录
 const REG = "REG";//注册
+const PROJECT_ADD = "PROJECT_ADD";//新增一个项目
+const PROJECT_LIST = "PROJECT_LIST";//获取项目列表
 const AJAX_START = "AJAX_START";//通用ajax开始
 const AJAX_FAIL = "AJAX_FAIL";//通用ajax失败
 const AJAX_LOADING_START = "AJAX_LOADING_START";//通用的带加载的ajax开始
@@ -44,41 +46,63 @@ let regSuccess = (data) => {
     }
 };
 
+let projectAddSuccess = (data) => {
+    return {
+        type: PROJECT_ADD,
+        data
+    }
+};
+let projectListSuccess = (data) => {
+    return {
+        type: PROJECT_LIST,
+        data
+    }
+};
 export default {
     AJAX_START,
     ajaxStart,
+    ajaxFail,
     ajaxLoadingStart,
     AJAX_FAIL,
     LOGIN,
-    login :(username,password,rememberPas) => {
+    login :(email,password,rememberPas) => {
         return (dispatch)=>{
             dispatch(ajaxStart());
-            return ajax(`http://localhost/user.php`,{username,password,rememberPas})
-                .done(json =>
-                    dispatch(loginSuccess(json))
-                )
-                .fail(e=>dispatch(ajaxFail(e)))
-        }
-    },
-    REG,
-    reg :(email,password) => {
-        return (dispath) => {
-            dispath(ajaxStart());
+            let req = API.Login.login;
             return ajax({
-                    url:API.Login.register.url,
-                    method:API.Login.register.method,
+                    url:req.url,
+                    method:req.method,
                     data:{email,password}
                 })
-                .done((data)=>{
+                .done(data =>{
                     if(data && data.result){
-                        return dispath(regSuccess(data.data))
+                        //将用户信息保存下来
+                        if(rememberPas){
+                            localStorage['email'] = email;
+                            localStorage['password'] = password;
+                        }
+                        return dispatch(loginSuccess(data.data));
                     }else{
                         //异常情况处理，此处先直接打印错误信息
                         console.error(data);
                     }
-
                 })
-                .fail(e=>dispath(ajaxFail(e)))
+                .fail(e=>dispatch(ajaxFail(e)))
         }
+    },
+    REG,
+    reg : (email,password) => {
+        return ajaxCommon({
+            api:API.Login.register,
+            data:{email,password},
+            success:regSuccess});
+    },
+    PROJECT_LIST,
+    projectList : () => {
+        return ajaxCommon({api:API.Project.list,success:projectListSuccess});
+    },
+    PROJECT_ADD,
+    projectAdd : ()=>{
+        return ajaxCommon(API.Project.add,null,projectAddSuccess,null);
     }
 }

@@ -38,7 +38,7 @@ class Layout extends Component{
     }
     renderTitle(){
         let themeColor = this.props.muiTheme.palette.primary1Color;
-        let {location} = this.props;
+        let {location,user} = this.props;
         let className = "fixed-header";
         //dashboard下的都需要这个class
         if(this.inDashboard(location.pathname)){
@@ -50,7 +50,11 @@ class Layout extends Component{
                     <span className="name">Pomelo</span>
                 </div>
                 <div className="header-right">
-                    <Link to="/login">登录</Link> | <Link to="/reg">注册</Link>
+                    {
+                        user.email ?
+                            (<Link to="/dashboard">工作台</Link>) :
+                            (<span><Link to="/login">登录</Link> | <Link to="/reg">注册</Link></span>)
+                    }
                 </div>
             </div>
         )
@@ -137,5 +141,5 @@ class Layout extends Component{
     }
 }
 export default connect(state=>({
-    state
+    user:state.user
 }))(muiThemeable()(Layout));

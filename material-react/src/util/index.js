@@ -2,7 +2,8 @@
  * Created by CoolGuy on 2017/1/1.
  */
 import $ from 'jquery';
-export function uuid() {
+import AjaxAction from '../actions/AjaxAction';
+export var uuid = () =>{
     var s = [];
     var hexDigits = "0123456789abcdef";
     for (var i = 0; i < 36; i++) {
@@ -14,10 +15,10 @@ export function uuid() {
 
     var uuid = s.join("");
     return uuid;
-}
+};
 
-export function ajax(options){
-    let {url,data,method,dataType} = options;
+export var ajax = (options)=>{
+    let {url,data,method,dataType,headers} = options;
     method = method || "get";
     dataType = dataType || "json";
     return $.ajax({
@@ -25,6 +26,34 @@ export function ajax(options){
         data:JSON.stringify(data),
         dataType:dataType,
         type:method,
-        contentType:"application/json"
+        contentType:"application/json",
+        headers:headers
     });
-}
+};
+export var ajaxCommon = ({api,data,successCallback,failCallback}) => {
+    let {ajaxStart,ajaxFail} = AjaxAction;
+    return (dispatch) => {
+        dispatch(ajaxStart());
+        let ajaxOptions = {
+            url:api.url,
+            method:api.method
+        };
+        data && (ajaxOptions.data = {...data});
+        let token = sessionStorage['token'];
+        token && (ajaxOptions.headers = {"auth-token":token});
+        return ajax(ajaxOptions)
+            .done((data)=>{
+                if(data && data.result && successCallback){
+                    return dispatch(successCallback(data.data))
+                }else{
+                    //异常情况处理，此处先直接打印错误信息
+                    console.error(data);
+                    if(failCallback){
+                        return dispatch(failCallback(data));
+                    }
+                }
+
+            })
+            .fail(e=>dispatch(ajaxFail(e)))
+    }
+};

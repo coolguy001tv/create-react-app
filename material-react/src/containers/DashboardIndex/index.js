@@ -8,6 +8,7 @@ import './dashboard-index.scss';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import Paper from 'material-ui/Paper';
 import Icon from '../../components/Icon';
+import AjaxAction from '../../actions/AjaxAction';
 class DashboardIndex extends Component{
     renderOneLi(theId){
         let id = theId || "";
@@ -26,7 +27,7 @@ class DashboardIndex extends Component{
 
                     >
                         <Icon name="gear" size={20} className="settings" useThemeColor={true}
-                              onClick={(e)=>{console.log("111");e.preventDefault();e.stopPropagation();}}></Icon>
+                              onClick={(e)=>{e.preventDefault();e.stopPropagation();}}></Icon>
                         <Icon name="data" size={60}></Icon>
                         <span className="name">会议系统</span>
                     </Paper> :
@@ -39,18 +40,22 @@ class DashboardIndex extends Component{
         );
     }
 
+    componentDidMount() {
+        let {dispatch} = this.props;
+        dispatch(AjaxAction.projectList());
+    }
+
     render(){
 
+        let {projectList} = this.props;
         return (
             <div className="dashboard-content">
                 <h1>工作台</h1>
                 <div className="project-list clearfix">
-                    {this.renderOneLi(1)}
-                    {this.renderOneLi(2)}
-                    {this.renderOneLi(3)}
-                    {this.renderOneLi(4)}
-                    {this.renderOneLi(5)}
-                    {this.renderOneLi(6)}
+                    {projectList.map((v,i)=>{
+                        this.renderOneLi(v,i);
+                    })}
+
                     {this.renderOneLi(0)}
                 </div>
             </div>
@@ -58,4 +63,6 @@ class DashboardIndex extends Component{
     }
 }
 
-export default connect()(muiThemeable()(DashboardIndex));
+export default connect((state)=>({
+    projectList:state.projectList
+}))(muiThemeable()(DashboardIndex));

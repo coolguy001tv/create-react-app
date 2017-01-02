@@ -16,7 +16,7 @@ import NavLink from '../../components/NavLink';
 import Snackbar from 'material-ui/Snackbar';
 
 
-import Action from '../../actions';
+//import Action from '../../actions';
 import AjaxAction from '../../actions/AjaxAction';
 
 class Reg extends Component{
@@ -28,7 +28,7 @@ class Reg extends Component{
         console.log("captcha");
     }
     listenEnter = (event)=>{
-        if(13 == event.charCode){
+        if(13 === event.charCode){
             this.reg();
         }
     };

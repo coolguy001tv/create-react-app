@@ -2,8 +2,6 @@
  * Created by CoolGuy on 2016/12/26.
  */
 import React,{Component} from 'react';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
 import Icon from '../../Icon';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import $ from 'jquery';

@@ -102,22 +102,7 @@ class Layout extends Component{
                 {this.renderTitle()}
 
                 <div className="main-content">
-                    {/*<Icon name="management" size={120}/>
-                    <Icon name="team"/>
-                    <Icon name="ddd"/>
-                    <div className="left-menu" style={{borderTop:"1px solid "+themeColor}}>
-
-                        <List>
-                            <Subheader>左侧菜单只用于临时展示用~</Subheader>
-                            <Divider />
-                            <Link to="/login"><ListItem primaryText="登录" leftIcon={<ContentInbox />} /></Link>
-                            <Link to="/reg"><ListItem primaryText="注册" leftIcon={<ActionGrade />} /></Link>
-                            <Link to="/dashboard"><ListItem primaryText="dashboard" leftIcon={<ContentDrafts />} /></Link>
-                        </List>
-                        <Divider />
-                    </div>*/}
                     <div className="content">
-
                         <ReactCSSTransitionGroup
                             component="div"
                             transitionName="example"

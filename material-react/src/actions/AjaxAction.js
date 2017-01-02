@@ -7,6 +7,7 @@ import {ajax,ajaxCommon} from '../util';
 const LOGIN = "LOGIN";//登录
 const REG = "REG";//注册
 const PROJECT_ADD = "PROJECT_ADD";//新增一个项目
+const PROJECT_EDIT = "PROJECT_EDIT";//设置一个项目
 const PROJECT_LIST = "PROJECT_LIST";//获取项目列表
 const AJAX_START = "AJAX_START";//通用ajax开始
 const AJAX_FAIL = "AJAX_FAIL";//通用ajax失败
@@ -58,6 +59,12 @@ let projectListSuccess = (data) => {
         data
     }
 };
+let projectEditSuccess = (data) => {
+    return {
+        type: PROJECT_EDIT,
+        data
+    }
+}
 export default {
     AJAX_START,
     ajaxStart,
@@ -102,7 +109,18 @@ export default {
         return ajaxCommon({api:API.Project.list,success:projectListSuccess});
     },
     PROJECT_ADD,
-    projectAdd : ()=>{
-        return ajaxCommon(API.Project.add,null,projectAddSuccess,null);
-    }
+    //todo: 暂时不支持ICON上传
+    projectAdd : (projectName,description)=>{
+        return ajaxCommon({api:API.Project.add,data:{projectName,description},success:projectAddSuccess});
+    },
+    //todo: 暂时不支持ICON上传
+    PROJECT_EDIT,
+    projectEdit : (projectId,projectName,description)=>{
+        let api = API.Project.edit;
+        api.url = api.url.replace("{projectId}",projectId);
+        return ajaxCommon({
+            api:api,
+            data:{projectName,description},
+            success:projectEditSuccess});
+    },
 }

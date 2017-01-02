@@ -30,7 +30,7 @@ export var ajax = (options)=>{
         headers:headers
     });
 };
-export var ajaxCommon = ({api,data,successCallback,failCallback}) => {
+export var ajaxCommon = ({api,data,success,fail}) => {
     let {ajaxStart,ajaxFail} = AjaxAction;
     return (dispatch) => {
         dispatch(ajaxStart());
@@ -42,14 +42,14 @@ export var ajaxCommon = ({api,data,successCallback,failCallback}) => {
         let token = sessionStorage['token'];
         token && (ajaxOptions.headers = {"auth-token":token});
         return ajax(ajaxOptions)
-            .done((data)=>{
-                if(data && data.result && successCallback){
-                    return dispatch(successCallback(data.data))
+            .done((json)=>{
+                if(json && json.result && success){
+                    return dispatch(success(json.data || {...data}))
                 }else{
                     //异常情况处理，此处先直接打印错误信息
-                    console.error(data);
-                    if(failCallback){
-                        return dispatch(failCallback(data));
+                    console.error(json);
+                    if(fail){
+                        return dispatch(fail(json));
                     }
                 }
 

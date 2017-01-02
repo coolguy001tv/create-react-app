@@ -45,7 +45,8 @@ class TheApp extends React.Component{
                         <Route path="dashboard" component={Dashboard}>
                             <Route path="edit" component={EditProject}/>
                             <Route path="edit/:id" component={EditProject}/>
-                            <Route path="api" component={ApiPage}/>
+                            <Route path="api/" component={EditProject}/>
+                            <Route path="api/:id" component={ApiPage}/>
                         </Route>
                         <Route path="*" component={NoMatch}/>
                     </Route>

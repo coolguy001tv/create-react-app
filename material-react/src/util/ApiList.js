@@ -42,6 +42,10 @@ let Project = {
     "list":{
         url:URL_PREFIX+"/v1/workbench/project/list",
         method:"get"
+    },
+    edit:{
+        url:URL_PREFIX+"/v1/workbench/project/{projectId}/edit",
+        method:"post"
     }
 
 };

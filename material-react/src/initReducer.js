@@ -4,6 +4,9 @@
 export default {
     user: {
     },
+    globalError:{
+        msg:"",
+    },
     theme: 'default',
     projectList:[],
     currentProject:{

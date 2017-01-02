@@ -43,9 +43,21 @@ let projectList = (state = [], action) => {
             return state;
     }
 };
+let globalError = (state = {},action) => {
+    switch (action.type){
+        case AjaxAction.AJAX_FAIL:
+            debugger;
+            return {
+                msg:action.data || "服务器开小差了"
+            };
+        default:
+            return state;
+    }
+};
 export default combineReducers({
     user,
     theme,
     projectList,
-    currentProject
+    currentProject,
+    globalError,
 })

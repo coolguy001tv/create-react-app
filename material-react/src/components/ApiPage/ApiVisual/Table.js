@@ -10,7 +10,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import './table.scss';
 
-import Reducer from '../../../reducers/CurrentProjectReducer';
+//import Reducer from '../../../reducers/CurrentProjectReducer';
 import Action from '../../../actions';
 
 class ApiTable extends Component{

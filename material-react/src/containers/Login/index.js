@@ -12,7 +12,7 @@ import NavLink from '../../components/NavLink';
 import Snackbar from 'material-ui/Snackbar';
 import './login.scss';
 
-import action from '../../actions';
+//import action from '../../actions';
 import AjaxAction from '../../actions/AjaxAction';
 
 import {connect} from 'react-redux';
@@ -27,7 +27,7 @@ class Login extends Component {
 
     }
     listenEnter = (event)=>{
-      if(13 == event.charCode){
+      if(13 === event.charCode){
           this.login();
       }
     };

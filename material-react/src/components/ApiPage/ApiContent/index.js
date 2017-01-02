@@ -5,8 +5,7 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import Toggle from 'material-ui/Toggle';
-import {Card, CardActions, CardHeader, CardTitle, CardText} from 'material-ui/Card';
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {Card, CardTitle} from 'material-ui/Card';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
@@ -15,7 +14,7 @@ import ApiVisual from '../ApiVisual';
 import './api-content.scss';
 import $ from 'jquery';
 
-import reducers from '../../../reducers';
+//import reducers from '../../../reducers';
 
 
 const request_method = ["GET","POST","HEAD","PUT","DELETE","TRACE","CONNECT","OPTIONS"];

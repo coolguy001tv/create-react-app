@@ -11,7 +11,9 @@ let initData = (type,input) => {
                 "type":"string",
                 "testValue": "",
                 "description": ""
-            }
+            };
+        default:
+            return {};
     }
 };
 

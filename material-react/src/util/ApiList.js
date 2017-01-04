@@ -1,6 +1,7 @@
 /**
  * Created by CoolGuy on 2017/1/1.
  * 协议文档参考：http://192.168.1.100:8080/swagger-ui.html
+ * http://121.40.214.161:8080/
  */
 const URL_PREFIX = "http://192.168.1.100:8080";
 

@@ -30,6 +30,42 @@ export var getObjByUuid = (array,uuid) => {
     return theObj;
 
 };
+//在一个嵌套的数组中查找uuid为指定uuid的父级数组
+//假定当前uuid一定在array中（用户如果不能判断这点，请调用getObjByUuid来确保这点）
+export var getParentArrayByUuid = (array,uuid) => {
+    let parentArray = array;
+    let flag = false;
+    let index = -1;//当前元素位于parentArray的第几个
+    let findParArr = (arr) => {
+        if(flag){
+            return;
+        }
+        if(!arr || !arr.length){
+            return;
+        }
+        let len = arr.length;
+        for(let i = 0; i < len; i++){
+            let one = arr[i];
+            if(one.uuid && one.uuid === uuid){
+                parentArray = arr;
+                flag = true;
+                index = i;
+                break;
+            }
+            if(one.children && one.children.length){
+                findParArr(one.children);
+            }
+        }
+
+    };
+    findParArr(array);
+    return {
+        array:parentArray,
+        index:index
+    };
+
+};
+
 
 export var uuid = () =>{
     var s = [];

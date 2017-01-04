@@ -1,6 +1,7 @@
 /**
  * Created by CoolGuy on 2016/12/31.
  */
+
 export default {
     user: {
     },
@@ -12,18 +13,18 @@ export default {
     currentProject:{
         //request和response都必须有uuid
         request:[{
-            "require": "false",
+            "require": false,
             "children": [{
-                "require": "true",
+                "require": true,
                 "type": "string",
                 "children": [],
                 "name": "hello",
-                "testValue": "",
+                "testValue": "这里有只",
                 "uuid":"234234234324",
             }, {
-                "require": "true",
+                "require": true,
                 "type": "object",
-                "children": [{"require": "true", "type": "string", "children": [
+                "children": [{"require": true, "type": "string", "children": [
                     {"name":"第四季","uuid":"123fscxsdf",}
                 ], "name": "a","uuid":"1234asz2", "testValue": ""}],
                 "name": "test",
@@ -38,10 +39,9 @@ export default {
             "name": "data",
             "uuid":"f213423a234234",
             "testValue": "",
-            "defaultValue": "测试默认值",
             "description": "我的"
-        }, {"require": "false", "children": [], "type": "string", "name": "","uuid":"1234546", "testValue": ""}, {
-            "require": "false",
+        }, {"require": false, "children": [], "type": "string", "name": "12345","uuid":"1234546", "testValue": ""}, {
+            "require": false,
             "children": [],
             "type": "string",
             "name": "test",

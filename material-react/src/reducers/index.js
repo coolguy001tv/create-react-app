@@ -28,10 +28,19 @@ let theme = (state = {}, action) => {
 };
 
 let currentProject = (state = {}, action) => {
+    let result,merge;
     switch (action.type){
-        case actions.CHANGE_API_REQUEST_TYPE:
-            let result = CurrentProjectReducer.request(state.request,action);
-            let merge = Object.assign({},state,{request:result});
+        case actions.CHANGE_API_REQUEST_DATA:
+            result = CurrentProjectReducer.modify(state.request,action);
+            merge = Object.assign({},state,{request:result});
+            return merge;
+        case actions.ADD_API_REQUEST_DATA:
+            result = CurrentProjectReducer.add(state.request,action);
+            merge = Object.assign({},state,{request:result});
+            return merge;
+        case actions.DEL_API_REQUEST_DATA:
+            result = CurrentProjectReducer.del(state.request,action);
+            merge = Object.assign({},state,{request:result});
             return merge;
         default:
             return state;

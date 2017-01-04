@@ -2,12 +2,14 @@
  * Created by CoolGuy on 2016/12/30.
  */
 import React,{Component} from 'react';
+import {connect} from 'react-redux';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 //import {List, ListItem} from 'material-ui/List';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import {uuid} from '../../../util';
 import './table.scss';
 
 //import Reducer from '../../../reducers/CurrentProjectReducer';
@@ -16,7 +18,6 @@ import Action from '../../../actions';
 class ApiTable extends Component{
     tableRow = [];
     depth = 0;
-    increasedNumber = 0;//自增数
     listData = (data)=>{
         if(this.depth < 0){
             return null;//目前不清楚为什么会有这种异常
@@ -36,12 +37,12 @@ class ApiTable extends Component{
         this.depth--;
     };
     formatOneData = (one,depth)=>{
-        this.increasedNumber++;
+        let id = one.uuid || uuid();
         return (
-            <TableRow key={this.increasedNumber}>
+            <TableRow key={id}>
                 <TableRowColumn className={"depth-"+depth} style={{paddingLeft:24+depth*10}}><TextField name="argument-name" style={{width:"auto"}} value={one.name}/></TableRowColumn>
                 <TableRowColumn><TextField name="argument-value" style={{width:"auto"}} value={one.testValue}/></TableRowColumn>
-                <TableRowColumn>{this.renderSelect(one.type)}</TableRowColumn>
+                <TableRowColumn>{this.renderSelect(one.type,id)}</TableRowColumn>
                 <TableRowColumn>John Smith</TableRowColumn>
                 <TableRowColumn>Employed</TableRowColumn>
                 <TableRowColumn>John Smith</TableRowColumn>
@@ -49,15 +50,16 @@ class ApiTable extends Component{
         );
     };
     //todo: 修改当前项的值
-    handleChange = (event, index, value) =>{
-        let {dispath} = this.props;
-        dispath(Action.changeApiRequestType(value));
+    handleChange = (uuid,event, index, type) =>{
+        let {dispatch} = this.props;
+        //console.log(uuid,event, index, value);
+        dispatch(Action.changeApiRequestType(uuid,type));
     };
-    renderSelect = (value)=>{
+    renderSelect = (value,id)=>{
         return (
             <SelectField
                 value={value||"string"}
-                onChange={this.handleChange}
+                onChange={this.handleChange.bind(this,id)}
             >
                 <MenuItem value="string" primaryText="string" />
                 <MenuItem value="number" primaryText="number" />
@@ -73,6 +75,7 @@ class ApiTable extends Component{
         let {data} = this.props;
         console.log(data);
         this.tableRow = [];
+        this.depth = 0;
         this.listData(data);
         //console.log(this.tableRow);
         return (
@@ -99,4 +102,4 @@ class ApiTable extends Component{
     }
 }
 
-export default muiThemeable()(ApiTable);
+export default connect((state)=>({state}))(muiThemeable()(ApiTable));

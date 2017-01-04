@@ -41,12 +41,10 @@ class EditProject extends Component{
     getCurrentProjectInfo = (projectId)=>{
         let {projectList} = this.props;
         if(!projectList || !projectList.length){
-            return ;
+            return;
         }
         let result = projectList.find((v)=>{
-            if(v.projectId === projectId){
-                return true;
-            }
+            return(v.projectId === projectId);
         });
         return result;
     };

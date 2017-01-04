@@ -4,7 +4,7 @@
 import { combineReducers } from 'redux';
 import actions from '../actions';
 import AjaxAction from '../actions/AjaxAction';
-//import currentProjectReducer from './CurrentProjectReducer';
+import CurrentProjectReducer from './CurrentProjectReducer';
 let user = (state={},action)=>{
     let obj;
     switch (action.type){
@@ -30,7 +30,9 @@ let theme = (state = {}, action) => {
 let currentProject = (state = {}, action) => {
     switch (action.type){
         case actions.CHANGE_API_REQUEST_TYPE:
-            return Object.assign(state,action.data);
+            let result = CurrentProjectReducer.request(state.request,action);
+            let merge = Object.assign({},state,{request:result});
+            return merge;
         default:
             return state;
     }

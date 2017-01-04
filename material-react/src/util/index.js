@@ -3,6 +3,34 @@
  */
 import $ from 'jquery';
 import AjaxAction from '../actions/AjaxAction';
+
+//在一个嵌套的数组中查找uuid为指定uuid的obj
+export var getObjByUuid = (array,uuid) => {
+    let theObj = null;
+    let findUuid = (arr)=>{
+        if(theObj){
+            return;//已经找到了
+        }
+        if(!arr || !arr.length){
+            return null;
+        }
+        let len = arr.length;
+        for(let i = 0; i < len; i++){
+            let one = arr[i];
+            if(one.uuid && one.uuid === uuid){
+                theObj = one;
+                break;
+            }
+            if(one.children && one.children.length){
+                findUuid(one.children);
+            }
+        }
+    };
+    findUuid(array);
+    return theObj;
+
+};
+
 export var uuid = () =>{
     var s = [];
     var hexDigits = "0123456789abcdef";

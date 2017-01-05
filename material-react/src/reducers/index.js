@@ -34,6 +34,8 @@ let currentProject = (state = {}, action) => {
             result = CurrentProjectReducer.modify(state.request,action);
             merge = Object.assign({},state,{request:result});
             return merge;
+        case actions.CHANGE_API_REQUEST_DATA_ALL:
+            return Object.assign({},state,{request:action.data});
         case actions.ADD_API_REQUEST_DATA:
             result = CurrentProjectReducer.add(state.request,action);
             merge = Object.assign({},state,{request:result});

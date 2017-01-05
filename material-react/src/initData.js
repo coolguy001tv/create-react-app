@@ -9,12 +9,14 @@ let initData = (type,input) => {
                 "uuid":obj.uuid,
                 "name":"",
                 "type":"string",
-                "testValue": "",
+                "textValue": "",
                 "description": ""
             };
         default:
             return {};
     }
 };
+
+export let supportedType = ["string","number","array","object-array","object","boolean","others"];
 
 export default initData;

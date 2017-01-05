@@ -14,6 +14,7 @@ import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import RaisedButton from 'material-ui/RaisedButton';
+import {supportedType} from '../../../initData';
 import {uuid} from '../../../util';
 import './table.scss';
 
@@ -73,7 +74,7 @@ class ApiTable extends Component{
         return (
             <TableRow key={id}>
                 <TableRowColumn className={"depth-"+depth} style={{paddingLeft:24+depth*20}}><TextField onChange={this.handleArgNameChange.bind(this,id)} name="argument-name" style={{width:"auto"}} value={one.name}/></TableRowColumn>
-                <TableRowColumn><TextField onChange={this.handleTestValueChange.bind(this,id)} name="argument-value" style={{width:"auto"}} value={one.testValue}/></TableRowColumn>
+                <TableRowColumn><TextField onChange={this.handleTestValueChange.bind(this,id)} name="argument-value" style={{width:"auto"}} value={one.textValue}/></TableRowColumn>
                 <TableRowColumn>{this.renderSelect(one.type,id)}</TableRowColumn>
                 <TableRowColumn style={requireTrStyle}><Checkbox onCheck={this.handleCheck.bind(this,id)} checked={one.require || false}/></TableRowColumn>
                 <TableRowColumn style={operationTrStyle}>{this.formatOneOperation(id)}</TableRowColumn>
@@ -87,7 +88,7 @@ class ApiTable extends Component{
     };
     handleTestValueChange = (uuid, event, newValue) => {
         let {dispatch} = this.props;
-        dispatch(Action.changeApiRequestData(uuid,"testValue",newValue));
+        dispatch(Action.changeApiRequestData(uuid,"textValue",newValue));
     };
     handleArgNameChange = (uuid,event,newValue) =>{
         let {dispatch} = this.props;
@@ -110,12 +111,9 @@ class ApiTable extends Component{
                 value={value||"string"}
                 onChange={this.handleChange.bind(this,id)}
             >
-                <MenuItem value="string" primaryText="string" />
-                <MenuItem value="number" primaryText="number" />
-                <MenuItem value="array" primaryText="array" />
-                <MenuItem value="object-array" primaryText="object-array" />
-                <MenuItem value="object" primaryText="object" />
-                <MenuItem value="boolean" primaryText="boolean" />
+                {supportedType.map((v)=>{
+                    return <MenuItem key={v} value={v} primaryText={v} />
+                })}
             </SelectField>
         )
     };
@@ -145,7 +143,7 @@ class ApiTable extends Component{
                         {this.tableRow}
                     </TableBody>
                 </Table>
-                <RaisedButton onClick={this.handleAddOneRow.bind(this,null)} label="新增"/>
+                <RaisedButton style={{marginTop:20,marginBottom:20}} onClick={this.handleAddOneRow.bind(this,null)} label="新增"/>
 
                 <div>
                     注意：删除一个为object/array-object的数据时，将同时删除其下所有元素

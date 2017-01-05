@@ -35,3 +35,9 @@
 
 # 注意事项
 * react-router请暂时用hashHistory而不是browserHistory,后者需要服务器配置支持才行
+
+# 未完成事项
+* dashboard/api页面如果从object转化为非object时的层级
+* getArrayValueType方法和其调用方并没有处理array-array的情况，这种情况只会作为基本的array来做处理
+* listToObject没有顺序
+* Tab通常会跳出到下一个焦点上的解决方案

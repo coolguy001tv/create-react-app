@@ -12,42 +12,44 @@ export default {
     projectList:[],
     currentProject:{
         //request和response都必须有uuid
-        request:[{
+/*request:[{
             "require": false,
             "children": [{
                 "require": true,
                 "type": "string",
                 "children": [],
                 "name": "hello",
-                "testValue": "这里有只",
+                "textValue": "这里有只",
                 "uuid":"234234234324",
             }, {
                 "require": true,
                 "type": "object",
-                "children": [{"require": true, "type": "string", "children": [
+                "children": [{"require": true, "type": "object", "children": [
                     {"name":"第四季","uuid":"123fscxsdf",}
-                ], "name": "a","uuid":"1234asz2", "testValue": ""}],
+                ], "name": "a","uuid":"1234asz2", "textValue": "a"}],
                 "name": "test",
                 "uuid":"124234sdf",
-                "testValue": ""
+                "textValue": ""
             },{
 
-                "name":"第二季",
+                "name":"second",
                 "uuid":"3487658768",
+                "textValue":"s",
+                "type":"string"
             }],
             "type": "object",
             "name": "data",
             "uuid":"f213423a234234",
-            "testValue": "",
+            "textValue": "",
             "description": "我的"
-        }, {"require": false, "children": [], "type": "string", "name": "12345","uuid":"1234546", "testValue": ""}, {
+        }, {"require": false, "children": [], "type": "string", "name": "12345","uuid":"1234546", "textValue": ""}, {
             "require": false,
             "children": [],
             "type": "string",
             "name": "test",
             "uuid":"1234a654867",
-            "testValue": ""
-        }],
+            "textValue": ""
+        }],*/
         response:[{
 
         }]

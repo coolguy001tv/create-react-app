@@ -10,7 +10,7 @@ import {parseImportData,listToObject} from '../../../util';
 import $ from 'jquery';
 //import TextField from 'material-ui/TextField';
 const btnStyle = {
-    margin:12
+    margin:20
 };
 const demoJson = JSON.stringify({
     "string":"foo","number":5,"array":[1,2,3,null],
@@ -24,56 +24,12 @@ class TextArea extends Component{
         let data = JSON.stringify(listToObject(list),null,'    ');
         return data;
     };
-    state = {
-        shouldUpdateTextArea:true,//如果用户处于编辑状态，则不需要更新；blur之后则需要更新
-        textArea:this.props.data ? this.formatList(this.props.data) : ""
-    };
-
-    componentWillReceiveProps(newProps){
-        let newData = this.formatList(newProps.data);
-        console.log(newData);
-        if(this.state.shouldUpdateTextArea){
-            if(newData !== this.state.textArea){
-                this.setState({
-                    textArea:newData
-                })
-            }
-        }
-
-    }
-    componentDidMount(){
-        //$(document).on("keypress",function(e){
-        //   console.log(e.charCode);
-        //});
-    }
 
     handleDataChange = (e) => {
         let value = e.target.value;
-        this.setState({
-            textArea:value
-        },()=>{
-            try{
-                let json = JSON.parse(value);
-                console.log(json);
-                let {dispatch} = this.props;
-                let parsedData = [];
-                parseImportData(json,parsedData);
-                dispatch(Action.changeApiRequestDataAll(parsedData));
-            }catch (e){
-                //不用做任何事
-            }
-        })
+        let {dispatch} = this.props;
+        dispatch(Action.changeApiRequestDataTextAreaAll(value));
 
-    };
-    handleBlur = (e) => {
-        this.setState({
-            shouldUpdateTextArea:true
-        })
-    };
-    handleFocus = (e) => {
-        this.setState({
-            shouldUpdateTextArea:false
-        })
     };
     handleKeyDown = (e) => {
         let code = e.keyCode || e.charCode;
@@ -83,30 +39,58 @@ class TextArea extends Component{
             //var selObj = window.getSelection();
             //console.log(selObj);
         }
-
-
+    };
+    handleImportFromTable = ()=>{
+        let {dispatch,table} = this.props;
+        let data = JSON.stringify(listToObject(table),null,'    ');
+        dispatch(Action.changeApiRequestDataTextAreaAll(data));
+    };
+    handleBeautify = ()=>{
+        let {textarea,dispatch} = this.props;
+        try{
+            let jsonTextArea = JSON.parse(textarea);
+            let data = JSON.stringify(jsonTextArea,null,'    ');
+            dispatch(Action.changeApiRequestDataTextAreaAll(data));
+        }catch (e){
+            console.warn("oops,压根就不是json格式",e);
+        }
+    };
+    handleUglify = () =>{
+        let {textarea,dispatch} = this.props;
+        try{
+            let jsonTextArea = JSON.parse(textarea);
+            let data = JSON.stringify(jsonTextArea);
+            dispatch(Action.changeApiRequestDataTextAreaAll(data));
+        }catch (e){
+            console.warn("oops,压根就不是json格式",e);
+        }
     };
     render(){
+        let {textarea} = this.props;
         return (
             <div>
-                <RaisedButton label="美化(Beautify)" style={btnStyle} />
-                <RaisedButton label="Uglify" style={btnStyle} />
-                <textarea name="textare"
-                          id="textare"
+                <div style={{marginTop:20,borderTop:"1px solid #ccc"}}>
+                    <RaisedButton label="从表格导入" style={btnStyle} onClick={this.handleImportFromTable}/>
+                    <RaisedButton label="美化格式" style={btnStyle} onClick={this.handleBeautify}/>
+                    <RaisedButton label="压缩格式" style={btnStyle} onClick={this.handleUglify}/>
+                </div>
+
+                <textarea name="textarea"
+                          id="textarea"
                           cols="100"
                           rows="20"
                           placeholder={demoJson}
-                          value={this.state.textArea}
+                          value={textarea}
                           onChange={this.handleDataChange}
-                          onBlur={this.handleBlur}
-                          onFocus={this.handleFocus}
                           onKeyDown={this.handleKeyDown}
                           style={{
                             height:200
                           }}
                 >
-
                 </textarea>
+                <div>
+                    友情提醒：从表格导入可能会清空输入框中的所有内容
+                </div>
             </div>
         )
     }

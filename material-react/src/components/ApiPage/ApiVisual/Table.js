@@ -15,7 +15,7 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import RaisedButton from 'material-ui/RaisedButton';
 import {supportedType} from '../../../initData';
-import {uuid} from '../../../util';
+import {parseImportData,listToObject,createUuid} from '../../../util';
 import './table.scss';
 
 //import Reducer from '../../../reducers/CurrentProjectReducer';
@@ -70,7 +70,7 @@ class ApiTable extends Component{
         )
     };
     formatOneData = (one,depth)=>{
-        let id = one.uuid || uuid();
+        let id = one.uuid || createUuid();
         return (
             <TableRow key={id}>
                 <TableRowColumn className={"depth-"+depth} style={{paddingLeft:24+depth*20}}><TextField onChange={this.handleArgNameChange.bind(this,id)} name="argument-name" style={{width:"auto"}} value={one.name}/></TableRowColumn>
@@ -105,6 +105,18 @@ class ApiTable extends Component{
         //console.log(uuid,event, index, value);
         dispatch(Action.changeApiRequestData(uuid,"type",type));
     };
+    handleImport = () => {
+        console.log("import from json");
+        let {dispatch,textarea} = this.props;
+        try{
+            let jsonTextArea = JSON.parse(textarea);
+            let array = [];
+            parseImportData(jsonTextArea,array);
+            dispatch(Action.changeApiRequestDataAll(array));
+        }catch (e){
+            console.warn("Oops,根本不是一个json格式",e);
+        }
+    };
     renderSelect = (value,id)=>{
         return (
             <SelectField
@@ -119,16 +131,14 @@ class ApiTable extends Component{
     };
     render(){
 
-        let {data} = this.props;
-        console.log(data);
+        let {table} = this.props;
         this.tableRow = [];
         this.depth = 0;
-        this.listData(data);
+        this.listData(table);
         //console.log(this.tableRow);
         return (
             <div>
-
-                <Table  selectable={false} style={{textAlign:"center"}}>
+                <Table selectable={false} style={{textAlign:"center"}}>
                     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>
                             <TableHeaderColumn>参数名</TableHeaderColumn>
@@ -143,8 +153,9 @@ class ApiTable extends Component{
                         {this.tableRow}
                     </TableBody>
                 </Table>
-                <RaisedButton style={{marginTop:20,marginBottom:20}} onClick={this.handleAddOneRow.bind(this,null)} label="新增"/>
-
+                {/*注意，下面一行必须bind(this,null)或者下面的写法,否则会把一个事件对象传递过去*/}
+                <RaisedButton style={{marginTop:20,marginBottom:20}} onClick={()=>{this.handleAddOneRow()}} label="新增"/>
+                <RaisedButton style={{margin:20}} onClick={this.handleImport} label="从JSON导入"/>
                 <div>
                     注意：删除一个为object/array-object的数据时，将同时删除其下所有元素
                 </div>

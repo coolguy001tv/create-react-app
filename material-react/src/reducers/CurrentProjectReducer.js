@@ -2,7 +2,7 @@
  * Created by CoolGuy on 2016/12/31.
  * currentProject拆分成多个小的部分
  */
-import {getObjByUuid,uuid as uuidFunc,getParentArrayByUuid} from '../util';
+import {getObjByUuid,createUuid as uuidFunc,getParentArrayByUuid} from '../util';
 import initData from '../initData'
 let modify = (state = [], action) => {
     let uuid = action.uuid;

@@ -12,7 +12,7 @@ export default {
     projectList:[],
     currentProject:{
         //request和response都必须有uuid
-/*request:[{
+        request:[{
             "require": false,
             "children": [{
                 "require": true,
@@ -49,10 +49,25 @@ export default {
             "name": "test",
             "uuid":"1234a654867",
             "textValue": ""
-        }],*/
+        }],
+        //request的textarea表现形式
+        requestTextArea:JSON.stringify({
+            "12345": "",
+            "data": {
+                "hello": "这里有只",
+                "test": {
+                    "a": {
+                        "第四季": ""
+                    }
+                },
+                "second": "s"
+            },
+            "test": ""
+        },null,'    '),
         response:[{
 
-        }]
+        }],
+        responseTextArea:{},
     },
 
 };

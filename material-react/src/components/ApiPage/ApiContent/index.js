@@ -175,8 +175,8 @@ class ApiContent extends Component{
     render(){
 
         let themeColor = this.props.muiTheme.palette.primary1Color;
-        let {request} = this.props;
-        //console.log(request);
+        let {request,requestTextArea,response,responseTextArea} = this.props;
+        //console.log(request,requestTextArea);
         return (
             <div className="api-content-wrapper">
                 <div className="header">
@@ -208,7 +208,13 @@ class ApiContent extends Component{
                         <div className="card1">
                             <Card containerStyle={cardStyle}>
                                 <CardTitle title="请求参数" titleStyle={titleStyle} style={cardTitleStyle}/>
-                                <ApiVisual data={request}/>
+                                <ApiVisual table={request} textarea={requestTextArea}/>
+                            </Card>
+                        </div>
+                        <div className="card2">
+                            <Card containerStyle={cardStyle}>
+                                <CardTitle title="响应参数" titleStyle={titleStyle} style={cardTitleStyle}/>
+                                <ApiVisual table={response} textarea={responseTextArea}/>
                             </Card>
                         </div>
 
@@ -222,6 +228,7 @@ class ApiContent extends Component{
 }
 export default connect((state)=>{
     return {
-        request:state.currentProject.request
+        request:state.currentProject.request,
+        requestTextArea:state.currentProject.requestTextArea
     }
 })(muiThemeable()(ApiContent));

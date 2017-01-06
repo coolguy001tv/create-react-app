@@ -4,7 +4,7 @@
 import $ from 'jquery';
 import AjaxAction from '../actions/AjaxAction';
 
-export var uuid = () =>{
+export var createUuid = () =>{
     var s = [];
     var hexDigits = "0123456789abcdef";
     for (var i = 0; i < 36; i++) {
@@ -17,7 +17,6 @@ export var uuid = () =>{
     var uuid = s.join("");
     return uuid;
 };
-
 
 //转化成JSON对象格式
 export var listToObject = (list) => {
@@ -123,7 +122,7 @@ export var parseImportData = (data, temp)=>{
                 t.type = '';
             }
             t.require = false;
-            t.uuid = uuid();
+            t.uuid = createUuid();
             temp.push(t);
         }
     }

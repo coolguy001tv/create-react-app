@@ -29,22 +29,23 @@ let theme = (state = {}, action) => {
 
 let currentProject = (state = {}, action) => {
     let result,merge;
+    let {apiType} = action;//apiType应该只有request和response两种
     switch (action.type){
         case actions.CHANGE_API_REQUEST_DATA:
-            result = CurrentProjectReducer.modify(state.request,action);
-            merge = Object.assign({},state,{request:result});
+            result = CurrentProjectReducer.modify(state[apiType],action);
+            merge = Object.assign({},state,{[apiType]:result});
             return merge;
         case actions.CHANGE_API_REQUEST_DATA_ALL:
-            return Object.assign({},state,{request:action.data});
+            return Object.assign({},state,{[apiType]:action.data});
         case actions.CHANGE_API_REQUEST_DATA_TEXT_AREA_ALL:
-            return Object.assign({},state,{requestTextArea:action.data});
+            return Object.assign({},state,{[apiType+'TextArea']:action.data});
         case actions.ADD_API_REQUEST_DATA:
-            result = CurrentProjectReducer.add(state.request,action);
-            merge = Object.assign({},state,{request:result});
+            result = CurrentProjectReducer.add(state[apiType],action);
+            merge = Object.assign({},state,{[apiType]:result});
             return merge;
         case actions.DEL_API_REQUEST_DATA:
-            result = CurrentProjectReducer.del(state.request,action);
-            merge = Object.assign({},state,{request:result});
+            result = CurrentProjectReducer.del(state[apiType],action);
+            merge = Object.assign({},state,{[apiType]:result});
             return merge;
         default:
             return state;

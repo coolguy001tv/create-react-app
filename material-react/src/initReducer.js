@@ -64,10 +64,8 @@ export default {
             },
             "test": ""
         },null,'    '),
-        response:[{
-
-        }],
-        responseTextArea:{},
+        response:undefined,
+        responseTextArea:"",
     },
 
 };

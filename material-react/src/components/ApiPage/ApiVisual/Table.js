@@ -15,7 +15,7 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import RaisedButton from 'material-ui/RaisedButton';
 import {supportedType} from '../../../initData';
-import {parseImportData,listToObject,createUuid} from '../../../util';
+import {parseImportData,/*listToObject,*/createUuid} from '../../../util';
 import './table.scss';
 
 //import Reducer from '../../../reducers/CurrentProjectReducer';
@@ -50,12 +50,12 @@ class ApiTable extends Component{
         this.depth--;
     };
     handleAddOneRow = (uuid) => {
-        let {dispatch} = this.props;
-        dispatch(Action.addApiRequestData(uuid));
+        let {dispatch,apiType} = this.props;
+        dispatch(Action.addApiRequestData(apiType,uuid));
     };
     handleDelOneRow = (uuid) => {
-        let {dispatch} = this.props;
-        dispatch(Action.delApiRequestData(uuid));
+        let {apiType,dispatch} = this.props;
+        dispatch(Action.delApiRequestData(apiType,uuid));
     };
     formatOneOperation = (uuid) => {
         return (
@@ -75,47 +75,49 @@ class ApiTable extends Component{
             <TableRow key={id}>
                 <TableRowColumn className={"depth-"+depth} style={{paddingLeft:24+depth*20}}><TextField onChange={this.handleArgNameChange.bind(this,id)} name="argument-name" style={{width:"auto"}} value={one.name}/></TableRowColumn>
                 <TableRowColumn><TextField onChange={this.handleTestValueChange.bind(this,id)} name="argument-value" style={{width:"auto"}} value={one.textValue}/></TableRowColumn>
+                <TableRowColumn><TextField name="description" onChange={this.handleDescriptionValueChange.bind(this,id)} style={{width:"auto"}} value={one.description}/></TableRowColumn>
                 <TableRowColumn>{this.renderSelect(one.type,id)}</TableRowColumn>
                 <TableRowColumn style={requireTrStyle}><Checkbox onCheck={this.handleCheck.bind(this,id)} checked={one.require || false}/></TableRowColumn>
                 <TableRowColumn style={operationTrStyle}>{this.formatOneOperation(id)}</TableRowColumn>
-                <TableRowColumn><TextField name="description" onChange={this.handleDescriptionValueChange.bind(this,id)} style={{width:"auto"}} value={one.description}/></TableRowColumn>
+
             </TableRow>
         );
     };
     handleDescriptionValueChange = (uuid, event, newValue) => {
-        let {dispatch} = this.props;
-        dispatch(Action.changeApiRequestData(uuid,"description",newValue));
+        let {dispatch,apiType} = this.props;
+        dispatch(Action.changeApiRequestData(apiType,uuid,"description",newValue));
     };
     handleTestValueChange = (uuid, event, newValue) => {
-        let {dispatch} = this.props;
-        dispatch(Action.changeApiRequestData(uuid,"textValue",newValue));
+        let {dispatch,apiType} = this.props;
+        dispatch(Action.changeApiRequestData(apiType,uuid,"textValue",newValue));
     };
     handleArgNameChange = (uuid,event,newValue) =>{
-        let {dispatch} = this.props;
+        let {dispatch,apiType} = this.props;
         console.log(uuid,newValue);
-        dispatch(Action.changeApiRequestData(uuid,"name",newValue));
+        dispatch(Action.changeApiRequestData(apiType,uuid,"name",newValue));
     };
     handleCheck = (uuid,event,isInputChecked) => {
-        let {dispatch} = this.props;
-        dispatch(Action.changeApiRequestData(uuid,"require",isInputChecked));
+        let {dispatch,apiType} = this.props;
+        dispatch(Action.changeApiRequestData(apiType,uuid,"require",isInputChecked));
     };
     //todo: 修改当前项的值
     handleChange = (uuid,event, index, type) =>{
-        let {dispatch} = this.props;
+        let {dispatch,apiType} = this.props;
         //console.log(uuid,event, index, value);
-        dispatch(Action.changeApiRequestData(uuid,"type",type));
+        dispatch(Action.changeApiRequestData(apiType,uuid,"type",type));
     };
     handleImport = () => {
         console.log("import from json");
-        let {dispatch,textarea} = this.props;
+        let {dispatch,textarea,apiType} = this.props;
         try{
             let jsonTextArea = JSON.parse(textarea);
             let array = [];
             parseImportData(jsonTextArea,array);
-            dispatch(Action.changeApiRequestDataAll(array));
+            dispatch(Action.changeApiRequestDataAll(apiType,array));
         }catch (e){
             console.warn("Oops,根本不是一个json格式",e);
         }
+
     };
     renderSelect = (value,id)=>{
         return (
@@ -143,10 +145,11 @@ class ApiTable extends Component{
                         <TableRow>
                             <TableHeaderColumn>参数名</TableHeaderColumn>
                             <TableHeaderColumn>参数值</TableHeaderColumn>
+                            <TableHeaderColumn>描述</TableHeaderColumn>
                             <TableHeaderColumn>类型</TableHeaderColumn>
                             <TableHeaderColumn style={requireTrStyle}>必传</TableHeaderColumn>
                             <TableHeaderColumn style={operationTrStyle}>操作</TableHeaderColumn>
-                            <TableHeaderColumn>描述</TableHeaderColumn>
+
                         </TableRow>
                     </TableHeader>
                     <TableBody showRowHover={true} displayRowCheckbox={false}>

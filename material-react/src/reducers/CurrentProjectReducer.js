@@ -20,6 +20,7 @@ let add = (state = [],action) => {
     //不传uuid表示新增到最后
     if(!uuid){
         state.push(newOne);
+        //console.log(newOne);
         return state;
     }
     //先找到要新增的元素

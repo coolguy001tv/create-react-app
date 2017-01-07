@@ -6,8 +6,8 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import RaisedButton from 'material-ui/RaisedButton';
 import {connect} from 'react-redux';
 import Action from '../../../actions';
-import {parseImportData,listToObject} from '../../../util';
-import $ from 'jquery';
+import {/*parseImportData,*/listToObject} from '../../../util';
+//import $ from 'jquery';
 //import TextField from 'material-ui/TextField';
 const btnStyle = {
     margin:20
@@ -27,8 +27,8 @@ class TextArea extends Component{
 
     handleDataChange = (e) => {
         let value = e.target.value;
-        let {dispatch} = this.props;
-        dispatch(Action.changeApiRequestDataTextAreaAll(value));
+        let {dispatch,apiType} = this.props;
+        dispatch(Action.changeApiRequestDataTextAreaAll(apiType,value));
 
     };
     handleKeyDown = (e) => {
@@ -41,26 +41,26 @@ class TextArea extends Component{
         }
     };
     handleImportFromTable = ()=>{
-        let {dispatch,table} = this.props;
+        let {dispatch,table,apiType} = this.props;
         let data = JSON.stringify(listToObject(table),null,'    ');
-        dispatch(Action.changeApiRequestDataTextAreaAll(data));
+        dispatch(Action.changeApiRequestDataTextAreaAll(apiType,data));
     };
     handleBeautify = ()=>{
-        let {textarea,dispatch} = this.props;
+        let {textarea,dispatch,apiType} = this.props;
         try{
             let jsonTextArea = JSON.parse(textarea);
             let data = JSON.stringify(jsonTextArea,null,'    ');
-            dispatch(Action.changeApiRequestDataTextAreaAll(data));
+            dispatch(Action.changeApiRequestDataTextAreaAll(apiType,data));
         }catch (e){
             console.warn("oops,压根就不是json格式",e);
         }
     };
     handleUglify = () =>{
-        let {textarea,dispatch} = this.props;
+        let {textarea,dispatch,apiType} = this.props;
         try{
             let jsonTextArea = JSON.parse(textarea);
             let data = JSON.stringify(jsonTextArea);
-            dispatch(Action.changeApiRequestDataTextAreaAll(data));
+            dispatch(Action.changeApiRequestDataTextAreaAll(apiType,data));
         }catch (e){
             console.warn("oops,压根就不是json格式",e);
         }

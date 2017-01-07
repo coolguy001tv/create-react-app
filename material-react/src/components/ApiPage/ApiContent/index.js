@@ -208,13 +208,13 @@ class ApiContent extends Component{
                         <div className="card1">
                             <Card containerStyle={cardStyle}>
                                 <CardTitle title="请求参数" titleStyle={titleStyle} style={cardTitleStyle}/>
-                                <ApiVisual table={request} textarea={requestTextArea}/>
+                                <ApiVisual apiType="request" table={request} textarea={requestTextArea}/>
                             </Card>
                         </div>
                         <div className="card2">
                             <Card containerStyle={cardStyle}>
                                 <CardTitle title="响应参数" titleStyle={titleStyle} style={cardTitleStyle}/>
-                                <ApiVisual table={response} textarea={responseTextArea}/>
+                                <ApiVisual apiType="response" table={response} textarea={responseTextArea}/>
                             </Card>
                         </div>
 
@@ -229,6 +229,8 @@ class ApiContent extends Component{
 export default connect((state)=>{
     return {
         request:state.currentProject.request,
-        requestTextArea:state.currentProject.requestTextArea
+        requestTextArea:state.currentProject.requestTextArea,
+        response:state.currentProject.response,
+        responseTextArea:state.currentProject.responseTextArea
     }
 })(muiThemeable()(ApiContent));

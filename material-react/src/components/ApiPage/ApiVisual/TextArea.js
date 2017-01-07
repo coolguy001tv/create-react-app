@@ -4,6 +4,7 @@
 import React,{Component} from 'react';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextArea from '../../TextArea';
 import {connect} from 'react-redux';
 import Action from '../../../actions';
 import {/*parseImportData,*/listToObject} from '../../../util';
@@ -16,7 +17,7 @@ const demoJson = JSON.stringify({
     "string":"foo","number":5,"array":[1,2,3,null],
     "object":{"property":"value",
         "subobj":{"arr":["foo","ha"],"numero":1}}},null,'\t');
-class TextArea extends Component{
+class TheTextArea extends Component{
     formatList = (list)=>{
         //var temp = [];
         //parseImportData(data,temp);
@@ -75,19 +76,13 @@ class TextArea extends Component{
                     <RaisedButton label="压缩格式" style={btnStyle} onClick={this.handleUglify}/>
                 </div>
 
-                <textarea name="textarea"
-                          id="textarea"
-                          cols="100"
-                          rows="20"
-                          placeholder={demoJson}
+
+                <TextArea placeholder={demoJson}
                           value={textarea}
                           onChange={this.handleDataChange}
                           onKeyDown={this.handleKeyDown}
-                          style={{
-                            height:200
-                          }}
                 >
-                </textarea>
+                </TextArea>
                 <div>
                     友情提醒：从表格导入可能会清空输入框中的所有内容
                 </div>
@@ -96,4 +91,4 @@ class TextArea extends Component{
     }
 }
 
-export default connect((state)=>({state}))(muiThemeable()(TextArea));
+export default connect((state)=>({state}))(muiThemeable()(TheTextArea));

@@ -11,6 +11,7 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import ApiVisual from '../ApiVisual';
+import TextArea from '../../TextArea';
 import './api-content.scss';
 import $ from 'jquery';
 
@@ -215,6 +216,29 @@ class ApiContent extends Component{
                             <Card containerStyle={cardStyle}>
                                 <CardTitle title="响应参数" titleStyle={titleStyle} style={cardTitleStyle}/>
                                 <ApiVisual apiType="response" table={response} textarea={responseTextArea}/>
+                            </Card>
+                        </div>
+                        <div className="card3">
+                            <Card containerStyle={cardStyle}>
+                                <CardTitle title="辅助信息" titleStyle={titleStyle} style={cardTitleStyle}/>
+                                <TextArea name="aid-textarea"
+                                          id="aid-textarea"
+                                          placeholder={"请输入辅助信息"}
+                                ></TextArea>
+                            </Card>
+                        </div>
+                        <div className="card4">
+                            <Card containerStyle={cardStyle}>
+                                <CardTitle title="示例" titleStyle={titleStyle} style={cardTitleStyle}/>
+                                <TextArea placeholder={"请输入示例"}
+                                ></TextArea>
+                            </Card>
+                        </div>
+                        <div className="card5">
+                            <Card containerStyle={cardStyle}>
+                                <CardTitle title="文档" titleStyle={titleStyle} style={cardTitleStyle}/>
+                                <TextArea placeholder={"请输入文档"}
+                                ></TextArea>
                             </Card>
                         </div>
 

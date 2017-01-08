@@ -22,7 +22,7 @@ class DashboardIndex extends Component{
         //    会议系统
         //</li>
         return (
-            <Link to={`/dashboard/api/${id}`} key={id}>
+            <Link to={`/dashboard/project/${id}`} key={id}>
                 {id ?
                     <Paper
                         className="one"

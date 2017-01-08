@@ -34,7 +34,7 @@ class MenuList extends Component{
         let location = window.location.href;
         let locArr = location.split("/");
         let index = locArr.findIndex((v)=>{
-            return v === "api";
+            return v === "project";
         });
         if(index === -1){
             console.error("程序错误，projectId");
@@ -44,10 +44,17 @@ class MenuList extends Component{
         return projectId;
     };
     componentDidMount() {
-        console.log("....");
-        //注意列表页目前有BUG，即API可以移动到第一级目录下
-        $('#leftMenu').nestable({maxDepth:2});
         let {dispatch} = this.props;
+        let $leftMenu = $('#leftMenu');
+        let _this = this;
+        $leftMenu.nestable({maxDepth:2});
+        $leftMenu.on("change",function(){
+            let data = $leftMenu.nestable('serialize');
+            let {dispatch} = _this.props;
+            dispatch(AjaxAction.folderAdjust(_this.getProjectId(),data));
+            //console.log(data,currentMenu);
+
+        });
         dispatch(AjaxAction.folderList(this.getProjectId()));
     }
     addName = ()=>{
@@ -79,7 +86,7 @@ class MenuList extends Component{
             <ol className="dd-list">
                 {folder.map((v)=>{
                     return (
-                        <li key={v.id} className="dd-item" data-type={v.type || "folder"} data-name={v.name || v.folderName}  data-id={v.id}>
+                        <li key={v.id || v.folderId} className="dd-item" data-type={v.type || "folder"} data-name={v.name || v.folderName}  data-id={v.id || v.folderId}>
                             <div className="dd-handle"><Icon name="folder" size={20}/> <span className="name">{v.name || v.folderName}</span></div>
                             {this.renderApi(v.children)}
                         </li>

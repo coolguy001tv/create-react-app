@@ -4,7 +4,7 @@
 import { combineReducers } from 'redux';
 import actions from '../actions';
 import AjaxAction from '../actions/AjaxAction';
-import CurrentProjectReducer from './CurrentProjectReducer';
+import CurrentProjectReducer from './CurrentApiReducer';
 let user = (state={},action)=>{
     let obj;
     switch (action.type){
@@ -27,7 +27,7 @@ let theme = (state = {}, action) => {
     }
 };
 
-let currentProject = (state = {}, action) => {
+let currentApi = (state = {}, action) => {
     let result,merge;
     let {apiType} = action;//apiType应该只有request和response两种
     switch (action.type){
@@ -74,6 +74,10 @@ let currentMenu = (state = [],action) => {
     switch (action.type){
         case AjaxAction.FOLDER_ADD:
             return [...state,action.newFolder];
+        case AjaxAction.FOLDER_LIST:
+            return action.data;
+        case AjaxAction.FOLDER_ADJUST:
+            return action.list;
         default:
             return state;
     }
@@ -82,7 +86,7 @@ export default combineReducers({
     user,
     theme,
     projectList,
-    currentProject,
+    currentApi,
     globalError,
     currentMenu,
 })

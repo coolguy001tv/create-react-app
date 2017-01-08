@@ -49,7 +49,7 @@ export default {
             ]
         }
     ]*/undefined,
-    currentProject:{
+    currentApi:{
         //request和response都必须有uuid
         request:/*[{
             "require": false,

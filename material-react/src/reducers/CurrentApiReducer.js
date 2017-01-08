@@ -1,6 +1,6 @@
 /**
  * Created by CoolGuy on 2016/12/31.
- * currentProject拆分成多个小的部分
+ * currentApi拆分成多个小的部分
  */
 import {getObjByUuid,createUuid as uuidFunc,getParentArrayByUuid} from '../util';
 import initData from '../initData'

@@ -19,28 +19,36 @@ let folderAddSuccess = (data,newFolder) => {
 };
 
 
-//
-//let mergeFoldersAndData = (folders,data)=>{
-//    let fLen = folders.length;
-//    folders.map((v)=>{
-//
-//    })
-//
-//};
+let getFolderInfo = (infoList,id)=>{
+    return infoList.find((v)=>{
+        return (v.id === id);
+    })
+};
+
+let mergeFoldersAndData = (folders,data)=>{
+    let newFolders = folders.map((v)=>{
+        let info = getFolderInfo(data, v.id);
+        return Object.assign(v,info);
+    });
+    return newFolders;
+
+};
 
 let folderListSuccess = (data)=>{
-    console.log(data);
+    let result = mergeFoldersAndData(data.folders.list,data.data);
+    console.log(result);
     return {
         type:FOLDER_LIST,
-        data,
+        data:result,
     }
 };
 
 
-let folderAdjustSuccess = (data) => {
+let folderAdjustSuccess = (data,list) => {
     return {
         type:FOLDER_ADJUST,
-        data
+        data,
+        list
     }
 };
 
@@ -81,8 +89,10 @@ export default {
         return ajaxCommon({
             api:API.Folder.adjust(projectId),
             data:{folders:{list:list}},
-            success:folderAdjustSuccess
-        })
+            success:(data)=>{
+                return folderAdjustSuccess(data,list);
+            }
+        });
     },
     folderDelete : (projectId,folderId)=>{
         return ajaxCommon({

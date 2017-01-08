@@ -177,84 +177,86 @@ class ApiContent extends Component{
 
         let themeColor = this.props.muiTheme.palette.primary1Color;
         let {request,requestTextArea,response,responseTextArea} = this.props;
-        //console.log(request,requestTextArea);
+        let isEmpty = !(request && request.length);
         return (
             <div className="api-content-wrapper">
-                <div className="header">
-                    <h1>获取用户列表</h1>
-                    <div className="toggle">
-                        <Toggle
-                            label="预览"
-                            defaultToggled={true}
-                            labelPosition="right"
-                            style={{float:"right"}}
-                        />
+                {isEmpty ? <div>赶紧从左边新增一个或者选择一个API吧</div> :
+                <div>
+                    <div className="header">
+                        <h1>获取用户列表</h1>
+                        <div className="toggle">
+                            <Toggle
+                                label="预览"
+                                defaultToggled={true}
+                                labelPosition="right"
+                                style={{float:"right"}}
+                            />
+                        </div>
+                    </div>
+                    <div className="content-wrapper">
+                        <div className="left-nav">
+                            <ul className="left-nav-ul">
+                                <li>基本信息</li>
+                                <li>请求参数</li>
+                                <li>响应参数</li>
+                                <li>辅助信息</li>
+                                <li>示例</li>
+                                <li>文档</li>
+                            </ul>
+                            <div className="line" style={{top:this.state.top,backgroundColor:themeColor}}></div>
+                        </div>
+                        <div className="right-content">
+
+                            <div className="card0">{this.cardBasicInfo()}</div>
+                            <div className="card1">
+                                <Card containerStyle={cardStyle}>
+                                    <CardTitle title="请求参数" titleStyle={titleStyle} style={cardTitleStyle}/>
+                                    <ApiVisual apiType="request" table={request} textarea={requestTextArea}/>
+                                </Card>
+                            </div>
+                            <div className="card2">
+                                <Card containerStyle={cardStyle}>
+                                    <CardTitle title="响应参数" titleStyle={titleStyle} style={cardTitleStyle}/>
+                                    <ApiVisual apiType="response" table={response} textarea={responseTextArea}/>
+                                </Card>
+                            </div>
+                            <div className="card3">
+                                <Card containerStyle={cardStyle}>
+                                    <CardTitle title="辅助信息" titleStyle={titleStyle} style={cardTitleStyle}/>
+                                    <TextArea name="aid-textarea"
+                                              id="aid-textarea"
+                                              placeholder={"请输入辅助信息"}
+                                    ></TextArea>
+                                </Card>
+                            </div>
+                            <div className="card4">
+                                <Card containerStyle={cardStyle}>
+                                    <CardTitle title="示例" titleStyle={titleStyle} style={cardTitleStyle}/>
+                                    <TextArea placeholder={"请输入示例"}
+                                    ></TextArea>
+                                </Card>
+                            </div>
+                            <div className="card5">
+                                <Card containerStyle={cardStyle}>
+                                    <CardTitle title="文档" titleStyle={titleStyle} style={cardTitleStyle}/>
+                                    <TextArea placeholder={"请输入文档"}
+                                    ></TextArea>
+                                </Card>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-                <div className="content-wrapper">
-                    <div className="left-nav">
-                        <ul className="left-nav-ul">
-                            <li>基本信息</li>
-                            <li>请求参数</li>
-                            <li>响应参数</li>
-                            <li>辅助信息</li>
-                            <li>示例</li>
-                            <li>文档</li>
-                        </ul>
-                        <div className="line" style={{top:this.state.top,backgroundColor:themeColor}}></div>
-                    </div>
-                    <div className="right-content">
-
-                        <div className="card0">{this.cardBasicInfo()}</div>
-                        <div className="card1">
-                            <Card containerStyle={cardStyle}>
-                                <CardTitle title="请求参数" titleStyle={titleStyle} style={cardTitleStyle}/>
-                                <ApiVisual apiType="request" table={request} textarea={requestTextArea}/>
-                            </Card>
-                        </div>
-                        <div className="card2">
-                            <Card containerStyle={cardStyle}>
-                                <CardTitle title="响应参数" titleStyle={titleStyle} style={cardTitleStyle}/>
-                                <ApiVisual apiType="response" table={response} textarea={responseTextArea}/>
-                            </Card>
-                        </div>
-                        <div className="card3">
-                            <Card containerStyle={cardStyle}>
-                                <CardTitle title="辅助信息" titleStyle={titleStyle} style={cardTitleStyle}/>
-                                <TextArea name="aid-textarea"
-                                          id="aid-textarea"
-                                          placeholder={"请输入辅助信息"}
-                                ></TextArea>
-                            </Card>
-                        </div>
-                        <div className="card4">
-                            <Card containerStyle={cardStyle}>
-                                <CardTitle title="示例" titleStyle={titleStyle} style={cardTitleStyle}/>
-                                <TextArea placeholder={"请输入示例"}
-                                ></TextArea>
-                            </Card>
-                        </div>
-                        <div className="card5">
-                            <Card containerStyle={cardStyle}>
-                                <CardTitle title="文档" titleStyle={titleStyle} style={cardTitleStyle}/>
-                                <TextArea placeholder={"请输入文档"}
-                                ></TextArea>
-                            </Card>
-                        </div>
-
-                    </div>
-                </div>
-
-
+                }
             </div>
         )
     }
 }
 export default connect((state)=>{
     return {
-        request:state.currentProject.request,
-        requestTextArea:state.currentProject.requestTextArea,
-        response:state.currentProject.response,
-        responseTextArea:state.currentProject.responseTextArea
+        request:state.currentApi.request,
+        requestTextArea:state.currentApi.requestTextArea,
+        response:state.currentApi.response,
+        responseTextArea:state.currentApi.responseTextArea
     }
 })(muiThemeable()(ApiContent));

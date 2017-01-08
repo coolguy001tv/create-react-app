@@ -359,11 +359,10 @@
              * move horizontal
              */
             if (mouse.dirAx && mouse.distAxX >= opt.threshold) {
-                console.log("hhh");
                 // reset move distance on x-axis for new phase
                 mouse.distAxX = 0;
                 prev = this.placeEl.prev(opt.itemNodeName);
-                console.log(prev);
+                //console.log(prev);
                 // increase horizontal level if previous sibling exists and is not collapsed
 
                 if (mouse.distX > 0 && prev.length && !prev.hasClass(opt.collapsedClass)) {
@@ -390,16 +389,17 @@
 
                 }
                 // decrease horizontal level
+                //不允许二级拖动到一级上来
                 if (mouse.distX < 0) {
                     // we can't decrease a level if an item preceeds the current one
-                    next = this.placeEl.next(opt.itemNodeName);
-                    if (!next.length) {
-                        parent = this.placeEl.parent();
-                        this.placeEl.closest(opt.itemNodeName).after(this.placeEl);
-                        if (!parent.children().length) {
-                            this.unsetParent(parent.parent());
-                        }
-                    }
+                    //next = this.placeEl.next(opt.itemNodeName);
+                    //if (!next.length) {
+                    //    parent = this.placeEl.parent();
+                    //    this.placeEl.closest(opt.itemNodeName).after(this.placeEl);
+                    //    if (!parent.children().length) {
+                    //        this.unsetParent(parent.parent());
+                    //    }
+                    //}
                 }
             }
 
@@ -457,6 +457,8 @@
 
                 var before = e.pageY < (this.pointEl.offset().top + this.pointEl.height() / 2);
                     parent = this.placeEl.parent();
+                var pointType = this.pointEl.data("type");
+                console.log(isEmpty,before);
                 // if empty create new list to replace empty placeholder
                 if (isEmpty) {
                     list = $(document.createElement(opt.listNodeName)).addClass(opt.listClass);
@@ -464,9 +466,8 @@
                     this.pointEl.replaceWith(list);
                 }
                 else if (before) {
-                    var pointType = this.pointEl.data("type");
                     if(type === 'file' && pointType === 'folder'){
-                        console.log("hererererer");
+                        console.log("here");
                         var prev = this.pointEl.prev();
                         //console.log(prev);
                         // cannot increase level when item above is collapsed
@@ -477,12 +478,19 @@
                         this.pointEl.before(this.placeEl);
                     }
 
-
-
-
                 }
                 else {
-                    this.pointEl.after(this.placeEl);
+                    if(type === 'file' && pointType === 'folder'){
+                        console.log(this.pointEl);
+                        list = $('<' + opt.listNodeName + '/>').addClass(opt.listClass);
+                        list.append(this.placeEl);
+                        this.pointEl.append(list);
+                        this.setParent(this.pointEl);
+
+                    }else{
+                        this.pointEl.after(this.placeEl);
+                    }
+
                 }
                 if (!parent.children().length) {
                     this.unsetParent(parent.parent());

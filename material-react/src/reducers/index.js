@@ -70,10 +70,14 @@ let globalError = (state = {},action) => {
             return state;
     }
 };
+let currentMenu = (state = [],action) => {
+    return state;
+};
 export default combineReducers({
     user,
     theme,
     projectList,
     currentProject,
     globalError,
+    currentMenu,
 })

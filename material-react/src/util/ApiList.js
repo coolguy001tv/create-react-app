@@ -51,9 +51,33 @@ let Project = {
 
 };
 
+let Folder = {
+    add:{
+        url:URL_PREFIX+"/v1/workbench/folder/{projectId}/add",
+        method:"post"
+    },
+    adjust:{
+        url:URL_PREFIX+"/v1/workbench/folder/{projectId}/adjust",
+        method:"post"
+    },
+    list:{
+        url:URL_PREFIX+"/v1/workbench/folder/{projectId}/list",
+        method:"get"
+    },
+    "delete":{
+        url:URL_PREFIX+"/v1/workbench/folder/{projectId}/{folderId}/delete",
+        method:"post"
+    },
+    edit:{
+        url:URL_PREFIX+"/v1/workbench/folder/{projectId}/{folderId}/edit",
+        method:"post"
+    }
+};
+
 export default {
     User,
     Login,
     Api,
-    Project
+    Project,
+    Folder,
 }

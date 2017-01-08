@@ -2,7 +2,7 @@
  * Created by CoolGuy on 2017/1/1.
  */
 import $ from 'jquery';
-import AjaxAction from '../actions/AjaxAction';
+import CommonAction from '../actions/CommonAction';
 
 export var createUuid = () =>{
     var s = [];
@@ -207,7 +207,7 @@ export var ajax = (options)=>{
     });
 };
 export var ajaxCommon = ({api,data,success,fail}) => {
-    let {ajaxStart,ajaxFail} = AjaxAction;
+    let {ajaxStart,ajaxFail} = CommonAction;
     return (dispatch) => {
         dispatch(ajaxStart());
         let ajaxOptions = {

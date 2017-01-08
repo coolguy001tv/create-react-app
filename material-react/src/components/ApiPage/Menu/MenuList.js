@@ -2,6 +2,7 @@
  * Created by CoolGuy on 2016/12/26.
  */
 import React,{Component} from 'react';
+import {connect} from 'react-redux';
 import Icon from '../../Icon';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import $ from 'jquery';
@@ -15,8 +16,48 @@ class MenuList extends Component{
     addFolder(){
         console.log("folder added");
     }
+    renderFolder(folder){
+        if(!folder || !folder.length){
+            return null;
+        }
+        return (
+            <ol className="dd-list">
+                {folder.map((v)=>{
+                    return (
+                        <li key={v.id} className="dd-item" data-type={v.type || "folder"} data-name={v.name}  data-id={v.id}>
+                            <div className="dd-handle"><Icon name="folder" size={20}/> <span className="name">{v.name}</span></div>
+                            {this.renderApi(v.children)}
+                        </li>
+                    );
+                })}
+            </ol>
+        )
+
+    }
+    renderApi(children){
+        if(!children || !children.length){
+            return null;
+        }
+        return (
+            <ol className="dd-list">
+                {children.map((v)=>{
+                    return (
+                        <li key={v.id} className="dd-item" data-type={v.type || "file"} data-name={v.name} data-method={v.method ||"options"}  data-id={v.id}>
+                            <div className="dd-handle"><span className={"method "+v.method}></span> <span className="name">{v.name}</span></div>
+                        </li>
+                    );
+                })}
+            </ol>
+        )
+    }
+    //目前只处理2级
+    renderMenu = ()=>{
+        let {currentMenu} = this.props;
+        return this.renderFolder(currentMenu);
+    };
     render(){
         let themeColor = this.props.muiTheme.palette.primary1Color;
+
         return (
             <div className="menu-list-wrapper">
                 <h1 style={{borderBottom:"1px solid "+themeColor}}>会议系统</h1>
@@ -25,31 +66,7 @@ class MenuList extends Component{
                     <Icon name="sort-alpha-asc" size={20}/>
                 </div>
                 <div id="leftMenu" className="dd">
-                    <ol className="dd-list">
-                        <li className="dd-item" data-type="folder" data-name="1用户管理"  data-id="abcdefas">
-                            <div className="dd-handle"><Icon name="folder" size={20}/> <span className="name">1用户管理</span></div>
-                            <ol className="dd-list">
-                                <li className="dd-item" data-type="file" data-name="1.1获取用户列表" data-method="post"  data-id="14">
-                                    <div className="dd-handle"><span className="method post"></span> <span className="name">1.1获取用户列表</span></div>
-                                </li>
-                            </ol>
-                        </li>
-                        <li className="dd-item" data-type="folder"  data-name="2统计管理" data-id="12">
-                            <div className="dd-handle"><Icon name="folder" size={20}/> <span className="name">2统计管理</span></div>
-                        </li>
-                        <li className="dd-item" data-type="folder"  data-id="13" data-name="3项目管理">
-                            <div className="dd-handle"><Icon name="folder" size={20}/> <span className="name">3项目管理</span></div>
-
-                            <ol className="dd-list">
-                                <li className="dd-item" data-type="file"  data-method="post"   data-name="获取用户列表" data-id="14">
-                                    <div className="dd-handle"><span className="method post"></span> <span className="name">获取用户列表</span></div>
-                                </li>
-                                <li className="dd-item" data-type="file"  data-method="get" data-id="15"  data-name="获取用户列表">
-                                    <div className="dd-handle"><span className="method get"></span> <span className="name">获取用户列表</span></div>
-                                </li>
-                            </ol>
-                        </li>
-                    </ol>
+                    {this.renderMenu()}
                 </div>
             </div>
 
@@ -57,4 +74,8 @@ class MenuList extends Component{
     }
 }
 
-export default muiThemeable()(MenuList);
+export default connect((state)=>{
+    return {
+        currentMenu:state.currentMenu
+    }
+})(muiThemeable()(MenuList));

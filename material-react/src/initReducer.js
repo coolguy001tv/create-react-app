@@ -10,9 +10,48 @@ export default {
     },
     theme: 'default',
     projectList:[],
+    currentMenu:[
+        {
+            "id": "abcdefas",
+            "name": "1用户管理",
+            "type": "folder",
+            "children": [
+                {
+                    "id": 14,
+                    "method": "post",
+                    "name": "1.1获取用户列表",
+                    "type": "file"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "name": "2统计管理",
+            "type": "folder"
+        },
+        {
+            "name": "3项目管理",
+            "id": 13,
+            "type": "folder",
+            "children": [
+                {
+                    "id": 14,
+                    "name": "获取用户列表",
+                    "method": "post",
+                    "type": "file"
+                },
+                {
+                    "name": "获取用户列表",
+                    "id": 15,
+                    "method": "get",
+                    "type": "file"
+                }
+            ]
+        }
+    ],
     currentProject:{
         //request和response都必须有uuid
-        request:[{
+        request:/*[{
             "require": false,
             "children": [{
                 "require": true,
@@ -49,21 +88,9 @@ export default {
             "name": "test",
             "uuid":"1234a654867",
             "textValue": ""
-        }],
+        }]*/ undefined,
         //request的textarea表现形式
-        requestTextArea:JSON.stringify({
-            "12345": "",
-            "data": {
-                "hello": "这里有只",
-                "test": {
-                    "a": {
-                        "第四季": ""
-                    }
-                },
-                "second": "s"
-            },
-            "test": ""
-        },null,'    '),
+        requestTextArea:"",
         response:undefined,
         responseTextArea:"",
     },

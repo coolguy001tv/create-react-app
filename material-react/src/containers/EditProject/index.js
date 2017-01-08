@@ -31,7 +31,8 @@ class EditProject extends Component{
         }else{
             dispatch(AjaxAction.projectAdd(projectNameValue,descriptionValue)).then((data)=>{
                 if(data.result){
-                    router.push('/dashboard/api');
+                    let id = data.data;
+                    router.push('/dashboard/api/'+id);
                 }
             });
         }

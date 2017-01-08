@@ -71,7 +71,12 @@ let globalError = (state = {},action) => {
     }
 };
 let currentMenu = (state = [],action) => {
-    return state;
+    switch (action.type){
+        case AjaxAction.FOLDER_ADD:
+            return [...state,action.newFolder];
+        default:
+            return state;
+    }
 };
 export default combineReducers({
     user,

@@ -2,6 +2,7 @@
  * Created by CoolGuy on 2016/12/21.
  */
 import React,{Component} from 'react';
+import {connect} from 'react-redux';
 import Menu from '../../components/ApiPage/Menu/MenuList';
 import ApiContent from '../../components/ApiPage/ApiContent';
 import './api-page.scss';
@@ -19,4 +20,4 @@ class ApiPage extends Component{
     }
 }
 
-export default ApiPage;
+export default connect()(ApiPage);

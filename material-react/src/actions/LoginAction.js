@@ -11,6 +11,7 @@ const {
 //actions
 const LOGIN = "LOGIN";//登录
 const REG = "REG";//注册
+const LOGIN_FORGET = "LOGIN_FORGET";//忘记密码
 //action creators
 let loginSuccess = (data) => {
     return {
@@ -60,4 +61,14 @@ export default {
             data:{email,password},
             success:regSuccess});
     },
+    LOGIN_FORGET,
+    loginForget: (email) => {
+        return ajaxCommon({
+            api:API.Login.forget,
+            data:{email},
+            success:(data)=>({
+                type:LOGIN_FORGET,
+                data
+            })});
+    }
 }

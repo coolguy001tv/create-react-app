@@ -29,7 +29,6 @@ class DashboardIndex extends Component{
                         rounded={false}
                         zDepth={0}
                         style={{borderBottom:"2px solid "+themeColor}}
-
                     >
                         <Icon name="gear" size={20} className="settings" useThemeColor={true}
                               onClick={(e)=>{e.preventDefault();e.stopPropagation();this.jumpToEditProject(id);}}></Icon>

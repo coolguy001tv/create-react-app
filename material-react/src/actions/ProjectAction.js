@@ -6,6 +6,8 @@ import {ajaxCommon} from '../util';
 const PROJECT_ADD = "PROJECT_ADD";//新增一个项目
 const PROJECT_EDIT = "PROJECT_EDIT";//设置一个项目
 const PROJECT_LIST = "PROJECT_LIST";//获取项目列表
+const PROJECT_DELETE = "PROJECT_DELETE";//删除一个项目
+const PROJECT_SEARCH = "PROJECT_SEARCH";//搜索一个项目
 
 let projectAddSuccess = (data) => {
     return {
@@ -39,11 +41,32 @@ export default {
     //todo: 暂时不支持ICON上传
     PROJECT_EDIT,
     projectEdit : (projectId,projectName,description)=>{
-        let api = API.Project.edit;
-        api.url = api.url.replace("{projectId}",projectId);
         return ajaxCommon({
-            api:api,
+            api:API.Project.edit(projectId),
             data:{projectName,description},
-            success:projectEditSuccess});
+            success:projectEditSuccess
+        });
+    },
+    PROJECT_DELETE,
+    projectDelete : (projectId) => {
+        return ajaxCommon({
+            api:API.Project.delete(projectId),
+            data:{projectId},
+            success:(data)=>({
+                type:PROJECT_DELETE,
+                data
+            })
+        });
+    },
+    PROJECT_SEARCH,
+    projectSearch : (projectId,searchReq) => {
+        return ajaxCommon({
+            api:API.Project.search(projectId),
+            data:{projectId,searchReq},
+            success:(data)=>({
+                type:PROJECT_SEARCH,
+                data
+            })
+        });
     },
 }

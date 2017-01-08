@@ -10,7 +10,7 @@ export default {
     },
     theme: 'default',
     projectList:[],
-    currentMenu:[
+    currentMenu:/*[
         {
             "id": "abcdefas",
             "name": "1用户管理",
@@ -48,7 +48,7 @@ export default {
                 }
             ]
         }
-    ],
+    ]*/undefined,
     currentProject:{
         //request和response都必须有uuid
         request:/*[{

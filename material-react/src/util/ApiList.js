@@ -20,6 +20,10 @@ let Login = {
     logout:{
         url:URL_PREFIX+"/v1/user/account/logout",
         method:"post"
+    },
+    forget:{
+        url:URL_PREFIX+"/v1/user/account/forget",
+        method:"post"
     }
 };
 
@@ -28,10 +32,18 @@ let Api = {
         url:URL_PREFIX+"/v1/workbench/api/add",
         method:"post"
     },
-    "get":{
-        url:URL_PREFIX+"/v1/workbench/api",
+    "get":(apiId)=>({
+        url:`${URL_PREFIX}/v1/workbench/api/${apiId}`,
         method:"get"
-    }
+    }),
+    delete:(apiId)=>({
+        url:`${URL_PREFIX}/v1/workbench/api/${apiId}/delete`,
+        method:"post"
+    }),
+    edit:(apiId)=>({
+        url:`${URL_PREFIX}/v1/workbench/api/${apiId}/edit`,
+        method:"post"
+    }),
 
 };
 let Project = {
@@ -44,35 +56,58 @@ let Project = {
         url:URL_PREFIX+"/v1/workbench/project/list",
         method:"get"
     },
-    edit:{
-        url:URL_PREFIX+"/v1/workbench/project/{projectId}/edit",
+    edit:(projectId)=>({
+        url:`${URL_PREFIX}/v1/workbench/project/${projectId}/edit`,
         method:"post"
-    }
+    }),
+    "delete":(projectId)=>({
+        url:`${URL_PREFIX}/v1/workbench/project/${projectId}/delete`,
+        method:"post"
+    }),
+    "search":(projectId)=>({
+        url:`${URL_PREFIX}/v1/workbench/project/${projectId}/search`,
+        method:"post"
+    }),
 
 };
 
 let Folder = {
-    add:{
-        url:URL_PREFIX+"/v1/workbench/folder/{projectId}/add",
+    add: (projectId)=>({
+        url:`${URL_PREFIX}/v1/workbench/folder/${projectId}/add`,
         method:"post"
-    },
-    adjust:{
-        url:URL_PREFIX+"/v1/workbench/folder/{projectId}/adjust",
+    }),
+    adjust:(projectId)=>({
+        url:`${URL_PREFIX}/v1/workbench/folder/${projectId}/adjust`,
         method:"post"
-    },
-    list:{
-        url:URL_PREFIX+"/v1/workbench/folder/{projectId}/list",
+    }),
+    "list":(projectId)=>({
+        url:`${URL_PREFIX}/v1/workbench/folder/${projectId}/list`,
+        method:"get"
+    }),
+    "delete":(projectId,folderId)=>({
+        url:`${URL_PREFIX}/v1/workbench/folder/${projectId}/${folderId}/delete`,
+        method:"post"
+    }),
+    edit:(projectId,folderId)=>({
+        url:`${URL_PREFIX}/v1/workbench/folder/${projectId}/${folderId}/edit`,
+        method:"post"
+    })
+};
+
+let UserSetting = {
+    account:{
+        url:URL_PREFIX+"/v1/user/setting/account",
         method:"get"
     },
-    "delete":{
-        url:URL_PREFIX+"/v1/workbench/folder/{projectId}/{folderId}/delete",
-        method:"post"
+    info:{
+        url:URL_PREFIX+"/v1/user/setting/info",
+        method:"get"
     },
-    edit:{
-        url:URL_PREFIX+"/v1/workbench/folder/{projectId}/{folderId}/edit",
+    infoEdit:{
+        url:URL_PREFIX+"/v1/user/setting/info/edit",
         method:"post"
     }
-};
+}
 
 export default {
     User,
@@ -80,4 +115,5 @@ export default {
     Api,
     Project,
     Folder,
+    UserSetting,
 }

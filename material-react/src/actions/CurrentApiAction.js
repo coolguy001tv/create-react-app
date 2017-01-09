@@ -8,6 +8,8 @@ const CHANGE_API_REQUEST_DATA_TEXT_AREA_ALL = 'CHANGE_API_REQUEST_DATA_TEXT_AREA
 const ADD_API_REQUEST_DATA = 'ADD_API_REQUEST_DATA';//新增一行API的请求参数
 const DEL_API_REQUEST_DATA = 'DEL_API_REQUEST_DATA';//删除一行API的请求参数
 
+const CHANGE_API_DATA_BY_KEY = 'CHANGE_API_DATA_BY_KEY';//通过key-value的方式修改指定的API，以上主体上都是通过Object修改的
+
 //apiType应该只有request和response两种
 //修改api-request请求类型
 var changeApiRequestData = (apiType,uuid,key,value) => {
@@ -53,9 +55,17 @@ export default {
     CHANGE_API_REQUEST_DATA_TEXT_AREA_ALL,
     ADD_API_REQUEST_DATA,
     DEL_API_REQUEST_DATA,
+    CHANGE_API_DATA_BY_KEY,
     changeApiRequestData,
     changeApiRequestDataAll,
     changeApiRequestDataTextAreaAll,
     addApiRequestData,
     delApiRequestData,
+    changeApiDataByKey : (key,value)=>{
+        return {
+            type:CHANGE_API_DATA_BY_KEY,
+            key,
+            value,
+        }
+    }
 }

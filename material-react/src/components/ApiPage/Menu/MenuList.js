@@ -12,24 +12,28 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import AjaxAction from '../../../actions/AjaxAction';
-import {createUuid} from '../../../util'
+import action from '../../../actions';
+import {createUuid} from '../../../util';
+import {defaultLeftMenu} from '../../../initData';
 
 import $ from 'jquery';
 require("../../../../public/nestable/jquery.nestable");
 import './menu-list.scss';
 class MenuList extends Component{
     state = {
-        dialogOpen: false,
-        dialogType:"file",//文件file或者文件夹folder
-        dialogOperation:"add",//新增add或者编辑edit
+        dialogFolderOpen: false,
+        dialogApiOpen:false,
     };
-    handleOpen = () => {
-        this.setState({dialogOpen: true});
+    handleOpen = (isFolder) => {
+        let key = isFolder ? 'dialogFolderOpen' : 'dialogApiOpen'
+        this.setState({[key]: true});
     };
 
-    handleClose = () => {
-        this.setState({dialogOpen: false});
+    handleClose = (isFolder) => {
+        let key = isFolder ? 'dialogFolderOpen' : 'dialogApiOpen'
+        this.setState({[key]: false});
     };
+
     getProjectId = ()=>{
         let location = window.location.href;
         let locArr = location.split("/");
@@ -55,28 +59,79 @@ class MenuList extends Component{
             //console.log(data,currentMenu);
 
         });
-        dispatch(AjaxAction.folderList(this.getProjectId()));
+        $leftMenu.on("helloworld",function(){
+            let $this = $(this);
+            console.log($this);
+        });
+        //获取列表
+        dispatch(AjaxAction.folderList(this.getProjectId())).then((data)=>{
+            let theData = data.data;
+            //如果没有数据添加一条默认的目录数据
+            if(!theData || !theData.folders){
+                this.addFolder(defaultLeftMenu[0]);
+            }
+
+        });
     }
-    addName = ()=>{
-        this.handleOpen();
-    };
-    addFolder = ()=>{
-        let {dispatch,currentMenu} = this.props;
-        let projectId = this.getProjectId();
-        let name = this.refs.name.input.value;
-        let newFolder = {
-            "id": createUuid(),
-            "name": name,
-            "type": "folder",
+
+    addOneApi = ()=>{
+        //告知后端创建新的API了
+        //先只创建API到默认的未分类下，后期考虑放到其他目录下
+        let {currentMenu,dispatch} = this.props;
+        let currentMenu0 = currentMenu[0];
+        let newApi = {
+            apiId:createUuid(),
+            apiName:this.refs.apiName.input.value || "新的API",
+            type:"file"
         };
+        let newListItem = {
+            id:newApi.apiId,
+            name:newApi.apiName,
+            type:newApi.type
+        };
+        currentMenu0.children = currentMenu0.children || [];
+        currentMenu0.children.push(newListItem);
+        dispatch(AjaxAction.apiAdd({
+            apiId:createUuid(),
+            api:{
+                apiName:newApi.apiName
+            },
+            projectId:this.getProjectId(),
+            folders:{
+                list:currentMenu
+            }
+        }));
+        this.setState({
+            dialogApiOpen:false
+        })
+    };
+    addFolder = (folder)=>{
+        let {dispatch,currentMenu} = this.props;
+        currentMenu = currentMenu || [];
+        let newFolder = folder;
+        let projectId = this.getProjectId();
+        if(!newFolder){
+            let name = this.refs.name.input.value;
+            newFolder = {
+                "id": createUuid(),
+                "name": name,
+            };
+        }
+        newFolder.type = "folder";
         let newFolders = [...currentMenu,newFolder];
         dispatch(AjaxAction.folderAdd(projectId,newFolder.id,newFolder.name,newFolders)).then((data)=>{
             if(data.result){
                 this.setState({
-                    dialogOpen:false
+                    dialogFolderOpen:false
                 })
             }
         })
+    };
+    addApi = ()=>{
+        let {dispatch} = this.props;
+        dispatch(action.showApiDetail());
+        this.addOneApi();
+        //同时还需要更新左侧目录
     };
     renderFolder(folder){
         if(!folder || !folder.length){
@@ -86,8 +141,8 @@ class MenuList extends Component{
             <ol className="dd-list">
                 {folder.map((v)=>{
                     return (
-                        <li key={v.id || v.folderId} className="dd-item" data-type={v.type || "folder"} data-name={v.name || v.folderName}  data-id={v.id || v.folderId}>
-                            <div className="dd-handle"><Icon name="folder" size={20}/> <span className="name">{v.name || v.folderName}</span></div>
+                        <li key={v.id} className="dd-item" data-type={v.type || "folder"} data-name={v.name}  data-id={v.id}>
+                            <div className="dd-handle"><Icon name="folder" size={20}/> <span className="name">{v.name}</span></div>
                             {this.renderApi(v.children)}
                         </li>
                     );
@@ -129,8 +184,8 @@ class MenuList extends Component{
                         anchorOrigin={{horizontal: 'middle', vertical: 'top'}}
                         targetOrigin={{horizontal: 'middle', vertical: 'top'}}
                     >
-                        <MenuItem primaryText="文件夹" onClick={this.addName}/>
-                        <MenuItem primaryText="API" />
+                        <MenuItem primaryText="文件夹" onClick={this.handleOpen.bind(this,true)}/>
+                        <MenuItem primaryText="API" onClick={this.handleOpen.bind(this,false)}/>
                     </IconMenu>
 
                     <Icon name="sort-alpha-asc" size={20}/>
@@ -144,19 +199,39 @@ class MenuList extends Component{
                     actions={[<FlatButton
                                 label="取消"
                                 primary={true}
-                                onTouchTap={this.handleClose}
+                                onTouchTap={this.handleClose.bind(this,true)}
                               />,
                             <FlatButton
                                 label="提交"
                                 primary={true}
                                 keyboardFocused={true}
-                                onTouchTap={this.addFolder}
+                                onTouchTap={this.addFolder.bind(this,null)}
                             />]}
                     modal={false}
-                    open={this.state.dialogOpen}
-                    onRequestClose={this.handleClose}
+                    open={this.state.dialogFolderOpen}
+                    onRequestClose={this.handleClose.bind(this,true)}
                 >
                     <TextField hintText="给文件夹取个名字" ref="name"/>
+                </Dialog>
+                <Dialog
+                    title="请输入API名称"
+                    contentStyle={{width:400}}
+                    actions={[<FlatButton
+                                label="取消"
+                                primary={true}
+                                onTouchTap={this.handleClose.bind(this,false)}
+                              />,
+                            <FlatButton
+                                label="提交"
+                                primary={true}
+                                keyboardFocused={true}
+                                onTouchTap={this.addApi.bind(this,null)}
+                            />]}
+                    modal={false}
+                    open={this.state.dialogApiOpen}
+                    onRequestClose={this.handleClose.bind(this,false)}
+                >
+                    <TextField hintText="给API取个名字" ref="apiName"/>
                 </Dialog>
             </div>
 

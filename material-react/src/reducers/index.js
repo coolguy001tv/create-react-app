@@ -5,6 +5,7 @@ import { combineReducers } from 'redux';
 import actions from '../actions';
 import AjaxAction from '../actions/AjaxAction';
 import CurrentProjectReducer from './CurrentApiReducer';
+import {defaultApi,defaultLeftMenu} from '../initData';
 let user = (state={},action)=>{
     let obj;
     switch (action.type){
@@ -27,7 +28,7 @@ let theme = (state = {}, action) => {
     }
 };
 
-let currentApi = (state = {}, action) => {
+let currentApi = (state = defaultApi, action) => {
     let result,merge;
     let {apiType} = action;//apiType应该只有request和response两种
     switch (action.type){
@@ -46,6 +47,10 @@ let currentApi = (state = {}, action) => {
         case actions.DEL_API_REQUEST_DATA:
             result = CurrentProjectReducer.del(state[apiType],action);
             merge = Object.assign({},state,{[apiType]:result});
+            return merge;
+        case actions.CHANGE_API_DATA_BY_KEY:
+            let {key,value} = action;
+            merge = Object.assign({},state,{[key]:value});
             return merge;
         default:
             return state;
@@ -70,18 +75,40 @@ let globalError = (state = {},action) => {
             return state;
     }
 };
+
 let currentMenu = (state = [],action) => {
     switch (action.type){
         case AjaxAction.FOLDER_ADD:
-            return [...state,action.newFolder];
+            let {newFolder} = action;
+            newFolder.type = "folder";
+            return [...state,newFolder];
         case AjaxAction.FOLDER_LIST:
-            return action.data;
+            return action.data || [];
         case AjaxAction.FOLDER_ADJUST:
             return action.list;
+        case AjaxAction.API_ADD:
+            return [...action.api.folders.list];
         default:
             return state;
     }
 };
+
+let showApi = (state = false, action) => {
+    switch (action.type){
+        case actions.SHOW_API_DETAIL:
+            return true;
+        default:
+            return state;
+    }
+};
+let currentApiId = (state = null,action) => {
+    switch (action.type){
+        case AjaxAction.API_ADD:
+            return action.api.apiId;
+        default:
+            return state;
+    }
+}
 export default combineReducers({
     user,
     theme,
@@ -89,4 +116,6 @@ export default combineReducers({
     currentApi,
     globalError,
     currentMenu,
+    showApi,
+    currentApiId,
 })

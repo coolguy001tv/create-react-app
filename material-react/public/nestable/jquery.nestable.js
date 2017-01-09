@@ -87,6 +87,8 @@
             var onStartEvent = function(e)
             {
                 var handle = $(e.target);
+                $(this).trigger("helloworld");
+                console.log(this);
                 if (!handle.hasClass(list.options.handleClass)) {
                     if (handle.closest('.' + list.options.noDragClass).length) {
                         return;

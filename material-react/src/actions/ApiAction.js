@@ -17,12 +17,13 @@ export default {
     apiAdd: (api)=>{
         return ajaxCommon({
             api:API.Api.add,
-            data:{api},
+            data:api,
             success:(data)=>({
                 type:API_ADD,
-                data
-            })
-        })
+                api
+            }),
+            doNotWaitAjax:true,
+        });
     },
     apiGet: (apiId)=>{
         return ajaxCommon({
@@ -42,9 +43,13 @@ export default {
             })
         })
     },
-    apiEdit: (apiId)=>{
+    apiEdit: (apiId,edit)=>{
         return ajaxCommon({
-            api:API.Api.delete(apiId),
+            api:API.Api.edit(apiId),
+            data:{
+                apiId,
+                ...edit
+            },
             success:(data)=>({
                 type:API_EDIT,
                 data

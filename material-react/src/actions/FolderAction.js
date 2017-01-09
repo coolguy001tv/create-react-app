@@ -35,8 +35,10 @@ let mergeFoldersAndData = (folders,data)=>{
 };
 
 let folderListSuccess = (data)=>{
-    let result = mergeFoldersAndData(data.folders.list,data.data);
-    console.log(result);
+    let result;
+    if(data.folders){
+        result = mergeFoldersAndData(data.folders.list,data.data);
+    }
     return {
         type:FOLDER_LIST,
         data:result,
@@ -76,7 +78,7 @@ export default {
             api:API.Folder.add(projectId),
             data:{folderId,folderName,folders:{list:list}},
             success:(data)=>{
-                return folderAddSuccess(data,{folderId,folderName});
+                return folderAddSuccess(data,{id:folderId,name:folderName});
             }});
     },
     folderList : (projectId)=>{

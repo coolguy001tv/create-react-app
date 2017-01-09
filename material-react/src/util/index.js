@@ -206,7 +206,9 @@ export var ajax = (options)=>{
         headers:headers
     });
 };
-export var ajaxCommon = ({api,data,success,fail}) => {
+//通用的调用ajax的接口
+//如果doNotWaitAjax为真，那么dispatch不需要等待ajax的返回
+export var ajaxCommon = ({api,data,success,fail,doNotWaitAjax}) => {
     let {ajaxStart,ajaxFail} = CommonAction;
     return (dispatch) => {
         dispatch(ajaxStart());
@@ -217,7 +219,8 @@ export var ajaxCommon = ({api,data,success,fail}) => {
         data && (ajaxOptions.data = {...data});
         let token = sessionStorage['token'];
         token && (ajaxOptions.headers = {"auth-token":token});
-        return ajax(ajaxOptions)
+
+        let ajaxResult = ajax(ajaxOptions)
             .done((json)=>{
                 if(json && json.result && success){
                     return dispatch(success(json.data || {...data}))
@@ -230,6 +233,13 @@ export var ajaxCommon = ({api,data,success,fail}) => {
                 }
 
             })
-            .fail(e=>dispatch(ajaxFail(e)))
+            .fail(e=>dispatch(ajaxFail(e)));
+
+        if(doNotWaitAjax === true){
+            return dispatch(success());
+        }
+
+        return ajaxResult;
     }
 };
+

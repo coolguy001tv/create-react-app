@@ -14,16 +14,10 @@ import ApiVisual from '../ApiVisual';
 import TextArea from '../../TextArea';
 import './api-content.scss';
 import $ from 'jquery';
+import action from '../../../actions';
+import AjaxAction from '../../../actions/AjaxAction';
+import {request_method,request_protocol,data_type,response_type} from '../../../initData';
 
-//import reducers from '../../../reducers';
-
-
-const request_method = ["GET","POST","HEAD","PUT","DELETE","TRACE","CONNECT","OPTIONS"];
-const request_type = ["HTTP","HTTPS"];
-const data_type = ["FORM_DATA","X_WWW_FORM_URLENCODED","RAW","BINARY"];
-const response_type = ["application/atom+xml","application/x-www-form-urlencoded","application/json","application/octet-stream",
-    "application/svg+xml","application/xhtml+xml","application/xml","multipart/form-data","text/html","text/plain",
-    "text/xml","*/*","pplication/octet-stream"];
 let titleStyle = {
     fontSize:14,
     color:"#A4B3C1",//themeColor,
@@ -41,14 +35,19 @@ let cardStyle = {
 let liHeight = 29;
 class ApiContent extends Component{
     state = {
-        request_method:request_method[0],
-        request_type:request_type[0],
-        data_type:data_type[0],
-        response_type:response_type[2],
         top:0
     };
-    handleChange = (type,event, index, value) => this.setState({[type]:value});
+    handleKeyValueChange = (key,event,value) => {
+        let {dispatch,currentApiId} = this.props;
+        dispatch(action.changeApiDataByKey(key,value));
+        //修改同时告诉后端需要更新的数据
+        dispatch(AjaxAction.apiEdit(currentApiId,{
+            [key]:value
+        }))
+    };
     cardBasicInfo(){
+        let {currentApi} = this.props;
+        currentApi = currentApi || {};
         return (
             <Card containerStyle={cardStyle}>
                 <CardTitle title="基本信息" titleStyle={titleStyle} style={cardTitleStyle}/>
@@ -57,28 +56,54 @@ class ApiContent extends Component{
                         hintText="http://"
                         floatingLabelText="接口地址"
                         fullWidth={true}
-
+                        onChange={this.handleKeyValueChange.bind(this,"requestURL")}
+                        value={currentApi.requestURL}
                     />
                 </div>
                 <div className="dp-f">
                     <div className="flex1">
+                        <TextField
+                            hintText=""
+                            floatingLabelText="版本号"
+                            fullWidth={true}
+                            onChange={this.handleKeyValueChange.bind(this,"version")}
+                            value={currentApi.version}
+                        />
+                    </div>
+                    <div className="flex1">
                         <SelectField
                             floatingLabelText="请求类型"
-                            value={this.state.request_type}
-                            onChange={(...e)=>{this.handleChange('request_type',...e)}}
+                            value={currentApi.contentType}
+                            onChange={(event,index,value)=>{this.handleKeyValueChange("contentType",event,value);}}
                             fullWidth={true}
                         >
-                            {request_type.map((v,i)=>{
+                            {response_type.map((v,i)=>{
                                 return <MenuItem key={i}  value={v} primaryText={v} />
                             })}
 
                         </SelectField>
                     </div>
+                </div>
+                <div className="dp-f">
+                    <div className="flex1">
+                        <SelectField
+                            floatingLabelText="协议类型"
+                            value={currentApi.protocol}
+                            onChange={(event,index,value)=>{this.handleKeyValueChange("protocol",event,value);}}
+                            fullWidth={true}
+                        >
+                            {request_protocol.map((v,i)=>{
+                                return <MenuItem key={i}  value={v} primaryText={v} />
+                            })}
+
+                        </SelectField>
+                    </div>
+
                     <div className="flex1">
                         <SelectField
                             floatingLabelText="请求方式"
-                            value={this.state.request_method}
-                            onChange={(...e)=>{this.handleChange('request_method',...e)}}
+                            value={currentApi.requestMethod}
+                            onChange={(event,index,value)=>{this.handleKeyValueChange("requestMethod",event,value);}}
                             fullWidth={true}
                         >
                             {request_method.map((v,i)=>{
@@ -92,8 +117,8 @@ class ApiContent extends Component{
                     <div className="flex1">
                         <SelectField
                             floatingLabelText="数据类型"
-                            value={this.state.data_type}
-                            onChange={(...e)=>{this.handleChange('data_type',...e)}}
+                            value={currentApi.dataType}
+                            onChange={(event,index,value)=>{this.handleKeyValueChange("dataType",event,value);}}
                             fullWidth={true}
                         >
                             {data_type.map((v,i)=>{
@@ -105,8 +130,8 @@ class ApiContent extends Component{
                     <div className="flex1">
                         <SelectField
                             floatingLabelText="响应类型"
-                            value={this.state.response_type}
-                            onChange={(...e)=>{this.handleChange('response_type',...e)}}
+                            value={currentApi.respContentType}
+                            onChange={(event,index,value)=>{this.handleKeyValueChange("respContentType",event,value);}}
                             fullWidth={true}
                             labelStyle={{whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}
                         >
@@ -176,18 +201,23 @@ class ApiContent extends Component{
     render(){
 
         let themeColor = this.props.muiTheme.palette.primary1Color;
-        let {request,requestTextArea,response,responseTextArea} = this.props;
-        let isEmpty = !(request && request.length);
+        let {showApi,currentApi} = this.props;
+        let {request,requestTextArea,response,responseTextArea} = currentApi;
         return (
             <div className="api-content-wrapper">
-                {isEmpty ? <div>赶紧从左边新增一个或者选择一个API吧</div> :
+                {!showApi ? <div>赶紧从左边新增一个或者选择一个API吧</div> :
                 <div>
                     <div className="header">
-                        <h1>获取用户列表</h1>
+                        <h1><TextField
+                            hintText="请输入接口名称"
+                            value={currentApi.apiName}
+                            onChange={this.handleKeyValueChange.bind(this,"apiName")}
+                            fullWidth={true}
+                            /></h1>
                         <div className="toggle">
                             <Toggle
                                 label="预览"
-                                defaultToggled={true}
+                                defaultToggled={false}
                                 labelPosition="right"
                                 style={{float:"right"}}
                             />
@@ -254,9 +284,12 @@ class ApiContent extends Component{
 }
 export default connect((state)=>{
     return {
-        request:state.currentApi.request,
-        requestTextArea:state.currentApi.requestTextArea,
-        response:state.currentApi.response,
-        responseTextArea:state.currentApi.responseTextArea
+        currentApiId:state.currentApiId,
+        currentApi:state.currentApi,
+        //request:state.currentApi.request,
+        //requestTextArea:state.currentApi.requestTextArea,
+        //response:state.currentApi.response,
+        //responseTextArea:state.currentApi.responseTextArea,
+        showApi:state.showApi,
     }
 })(muiThemeable()(ApiContent));

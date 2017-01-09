@@ -53,6 +53,6 @@ let del = (state = [],action) => {
 
 export default {
     modify,
-    add,
+    add,//新增一个request/response相关数据
     del
 }

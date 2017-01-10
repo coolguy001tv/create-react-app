@@ -9,6 +9,19 @@
 * 后端负责人：*小礼子*
 * 前端负责人：*丁丁*
 
+
+# 第一次安装
+1. 首先安装node.js
+2. 新建一个.npmrc，放置到当前用户目录下（默认的档期目录可能是C:\Users\Administrator），注意，这块操作主要是方便国内加速，即使不进行这次操作应该也是OK的
+```
+registry=https://registry.npm.taobao.org
+disturl=https://npm.taobao.org/dist
+```
+3. 在当前目录下执行npm i
+4. 等待报错后，能够看到当前目录下有一个新的文件夹node_modules，将node-sass解压后放置到node_modules下（记得保留node-sass目录）
+5. 继续执行npm i
+6. 执行完之后，在当前目录下跑npm start即可
+
 # 文件夹结构
 * src/
     * components/

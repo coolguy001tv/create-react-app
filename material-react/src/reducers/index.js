@@ -52,6 +52,8 @@ let currentApi = (state = defaultApi, action) => {
             let {key,value} = action;
             merge = Object.assign({},state,{[key]:value});
             return merge;
+        case AjaxAction.API_GET:
+            return action.data.api;
         default:
             return state;
     }
@@ -97,6 +99,8 @@ let showApi = (state = false, action) => {
     switch (action.type){
         case actions.SHOW_API_DETAIL:
             return true;
+        case AjaxAction.API_GET:
+            return true;
         default:
             return state;
     }
@@ -105,6 +109,8 @@ let currentApiId = (state = null,action) => {
     switch (action.type){
         case AjaxAction.API_ADD:
             return action.api.apiId;
+        case AjaxAction.API_GET:
+            return action.apiId;
         default:
             return state;
     }

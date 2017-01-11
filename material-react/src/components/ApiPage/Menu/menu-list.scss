@@ -48,15 +48,49 @@ $border-color:#dbe8f0;
     }
 
   }
+  //这个是list下的list，也就是API的样式
   .dd-list {
-    padding-left: 30px;
-    .dd-handle{
-      //因为这个要被拖出去，所以这里如果设置padding之类的会影响样式
-    }
+    //padding-left: 30px;
+    .dd-item{
 
+
+    }
 
   }
 }
+
+.dd-item{
+  background: #fafafa;
+  position: relative;
+  .item-icon{
+    position: absolute;
+    right: 0;
+    top:0;
+    height:48px;
+  }
+  &:hover{
+    color: #2ea8e5;
+    background: #fff;
+  }
+
+
+  //因为这个要被拖出去，所以这里如果设置padding之类的会影响样式
+  .dd-handle {
+    display: block;
+    height: 48px;
+    line-height: 48px;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  .settings{
+    //width: 25px;
+  }
+}
+
+
 
 .dd-collapsed .dd-list {
   display: none;
@@ -74,22 +108,9 @@ $border-color:#dbe8f0;
   line-height: 20px;
 }
 
-.dd-handle {
-  display: block;
-  height: 48px;
-  line-height: 48px;
-  margin: 0;
-  padding: 0;
-  color: #333;
-  background: #fafafa;
-  box-sizing: border-box;
-  cursor: pointer;
-}
 
-.dd-handle:hover {
-  color: #2ea8e5;
-  background: #fff;
-}
+
+
 
 .dd-item > button {
   display: block;
@@ -155,7 +176,7 @@ $border-color:#dbe8f0;
   margin-top: 0;
 }
 
-.dd-dragel .dd-handle {
+.dd-dragel .dd-item {
   -webkit-box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, .1);
   box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, .1);
 }

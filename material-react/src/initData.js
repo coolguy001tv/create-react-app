@@ -22,18 +22,28 @@ let initData = (type,input) => {
 export const request_method = ["GET","POST","HEAD","PUT","DELETE","TRACE","CONNECT","OPTIONS"];
 export const request_protocol = ["HTTP","HTTPS"];
 export const data_type = ["FORM_DATA","X_WWW_FORM_URLENCODED","RAW","BINARY"];
-export const response_type = ["application/atom+xml","application/x-www-form-urlencoded","application/json","application/octet-stream",
-    "application/svg+xml","application/xhtml+xml","application/xml","multipart/form-data","text/html","text/plain",
-    "text/xml","*/*","pplication/octet-stream"];
+export const response_type = [{APPLICATION_ATOM_XML:"application/atom+xml"},
+    {APPLICATION_FORM_URLENCODED:"application/x-www-form-urlencoded"},
+    {APPLICATION_JSON:"application/json"},
+    {APPLICATION_OCTET_STREAM:"application/octet-stream"},
+    {APPLICATION_SVG_XML:"application/svg+xml"},
+    {APPLICATION_XHTML_XML:"application/xhtml+xml"},
+    {APPLICATION_XML:"application/xml"},
+    {MULTIPART_FORM_DATA:"multipart/form-data"},
+    {TEXT_HTML:"text/html"},
+    {TEXT_PLAIN:"text/plain"},
+    {TEXT_XML:"text/xml"},
+    {WILDCARD:"*/*"},
+    {DEFAULT_BINARY:"pplication/octet-stream"}];
 
 //默认API拥有以下信息
 export const defaultApi = {
     apiName:"",
-    contentType:response_type[2],
+    contentType:"APPLICATION_JSON",//response_type[2]的key
     dataType:data_type[0],
     protocol:request_protocol[0],
     requestMethod:request_method[0],
-    respContentType:response_type[2],
+    respContentType:"APPLICATION_JSON",//response_type[2]的key
     description:"",
     requestURL:"",
     "version":"1.0.0",

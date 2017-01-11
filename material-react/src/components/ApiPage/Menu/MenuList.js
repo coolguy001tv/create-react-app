@@ -52,11 +52,19 @@ class MenuList extends Component{
         let $leftMenu = $('#leftMenu');
         let _this = this;
         $leftMenu.nestable({maxDepth:2});
-        $leftMenu.on("change",function(){
+        $leftMenu.on("change",function(e,changedElement){
             let data = $leftMenu.nestable('serialize');
             let {dispatch} = _this.props;
-            dispatch(AjaxAction.folderAdjust(_this.getProjectId(),data));
+            //todo: 优化什么时候应该发起协议
+            //dispatch(AjaxAction.folderAdjust(_this.getProjectId(),data));
             //console.log(data,currentMenu);
+            //目前只能先依靠这个事件了
+            //如果点击的是API，需要获取详情
+            let $p = $(changedElement).parent();
+            if($p.data("type") === "file"){
+                let id = $p.data("id");
+                id && dispatch(AjaxAction.apiGet(id))
+            }
 
         });
         $leftMenu.on("helloworld",function(){
@@ -133,6 +141,11 @@ class MenuList extends Component{
         this.addOneApi();
         //同时还需要更新左侧目录
     };
+    setFolder = (e)=>{
+        console.log("setFolder");
+        e.stopPropagation();
+    };
+    //注意，请不要随意动renderFolder/renderApi的结构，否则拖动可能不可用
     renderFolder(folder){
         if(!folder || !folder.length){
             return null;
@@ -142,7 +155,20 @@ class MenuList extends Component{
                 {folder.map((v)=>{
                     return (
                         <li key={v.id} className="dd-item" data-type={v.type || "folder"} data-name={v.name}  data-id={v.id}>
-                            <div className="dd-handle"><Icon name="folder" size={20}/> <span className="name">{v.name}</span></div>
+                            <div className="dd-handle">
+                                <Icon name="folder" size={20}/>
+                                <span className="name">{v.name}</span>
+                            </div>
+                            <IconMenu
+                                iconButtonElement={<IconButton iconClassName="fa fa-plus-square"></IconButton>}
+                                anchorOrigin={{horizontal: 'middle', vertical: 'top'}}
+                                targetOrigin={{horizontal: 'middle', vertical: 'top'}}
+                                className="item-icon"
+                                style={{position:"absolute"}}
+                            >
+                                <MenuItem primaryText="文件夹" onClick={this.handleOpen.bind(this,true)}/>
+                                <MenuItem primaryText="API" onClick={this.handleOpen.bind(this,false)}/>
+                            </IconMenu>
                             {this.renderApi(v.children)}
                         </li>
                     );

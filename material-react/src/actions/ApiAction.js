@@ -30,7 +30,8 @@ export default {
             api:API.Api.get(apiId),
             success:(data)=>({
                 type:API_GET,
-                data
+                data,
+                apiId
             })
         })
     },

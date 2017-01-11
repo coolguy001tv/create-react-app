@@ -41,6 +41,7 @@ class ApiContent extends Component{
         let {dispatch,currentApiId} = this.props;
         dispatch(action.changeApiDataByKey(key,value));
         //修改同时告诉后端需要更新的数据
+        console.log(key,value);
         dispatch(AjaxAction.apiEdit(currentApiId,{
             [key]:value
         }))
@@ -78,7 +79,10 @@ class ApiContent extends Component{
                             fullWidth={true}
                         >
                             {response_type.map((v,i)=>{
-                                return <MenuItem key={i}  value={v} primaryText={v} />
+                                for(var key in v){
+                                    return <MenuItem key={i}  value={key} primaryText={v[key]} />
+                                }
+
                             })}
 
                         </SelectField>
@@ -136,7 +140,9 @@ class ApiContent extends Component{
                             labelStyle={{whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}
                         >
                             {response_type.map((v,i)=>{
-                                return <MenuItem key={i} value={v} primaryText={v} />
+                                for(var key in v){
+                                    return <MenuItem key={i}  value={v[key]} primaryText={key} />
+                                }
                             })}
 
                         </SelectField>

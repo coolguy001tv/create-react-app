@@ -87,8 +87,8 @@
             var onStartEvent = function(e)
             {
                 var handle = $(e.target);
-                $(this).trigger("helloworld");
-                console.log(this);
+                //$(this).trigger("helloworld");
+                //console.log(this);
                 if (!handle.hasClass(list.options.handleClass)) {
                     if (handle.closest('.' + list.options.noDragClass).length) {
                         return;
@@ -256,6 +256,7 @@
                 dragItem = target.closest(this.options.itemNodeName);
 
             this.placeEl.css('height', dragItem.height());
+            this.currentTarget = target;//保存当前拖动的元素
 
             mouse.offsetX = e.offsetX !== undefined ? e.offsetX : e.pageX - target.offset().left;
             mouse.offsetY = e.offsetY !== undefined ? e.offsetY : e.pageY - target.offset().top;
@@ -295,9 +296,10 @@
             this.placeEl.replaceWith(el);
 
             this.dragEl.remove();
-            this.el.trigger('change');
+            //console.log(this.currentTarget);
+            this.el.trigger('change',this.currentTarget);
             if (this.hasNewRoot) {
-                this.dragRootEl.trigger('change');
+                this.dragRootEl.trigger('change',this.currentTarget);
             }
             this.reset();
         },

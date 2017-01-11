@@ -5,7 +5,7 @@ import { combineReducers } from 'redux';
 import actions from '../actions';
 import AjaxAction from '../actions/AjaxAction';
 import CurrentProjectReducer from './CurrentApiReducer';
-import {defaultApi,defaultLeftMenu} from '../initData';
+import {defaultApi} from '../initData';
 let user = (state={},action)=>{
     let obj;
     switch (action.type){

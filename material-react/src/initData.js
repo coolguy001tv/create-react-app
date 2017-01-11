@@ -40,12 +40,12 @@ export const defaultApi = {
 };
 
 //默认左侧菜单的信息如下
-export let defaultLeftMenu = [{
+export let createDefaultLeftMenu = ()=>({
     "id": createUuid(),
     "name": "未分类",
     "type": "folder",
     "children":[]
-}];
+});
 
 export let supportedType = ["string","number","array","object-array","object","boolean","others"];
 

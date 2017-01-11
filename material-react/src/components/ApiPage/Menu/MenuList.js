@@ -14,7 +14,7 @@ import TextField from 'material-ui/TextField';
 import AjaxAction from '../../../actions/AjaxAction';
 import action from '../../../actions';
 import {createUuid} from '../../../util';
-import {defaultLeftMenu} from '../../../initData';
+import {createDefaultLeftMenu} from '../../../initData';
 
 import $ from 'jquery';
 require("../../../../public/nestable/jquery.nestable");
@@ -68,7 +68,7 @@ class MenuList extends Component{
             let theData = data.data;
             //如果没有数据添加一条默认的目录数据
             if(!theData || !theData.folders){
-                this.addFolder(defaultLeftMenu[0]);
+                this.addFolder(createDefaultLeftMenu());
             }
 
         });
@@ -92,7 +92,7 @@ class MenuList extends Component{
         currentMenu0.children = currentMenu0.children || [];
         currentMenu0.children.push(newListItem);
         dispatch(AjaxAction.apiAdd({
-            apiId:createUuid(),
+            apiId:newApi.apiId,
             api:{
                 apiName:newApi.apiName
             },

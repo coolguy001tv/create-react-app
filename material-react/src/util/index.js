@@ -223,7 +223,7 @@ export var ajaxCommon = ({api,data,success,fail,doNotWaitAjax}) => {
         let ajaxResult = ajax(ajaxOptions)
             .done((json)=>{
                 if(json && json.result && success){
-                    return dispatch(success(json.data || {...data}))
+                    return !doNotWaitAjax && dispatch(success(json.data || {...data}))
                 }else{
                     //异常情况处理，此处先直接打印错误信息
                     console.error(json);
@@ -237,9 +237,11 @@ export var ajaxCommon = ({api,data,success,fail,doNotWaitAjax}) => {
 
         if(doNotWaitAjax === true){
             return dispatch(success());
+        }else{
+            return ajaxResult;
         }
 
-        return ajaxResult;
+
     }
 };
 

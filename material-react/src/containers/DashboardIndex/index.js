@@ -4,7 +4,7 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
-
+import $ from 'jquery';
 import './dashboard-index.scss';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import Paper from 'material-ui/Paper';
@@ -47,6 +47,8 @@ class DashboardIndex extends Component{
     componentDidMount() {
         let {dispatch} = this.props;
         dispatch(AjaxAction.projectList());
+        //设置高度，方便滚动
+        $(".project-list").css("height",document.documentElement.clientHeight - 90);
     }
 
     render(){

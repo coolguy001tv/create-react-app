@@ -78,8 +78,8 @@ class ApiContent extends Component{
                             onChange={(event,index,value)=>{this.handleKeyValueChange("contentType",event,value);}}
                             fullWidth={true}
                         >
-                            {response_type.map((v,i)=>{
-                                for(var key in v){
+                            {response_type.map((v,i)=>{/*eslint array-callback-return:0*/
+                                for(var key in v){/*eslint guard-for-in:0*/
                                     return <MenuItem key={i}  value={key} primaryText={v[key]} />
                                 }
 
@@ -140,8 +140,8 @@ class ApiContent extends Component{
                             labelStyle={{whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}
                         >
                             {response_type.map((v,i)=>{
-                                for(var key in v){
-                                    return <MenuItem key={i}  value={v[key]} primaryText={key} />
+                                for(var key in v){/*eslint guard-for-in:0*/
+                                    return <MenuItem key={i}  value={key} primaryText={v[key]} />
                                 }
                             })}
 

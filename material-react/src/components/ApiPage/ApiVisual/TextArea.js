@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextArea from '../../TextArea';
 import {connect} from 'react-redux';
 import Action from '../../../actions';
+import AjaxAction from '../../../actions/AjaxAction';
 import {/*parseImportData,*/listToObject} from '../../../util';
 //import $ from 'jquery';
 //import TextField from 'material-ui/TextField';
@@ -36,15 +37,27 @@ class TheTextArea extends Component{
         let code = e.keyCode || e.charCode;
         if(code === 9){//Tab键
             e.preventDefault();
+            //todo:在用户光标处插入4个空格
             //e.target.setSelectionRange(0,0);
             //var selObj = window.getSelection();
             //console.log(selObj);
+        }else if(code === 13){//回车键触发保存
+            this.handleApiEdit();
         }
+    };
+    handleApiEdit = () => {
+        //let value = event.target.value;
+        let {dispatch,apiType,textarea,currentApiId} = this.props;
+        //todo:只有在值不相同的情况下进行处理
+        dispatch(AjaxAction.apiEdit(currentApiId,{
+            [apiType+"JsonArgs"]:textarea
+        }));
     };
     handleImportFromTable = ()=>{
         let {dispatch,table,apiType} = this.props;
         let data = JSON.stringify(listToObject(table),null,'    ');
         dispatch(Action.changeApiRequestDataTextAreaAll(apiType,data));
+        this.handleApiEdit();
     };
     handleBeautify = ()=>{
         let {textarea,dispatch,apiType} = this.props;
@@ -91,4 +104,7 @@ class TheTextArea extends Component{
     }
 }
 
-export default connect((state)=>({state}))(muiThemeable()(TheTextArea));
+export default connect((state)=>({
+    state:state,//必须要有这项，否则可能导致不会在被修改的时候重新渲染
+    currentApiId:state.currentApiId
+}))(muiThemeable()(TheTextArea));

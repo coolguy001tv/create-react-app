@@ -208,7 +208,7 @@ class ApiContent extends Component{
 
         let themeColor = this.props.muiTheme.palette.primary1Color;
         let {showApi,currentApi} = this.props;
-        let {request,requestTextArea,response,responseTextArea} = currentApi;
+        let {requestTableArgs,requestJsonArgs,responseTableArgs,responseJsonArgs} = currentApi;
         return (
             <div className="api-content-wrapper">
                 {!showApi ? <div>赶紧从左边新增一个或者选择一个API吧</div> :
@@ -247,13 +247,13 @@ class ApiContent extends Component{
                             <div className="card1">
                                 <Card containerStyle={cardStyle}>
                                     <CardTitle title="请求参数" titleStyle={titleStyle} style={cardTitleStyle}/>
-                                    <ApiVisual apiType="request" table={request} textarea={requestTextArea}/>
+                                    <ApiVisual apiType="request" table={requestTableArgs} textarea={requestJsonArgs||""}/>
                                 </Card>
                             </div>
                             <div className="card2">
                                 <Card containerStyle={cardStyle}>
                                     <CardTitle title="响应参数" titleStyle={titleStyle} style={cardTitleStyle}/>
-                                    <ApiVisual apiType="response" table={response} textarea={responseTextArea}/>
+                                    <ApiVisual apiType="response" table={responseTableArgs} textarea={responseJsonArgs||""}/>
                                 </Card>
                             </div>
                             <div className="card3">
@@ -261,7 +261,7 @@ class ApiContent extends Component{
                                     <CardTitle title="辅助信息" titleStyle={titleStyle} style={cardTitleStyle}/>
                                     <TextArea name="aid-textarea"
                                               id="aid-textarea"
-                                              placeholder={"请输入辅助信息"}
+                                              placeholder={"请输入辅助信息--注意，这条和上面2个目前没有实现，仅供查看"}
                                     ></TextArea>
                                 </Card>
                             </div>
@@ -290,12 +290,9 @@ class ApiContent extends Component{
 }
 export default connect((state)=>{
     return {
+        state:state,
         currentApiId:state.currentApiId,
         currentApi:state.currentApi,
-        //request:state.currentApi.request,
-        //requestTextArea:state.currentApi.requestTextArea,
-        //response:state.currentApi.response,
-        //responseTextArea:state.currentApi.responseTextArea,
         showApi:state.showApi,
     }
 })(muiThemeable()(ApiContent));

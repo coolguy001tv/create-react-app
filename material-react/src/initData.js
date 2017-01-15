@@ -47,6 +47,11 @@ export const defaultApi = {
     description:"",
     requestURL:"",
     "version":"1.0.0",
+    //必须赋值undefined，否则会被后端传入的null干扰导致reducer报错
+    requestTableArgs:undefined,
+    requestJsonArgs:undefined,
+    responseTableArgs:undefined,
+    responseJsonArgs:undefined
 };
 
 //默认左侧菜单的信息如下

@@ -6,7 +6,7 @@
 import React,{Component} from 'react';
 import {createUuid}  from '../../util';
 const textAreaStyle = {
-    height:300
+    height:350
 };
 export default class TextArea extends Component{
     render(){

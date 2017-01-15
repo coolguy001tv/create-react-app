@@ -52,17 +52,17 @@ export default {
     showApi:false,//是否应该展示右边的API详情
     currentApiId:null,//当前正在编辑/新增的APIID
     currentApi:{
-        "apiName": "",
-        "contentType": "application/json",
-        "dataType": "FORM_DATA",
-        "protocol": "HTTP",
-        "requestMethod": "GET",
-        "respContentType": "application/json",
-        "description": "",
-        "requestURL": "",
-        "version": "1.0.0",
+        //"apiName": "",
+        //"contentType": "application/json",
+        //"dataType": "FORM_DATA",
+        //"protocol": "HTTP",
+        //"requestMethod": "GET",
+        //"respContentType": "application/json",
+        //"description": "",
+        //"requestURL": "",
+        //"version": "1.0.0",
         //request和response都必须有uuid
-        request:/*[{
+        requestTableArgs:/*[{
             "require": false,
             "children": [{
                 "require": true,
@@ -101,9 +101,9 @@ export default {
             "textValue": ""
         }]*/undefined,
         //request的textarea表现形式
-        requestTextArea:"",
-        response:undefined,
-        responseTextArea:"",
+        requestJsonArgs:"",
+        responseTableArgs:undefined,
+        responseJsonArgs:"",
     },
 
 };

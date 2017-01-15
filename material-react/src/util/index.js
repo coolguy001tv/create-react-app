@@ -3,6 +3,29 @@
  */
 import $ from 'jquery';
 import CommonAction from '../actions/CommonAction';
+//只merge不为undefined/null的项
+//copy from https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+export var objectMergeWithoutEmptyValue = function(target) {
+    if (target == null) {
+        throw new TypeError('Cannot convert undefined or null to object');
+    }
+
+    target = Object(target);
+    for (var index = 1; index < arguments.length; index++) {
+        var source = arguments[index];
+        if (source != null) {
+            for (var key in source) {
+                if (Object.prototype.hasOwnProperty.call(source, key)) {
+                    var sk = source[key];
+                    if(sk !== undefined && sk !== null){
+                        target[key] = source[key];
+                    }
+                }
+            }
+        }
+    }
+    return target;
+};
 
 export var createUuid = () =>{
     var s = [];

@@ -20,6 +20,7 @@ import './table.scss';
 
 //import Reducer from '../../../reducers/CurrentProjectReducer';
 import Action from '../../../actions';
+import AjaxAction from '../../../actions/AjaxAction';
 
 const operationTrStyle = {
     width:50
@@ -73,15 +74,43 @@ class ApiTable extends Component{
         let id = one.uuid || createUuid();
         return (
             <TableRow key={id}>
-                <TableRowColumn className={"depth-"+depth} style={{paddingLeft:24+depth*20}}><TextField onChange={this.handleArgNameChange.bind(this,id)} name="argument-name" style={{width:"auto"}} value={one.name}/></TableRowColumn>
-                <TableRowColumn><TextField onChange={this.handleTestValueChange.bind(this,id)} name="argument-value" style={{width:"auto"}} value={one.textValue}/></TableRowColumn>
-                <TableRowColumn><TextField name="description" onChange={this.handleDescriptionValueChange.bind(this,id)} style={{width:"auto"}} value={one.description}/></TableRowColumn>
+                <TableRowColumn className={"depth-"+depth} style={{paddingLeft:24+depth*20}}>
+                    <TextField onChange={this.handleArgNameChange.bind(this,id)}
+                               onBlur={this.handleApiEdit}
+                               name="argument-name"
+                               style={{width:"auto"}}
+                               value={one.name}/>
+                </TableRowColumn>
+                <TableRowColumn>
+                    <TextField onChange={this.handleTestValueChange.bind(this,id)}
+                               onBlur={this.handleApiEdit}
+                               name="argument-value"
+                               style={{width:"auto"}}
+                               value={one.textValue}/>
+                </TableRowColumn>
+                <TableRowColumn>
+                    <TextField name="description"
+                               onChange={this.handleDescriptionValueChange.bind(this,id)}
+                               onBlur={this.handleApiEdit}
+                               style={{width:"auto"}}
+                               value={one.description}/>
+                </TableRowColumn>
                 <TableRowColumn>{this.renderSelect(one.type,id)}</TableRowColumn>
-                <TableRowColumn style={requireTrStyle}><Checkbox onCheck={this.handleCheck.bind(this,id)} checked={one.require || false}/></TableRowColumn>
+                <TableRowColumn style={requireTrStyle}>
+                    <Checkbox onCheck={this.handleCheck.bind(this,id)}
+                              onBlur={this.handleApiEdit}
+                              checked={one.require || false}/></TableRowColumn>
                 <TableRowColumn style={operationTrStyle}>{this.formatOneOperation(id)}</TableRowColumn>
 
             </TableRow>
         );
+    };
+    handleApiEdit = () => {
+        let {dispatch,apiType,table,currentApiId} = this.props;
+        //todo:只有在值不相同的情况下进行处理
+        dispatch(AjaxAction.apiEdit(currentApiId,{
+            [apiType+"TableArgs"]:table
+        }));
     };
     handleDescriptionValueChange = (uuid, event, newValue) => {
         let {dispatch,apiType} = this.props;
@@ -105,6 +134,8 @@ class ApiTable extends Component{
         let {dispatch,apiType} = this.props;
         //console.log(uuid,event, index, value);
         dispatch(Action.changeApiRequestData(apiType,uuid,"type",type));
+        //修改之后需要同时发协议告诉后端
+        this.handleApiEdit();
     };
     handleImport = () => {
         console.log("import from json");
@@ -114,6 +145,8 @@ class ApiTable extends Component{
             let array = [];
             parseImportData(jsonTextArea,array);
             dispatch(Action.changeApiRequestDataAll(apiType,array));
+            //导入成功后也需要将修改告知后端
+            this.handleApiEdit();
         }catch (e){
             console.warn("Oops,根本不是一个json格式",e);
         }
@@ -132,12 +165,10 @@ class ApiTable extends Component{
         )
     };
     render(){
-
         let {table} = this.props;
         this.tableRow = [];
         this.depth = 0;
         this.listData(table);
-        //console.log(this.tableRow);
         return (
             <div>
                 <Table selectable={false} style={{textAlign:"center"}}>
@@ -168,4 +199,8 @@ class ApiTable extends Component{
     }
 }
 
-export default connect((state)=>({state}))(muiThemeable()(ApiTable));
+export default connect((state)=>({
+    //table:state.table,
+    state:state,//必须要有这项，否则可能导致不会在被修改的时候重新渲染
+    currentApiId:state.currentApiId
+}))(muiThemeable()(ApiTable));

@@ -6,6 +6,7 @@ import actions from '../actions';
 import AjaxAction from '../actions/AjaxAction';
 import CurrentProjectReducer from './CurrentApiReducer';
 import {defaultApi} from '../initData';
+import {objectMergeWithoutEmptyValue} from '../util';
 let user = (state={},action)=>{
     let obj;
     switch (action.type){
@@ -31,29 +32,38 @@ let theme = (state = {}, action) => {
 let currentApi = (state = defaultApi, action) => {
     let result,merge;
     let {apiType} = action;//apiType应该只有request和response两种
+    //注意，对应的对象名称是requestTableArgs/requestJsonArgs
+    //目前只有CHANGE_API_REQUEST_DATA_TEXT_AREA_ALL会修改到JSON对象
+    let apiTypeName;
+    if(apiType){
+        apiTypeName = apiType+"TableArgs";
+    }
     switch (action.type){
         case actions.CHANGE_API_REQUEST_DATA:
-            result = CurrentProjectReducer.modify(state[apiType],action);
-            merge = Object.assign({},state,{[apiType]:result});
+            result = CurrentProjectReducer.modify(state[apiTypeName],action);
+            merge = Object.assign({},state,{[apiTypeName]:result});
             return merge;
         case actions.CHANGE_API_REQUEST_DATA_ALL:
-            return Object.assign({},state,{[apiType]:action.data});
+            return Object.assign({},state,{[apiTypeName]:action.data});
         case actions.CHANGE_API_REQUEST_DATA_TEXT_AREA_ALL:
-            return Object.assign({},state,{[apiType+'TextArea']:action.data});
+            return Object.assign({},state,{[apiType+'JsonArgs']:action.data});
         case actions.ADD_API_REQUEST_DATA:
-            result = CurrentProjectReducer.add(state[apiType],action);
-            merge = Object.assign({},state,{[apiType]:result});
+            result = CurrentProjectReducer.add(state[apiTypeName],action);
+            merge = Object.assign({},state,{[apiTypeName]:result});
             return merge;
         case actions.DEL_API_REQUEST_DATA:
-            result = CurrentProjectReducer.del(state[apiType],action);
-            merge = Object.assign({},state,{[apiType]:result});
+            result = CurrentProjectReducer.del(state[apiTypeName],action);
+            merge = Object.assign({},state,{[apiTypeName]:result});
             return merge;
         case actions.CHANGE_API_DATA_BY_KEY:
             let {key,value} = action;
             merge = Object.assign({},state,{[key]:value});
             return merge;
         case AjaxAction.API_GET:
-            return action.data.api;
+            merge = objectMergeWithoutEmptyValue({},defaultApi,action.data.api);
+            return merge;
+        case AjaxAction.API_ADD:
+            return objectMergeWithoutEmptyValue({},defaultApi,action.api.api);
         default:
             return state;
     }

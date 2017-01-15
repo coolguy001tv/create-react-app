@@ -14,7 +14,7 @@ import TextField from 'material-ui/TextField';
 import AjaxAction from '../../../actions/AjaxAction';
 import action from '../../../actions';
 import {createUuid} from '../../../util';
-import {createDefaultLeftMenu} from '../../../initData';
+import {createDefaultLeftMenu,defaultApi} from '../../../initData';
 
 import $ from 'jquery';
 require("../../../../public/nestable/jquery.nestable");
@@ -23,15 +23,14 @@ class MenuList extends Component{
     state = {
         dialogFolderOpen: false,
         dialogApiOpen:false,
+        dialogDelFolderOpen:false,
     };
-    handleOpen = (isFolder) => {
-        let key = isFolder ? 'dialogFolderOpen' : 'dialogApiOpen'
-        this.setState({[key]: true});
+    handleOpen = (dialogName) => {
+        this.setState({[dialogName]: true});
     };
 
-    handleClose = (isFolder) => {
-        let key = isFolder ? 'dialogFolderOpen' : 'dialogApiOpen'
-        this.setState({[key]: false});
+    handleClose = (dialogName) => {
+        this.setState({[dialogName]: false});
     };
 
     getProjectId = ()=>{
@@ -101,9 +100,9 @@ class MenuList extends Component{
         currentMenu0.children.push(newListItem);
         dispatch(AjaxAction.apiAdd({
             apiId:newApi.apiId,
-            api:{
+            api:Object.assign({},defaultApi,{
                 apiName:newApi.apiName
-            },
+            }),
             projectId:this.getProjectId(),
             folders:{
                 list:currentMenu
@@ -145,6 +144,12 @@ class MenuList extends Component{
         console.log("setFolder");
         e.stopPropagation();
     };
+    delFolder = ()=>{
+        console.log("deleted");
+    };
+    modifyFolder = ()=>{
+        console.log("modified");
+    };
     //注意，请不要随意动renderFolder/renderApi的结构，否则拖动可能不可用
     renderFolder(folder){
         if(!folder || !folder.length){
@@ -160,14 +165,14 @@ class MenuList extends Component{
                                 <span className="name">{v.name}</span>
                             </div>
                             <IconMenu
-                                iconButtonElement={<IconButton iconClassName="fa fa-plus-square"></IconButton>}
+                                iconButtonElement={<IconButton iconClassName="fa fa-gears"></IconButton>}
                                 anchorOrigin={{horizontal: 'middle', vertical: 'top'}}
                                 targetOrigin={{horizontal: 'middle', vertical: 'top'}}
                                 className="item-icon"
                                 style={{position:"absolute"}}
                             >
-                                <MenuItem primaryText="文件夹" onClick={this.handleOpen.bind(this,true)}/>
-                                <MenuItem primaryText="API" onClick={this.handleOpen.bind(this,false)}/>
+                                <MenuItem primaryText="删除" onClick={this.handleOpen.bind(this,'dialogDelFolderOpen')}/>
+                                <MenuItem primaryText="修改" onClick={this.modifyFolder}/>
                             </IconMenu>
                             {this.renderApi(v.children)}
                         </li>
@@ -210,8 +215,8 @@ class MenuList extends Component{
                         anchorOrigin={{horizontal: 'middle', vertical: 'top'}}
                         targetOrigin={{horizontal: 'middle', vertical: 'top'}}
                     >
-                        <MenuItem primaryText="文件夹" onClick={this.handleOpen.bind(this,true)}/>
-                        <MenuItem primaryText="API" onClick={this.handleOpen.bind(this,false)}/>
+                        <MenuItem primaryText="文件夹" onClick={this.handleOpen.bind(this,"dialogFolderOpen")}/>
+                        <MenuItem primaryText="API" onClick={this.handleOpen.bind(this,"dialogApiOpen")}/>
                     </IconMenu>
 
                     <Icon name="sort-alpha-asc" size={20}/>
@@ -225,7 +230,7 @@ class MenuList extends Component{
                     actions={[<FlatButton
                                 label="取消"
                                 primary={true}
-                                onTouchTap={this.handleClose.bind(this,true)}
+                                onTouchTap={this.handleClose.bind(this,"dialogFolderOpen")}
                               />,
                             <FlatButton
                                 label="提交"
@@ -235,7 +240,7 @@ class MenuList extends Component{
                             />]}
                     modal={false}
                     open={this.state.dialogFolderOpen}
-                    onRequestClose={this.handleClose.bind(this,true)}
+                    onRequestClose={this.handleClose.bind(this,"dialogFolderOpen")}
                 >
                     <TextField hintText="给文件夹取个名字" ref="name"/>
                 </Dialog>
@@ -245,7 +250,7 @@ class MenuList extends Component{
                     actions={[<FlatButton
                                 label="取消"
                                 primary={true}
-                                onTouchTap={this.handleClose.bind(this,false)}
+                                onTouchTap={this.handleClose.bind(this,"dialogApiOpen")}
                               />,
                             <FlatButton
                                 label="提交"
@@ -255,9 +260,29 @@ class MenuList extends Component{
                             />]}
                     modal={false}
                     open={this.state.dialogApiOpen}
-                    onRequestClose={this.handleClose.bind(this,false)}
+                    onRequestClose={this.handleClose.bind(this,"dialogApiOpen")}
                 >
                     <TextField hintText="给API取个名字" ref="apiName"/>
+                </Dialog>
+                <Dialog
+                    title="确认删除文件夹"
+                    contentStyle={{width:400}}
+                    actions={[<FlatButton
+                                label="取消"
+                                primary={true}
+                                onTouchTap={this.handleClose.bind(this,"dialogDelFolderOpen")}
+                              />,
+                            <FlatButton
+                                label="提交"
+                                primary={true}
+                                keyboardFocused={true}
+                                onTouchTap={this.delFolder}
+                            />]}
+                    modal={false}
+                    open={this.state.dialogDelFolderOpen}
+                    onRequestClose={this.handleClose.bind(this,"dialogDelFolderOpen")}
+                >
+                    删除文件夹后，该文件夹下的所有API将被清除，您是否确认此操作？
                 </Dialog>
             </div>
 
